@@ -25,10 +25,3 @@ spring:
       filter:
         enabled: true
 
-#  security:
-#    user:
-#      name: user
-#      password: password
-=======
-        enabled: true
->>>>>>> 001
