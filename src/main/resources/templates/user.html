@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
     <title>User info</title>
 </head>
 <body>
+<div sec:authorize="isAuthenticated()">
+    Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
 <div>
     <p th:text="${user.getFirstName()}">VALUE</p>
     <p th:text="${user.getSecondName()}">VALUE</p>
     <p th:text="${user.getAge()}">VALUE</p>
     <p th:text="${user.getGender()}">VALUE</p>
 </div>
-<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit!</a>
-<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
-    <input type="submit" value="Delete!"/>
-</form>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit!</a>
+    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+        <input type="submit" value="Delete!"/>
+    </form>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <a th:href="@{/user/edit}">Edit!</a>
+    <form th:method="DELETE" th:action="@{/user}" th:object="${user}">
+        <input type="submit" value="Delete!"/>
+    </form>
+</div>
+
 </body>
 </html>

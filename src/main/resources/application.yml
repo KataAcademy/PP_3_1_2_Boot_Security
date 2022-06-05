@@ -29,3 +29,6 @@ spring:
 #    user:
 #      name: user
 #      password: password
+=======
+        enabled: true
+>>>>>>> 001
