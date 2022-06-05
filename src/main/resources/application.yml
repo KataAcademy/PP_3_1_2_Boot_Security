@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_hiber
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+#  thymeleaf:
+#    prefix: /WEB-INF/views/
+#    suffix: .html
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
