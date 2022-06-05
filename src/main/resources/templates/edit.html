@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <meta charset="UTF-8">
+    <title>Update user</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated()">
+    Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
+
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+    <label for="nickName">NickName</label>
+    <input type="text" th:field="*{nickName}" id="nickName"/>
+    <br/>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <br/>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <br/>
+    <label for="name">Name</label>
+    <input type="text" th:field="*{firstName}" id="name"/>
+    <br/>
+    <label for="secondName">Surname</label>
+    <input type="text" th:field="*{secondName}" id="secondName"/>
+    <br/>
+    <label for="age">Age</label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <label for="gender">Gender</label>
+    <input type="text" th:field="*{gender}" id="gender"/>
+    <br/>
+    <input type="submit" value="Update!"/>
+</form>
+
+</body>
+</html>
