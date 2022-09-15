@@ -24,13 +24,14 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/admin")
+    @RequestMapping (value = "/admin")
     public String adminPage(Model model){
         model.addAttribute("users", userService.getAllUsers());
         return "adminPage";
     }
 
     @GetMapping(value = "/admin/add")
+
     public String addUser(Model model) {
         model.addAttribute("user", new User());
         return "addingPage";
@@ -64,7 +65,7 @@ public class AdminController {
         return "editingPage";
     }
 
-    @PostMapping(value = "admin/edit")
+    @PutMapping(value = "admin/edit")
     public String postEditUser(@ModelAttribute("user") User user,
                                @RequestParam(name = "roleAdmin", required=false) String role) {
 
@@ -79,7 +80,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/admin/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
