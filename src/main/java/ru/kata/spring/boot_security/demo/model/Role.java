@@ -1,53 +1,35 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table (name = "roles")
+@Table(name = "role")
 public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
+    @Column(name = "name")
     private String name;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<User> users;
-//
-//    public Role() {
-//    }
+    @Transient
+    @ManyToMany(mappedBy = "roles")
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "users_id")
+    )
+    private Set<User> users;
 
-//    public Role(Long id, String name) {
-//        this.id = id;
-//        this.name = name;
-//    }
-
-
-
-//    public Set<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<User> users) {
-//        this.users = users;
-//    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Role(String name) {
         this.name = name;
     }
 

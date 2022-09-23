@@ -1,46 +1,37 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
+@Transactional
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public Role getRoleByName(String name) {
-        Role role = null;
-        try {
-            role = entityManager
-                    .createQuery("SELECT r FROM Role r WHERE r.name=:name", Role.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
-        } catch (Exception e) {
-            System.out.println("Not found");
-        }
-        return role;
+    public Set<Role> getAllRoles() {
+        String JPAql = "SELECT role FROM Role role";
+        return entityManager.createQuery(JPAql, Role.class).getResultStream().collect(Collectors.toSet());
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return entityManager.find(Role.class, id);
+    public Set<Role> getByName(String name) {
+        String JPAql = "SELECT role FROM Role role WHERE role.name = :name";
+        return entityManager.createQuery(JPAql, Role.class).setParameter("name", name)
+                .getResultStream().collect(Collectors.toSet());
     }
 
     @Override
-    public List<Role> allRoles() {
-        return entityManager
-                .createQuery("select r from Role r", Role.class)
-                .getResultList();
-    }
-
-    @Override
-    public Role getDefaultRole() {
-        return getRoleByName("ROLE_USER");
+    public void saveRole(Role role) {
+        entityManager.persist(role);
     }
 }
+

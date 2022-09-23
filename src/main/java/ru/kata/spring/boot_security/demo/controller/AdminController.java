@@ -1,8 +1,11 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -13,78 +16,56 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
-
-    private final RoleService roleService;
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(RoleService roleService, UserService userService) {
-        this.roleService = roleService;
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
-    @RequestMapping (value = "/admin")
-    public String adminPage(Model model){
+    @GetMapping()
+    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        model.addAttribute("user", userService.getUserByName(userDetails.getUsername()));
         model.addAttribute("users", userService.getAllUsers());
-        return "adminPage";
+        model.addAttribute("roles", roleService.getAllRoles());
+        return "admin";
     }
 
-    @GetMapping(value = "/admin/add")
+    @PatchMapping("/{id}/update")
+    public String updateUser(@PathVariable(value = "id", required = false) Long id, @ModelAttribute("user") User user,
+                             @RequestParam(value = "nameRole", required = false) String nameRole) {
+        if (nameRole != null) {
+            user.setRoles(roleService.getByName(nameRole));
+        }
+        userService.update(user, id);
+        return "redirect:/admin";
+    }
 
-    public String addUser(Model model) {
+    @DeleteMapping("/{id}/delete")
+    public String deleteUser(@PathVariable(value = "id", required = false) Long id) {
+        userService.delete(id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/create")
+    public String createPage(@AuthenticationPrincipal UserDetails userDetails,Model model) {
         model.addAttribute("user", new User());
-        return "addingPage";
+        model.addAttribute("roleName", roleService.getAllRoles());
+        model.addAttribute("user", userService.getUserByName(userDetails.getUsername()));
+        return "create";
     }
 
-    @PostMapping(value = "/admin/add" )
-    public String postUser(@ModelAttribute("user") User user,
-                           @RequestParam(required=false) String role) {
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getDefaultRole());
-
-        if (role != null && role.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByName(role));
-        }
-        user.setRoles(roles);
-        userService.addUser(user);
-
+    @PostMapping("/create")
+    public String createUser(@ModelAttribute("user") User user,
+                             @RequestParam(value = "nameRole", required = false) String nameRole,
+                             @RequestParam(value = "username", required = false) String username) {
+        user.setUsername(username);
+        user.setRoles(roleService.getByName(nameRole));
+        userService.add(user);
         return "redirect:/admin";
     }
-
-    @GetMapping(value = "admin/edit/{id}")
-    public String editUser(Model model, @PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        Set<Role> roles = user.getRoles();
-        for (Role role: roles) {
-            if (role.equals(roleService.getRoleByName("ROLE_ADMIN"))) {
-                model.addAttribute("role", true);
-            }
-        }
-        model.addAttribute("user", user);
-        return "editingPage";
-    }
-
-    @PutMapping(value = "admin/edit")
-    public String postEditUser(@ModelAttribute("user") User user,
-                               @RequestParam(name = "roleAdmin", required=false) String role) {
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getDefaultRole());
-        if (role != null && role.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByName(role));
-        }
-        user.setRoles(roles);
-        userService.editUser(user);
-        System.out.println(role);
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping("/admin/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
-    }
-
-
 }

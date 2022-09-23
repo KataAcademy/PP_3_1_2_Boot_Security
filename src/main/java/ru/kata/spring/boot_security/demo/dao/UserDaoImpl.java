@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.User;
 
@@ -14,25 +15,14 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    public void addUser(User user) {
+    public List<User> getAllUsers() {
+        String JPAql = "SELECT user FROM User user";
+        return entityManager.createQuery(JPAql, User.class).getResultList();
+    }
+
+    @Override
+    public void create(User user) {
         entityManager.persist(user);
-    }
-
-    @Override
-    public void deleteUser(Long id) {
-
-        try {
-            User user = entityManager.find(User.class, id);
-            if (user != null) {
-                entityManager.remove(user);
-            }
-        } catch (NullPointerException e) {
-            System.out.println("This user not found");
-        }
-    }
-
-    @Override
-    public void editUser(User user) {entityManager.merge(user);
     }
 
     @Override
@@ -41,17 +31,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return entityManager
-                .createQuery("select u from User u", User.class)
-                .getResultList();
+    public void delete(Long id) {
+        String JPAql = "DELETE FROM User user WHERE user.id = :id";
+        entityManager.createQuery(JPAql).setParameter("id", id).executeUpdate();
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return entityManager
-                .createQuery("SELECT u FROM User AS u JOIN FETCH u.roles WHERE u.username= :username", User.class)
-                .setParameter("username", username)
-                .getSingleResult();
+    public void update(User user) {
+        entityManager.merge(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        String JPAql = "SELECT u from User u join fetch u.roles where u.username = :username";
+        return entityManager.createQuery(JPAql, User.class).setParameter("username", username).getSingleResult();
     }
 }
