@@ -1,37 +1,44 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
-@Transactional
-public class RoleDaoImpl implements RoleDao {
+public class RoleDaoImpl implements RoleDao{
 
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
+
+    @Override
+    public void addRole(Role role) {
+        entityManager.persist(role);
+    }
+
+
+    @Override
+    public Role getRoleByName(String name) {
+        return entityManager.createQuery("SELECT r FROM Role r WHERE r.name = :name", Role.class)
+                .setParameter("name", name).getSingleResult();
+    }
+
 
     @Override
     public Set<Role> getAllRoles() {
-        String JPAql = "SELECT role FROM Role role";
-        return entityManager.createQuery(JPAql, Role.class).getResultStream().collect(Collectors.toSet());
+        return new HashSet<>(entityManager.createQuery("from Role", Role.class)
+                .getResultList());
     }
 
-    @Override
-    public Set<Role> getByName(String name) {
-        String JPAql = "SELECT role FROM Role role WHERE role.name = :name";
-        return entityManager.createQuery(JPAql, Role.class).setParameter("name", name)
-                .getResultStream().collect(Collectors.toSet());
-    }
-
-    @Override
-    public void saveRole(Role role) {
-        entityManager.persist(role);
+    public Set<Role> getRolesByName(Set<Role> roles){
+        Set<Role> userRoles = new HashSet<>();
+        for (Role role : roles) {
+            userRoles.add(getRoleByName(role.getName()));
+        }
+        return userRoles;
     }
 }
-
