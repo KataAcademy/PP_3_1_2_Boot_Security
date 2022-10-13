@@ -1,7 +1,10 @@
 package ru.kata.spring.boot_security.demo.dao;
 
+import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import org.springframework.stereotype.Repository;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;

@@ -28,11 +28,11 @@ public class User implements UserDetails {
     private String password;
     @ManyToMany(cascade=CascadeType.REFRESH,fetch = FetchType.LAZY)
     @JoinTable (
-            name = "users_roles",
+            name = "Users_Roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn (name = "role_id")
     )
-    //private List<Role> roles = new ArrayList<>();
+
     private Set<Role> roles = new HashSet<>();
     public User() {
     }
@@ -80,6 +80,7 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public Set<Role> getRoles() {
         return roles;
