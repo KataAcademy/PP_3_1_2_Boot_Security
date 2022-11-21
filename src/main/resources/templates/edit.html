@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update user</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{admin/users/{id}(id=${user.getId()})}" th:object="${user}">
+  <label for="username">Name</label>
+  <input type="text" th:field="*{username}" id="username">
+  <br>
+  <label for="surname">Surname</label>
+  <input type="text" th:field="*{surname}" id="surname">
+  <br>
+  <label for="age">Age</label>
+  <input type="text" th:field="*{age}" id="age">
+  <br>
+  <label for="email">Email</label>
+  <input type="text" th:field="*{email}" id="email">
+  <br/>
+  <input type="submit" value="Update"/>
+</form>
+
+</body>
+</html>
