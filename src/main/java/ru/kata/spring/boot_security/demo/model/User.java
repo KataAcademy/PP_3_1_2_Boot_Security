@@ -16,7 +16,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String username;
 
     private String surname;
@@ -31,16 +31,19 @@ public class User implements UserDetails {
     private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

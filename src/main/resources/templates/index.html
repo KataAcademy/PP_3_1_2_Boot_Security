@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-
 <head>
+    <meta charset="UTF-8">
+    <title>Update user</title>
+</head>
     <meta charset="UTF-8">
     <title>All Users</title>
 </head>
 <body>
 
 <div th:each="user : ${users}">
-    <a th:href="@{admin/users/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">user</a>
+    <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">user</a>
 </div>
 <br/>
-<a href="admin/users/new">Add user</a>
+<a href="admin/new">Add user</a>
 </body>
 </html>
