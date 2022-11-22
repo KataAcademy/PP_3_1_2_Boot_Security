@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping("admin")
@@ -45,13 +47,15 @@ public class AdminController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
+        System.out.println("flag get");
         model.addAttribute("user", userService.getUserById(id));
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
     public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") Long id) {
+        System.out.println("flag update");
         userService.updateUser(id, user);
         return "redirect:/admin";
     }

@@ -19,7 +19,7 @@
 </a>
 <!--<a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Update</a>-->
 <br>
-<a th:method="DELETE" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
+<a th:action="@{/admin/{id}/(id=${user.getId()})}" th:method="delete">
     <input type="submit" value="Delete"/>
 </a>
 

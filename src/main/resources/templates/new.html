@@ -16,12 +16,12 @@
     <input type="password" th:field="*{password}" id="password">
     <br>
 
-<!--    <input type=checkbox id="adminId" name=roles[] value="ROLE_ADMIN">-->
-<!--    <label for="adminId">Admin</label>-->
-<!--    <br>-->
-<!--    <input type=checkbox id="userId" name=roles[] value="ROLE_USER">-->
-<!--    <label for="adminId">USER</label>-->
-<!--    <br>-->
+    <input type=checkbox th:field="*{roles}" id="admin_id" value="ADMIN">
+    <label for="admin_id">Admin</label>
+    <br>
+    <input type=checkbox th:field="*{roles}" id="user_id" value="USER">
+    <label for="user_id">USER</label>
+    <br>
 
 
     <label for="surname">Surname</label>
