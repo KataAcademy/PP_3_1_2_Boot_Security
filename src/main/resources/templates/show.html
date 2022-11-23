@@ -12,6 +12,7 @@
 <p th:text="${user.getAge()}">VALUE</p>
 <p th:text="${user.getEmail()}">VALUE</p>
 <p th:text="${user.getPassword()}">VALUE</p>
+<p th:text="${user.getRoles()}">VALUE</p>
 <a th:href="@{/admin/{id}/edit(id=${user.getId()})}">
     <input type="submit" value="Update"/>
 <br>

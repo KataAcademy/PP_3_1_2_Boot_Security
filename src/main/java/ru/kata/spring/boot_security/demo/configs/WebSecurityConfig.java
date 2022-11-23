@@ -25,7 +25,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userService = userService;
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -91,9 +90,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //        return jdbcUserDetailsManager;
 //    }
-
-
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();

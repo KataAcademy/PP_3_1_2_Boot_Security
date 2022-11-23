@@ -61,10 +61,6 @@ public class Role implements GrantedAuthority {
         this.user = user;
     }
 
-    public String getNameToString() {
-        return name.replaceAll("ROLE_", "");
-    }
-
     @Override
     public String getAuthority() {
         return getName();
@@ -86,8 +82,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

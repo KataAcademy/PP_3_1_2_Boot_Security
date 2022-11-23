@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void saveUser(User user) {
+        user.add(new Role("ROLE_USER"));
         user.setPassword(user.getPassword());
         userRepository.saveAndFlush(user);
     }
