@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
@@ -19,6 +20,11 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    @Autowired
+    public UserServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -61,11 +67,12 @@ public class UserServiceImpl implements UserService {
             User userRepos = userById.get();
             userRepos.setId(id);
             userRepos.setUsername(user.getUsername());
-            userRepos.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            userRepos.setPassword(new BCryptPasswordEncoder(12).encode(user.getPassword()));
+            System.out.println(user.getPassword());
             userRepos.setSurname(user.getSurname());
             userRepos.setEmail(user.getEmail());
             userRepos.setAge(user.getAge());
-            userRepository.save(user);
+            userRepository.save(userRepos);
         } else {
             throw new UsernameNotFoundException(String.format("User '%s' not found: ", user));
         }

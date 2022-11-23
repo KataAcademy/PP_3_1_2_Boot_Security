@@ -5,7 +5,15 @@
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
-
+<br><br>
+<p th:text="${user.getUsername()}">VALUE</p>
+<p th:text="${user.getId()}">VALUE</p>
+<p th:text="${user.getSurname()}">VALUE</p>
+<p th:text="${user.getAge()}">VALUE</p>
+<p th:text="${user.getEmail()}">VALUE</p>
+<p th:text="${user.getPassword()}">VALUE</p>
+<br><br>
+<a href="/logout" type="submit">Logout</a>
 
 </body>
 </html>
