@@ -9,27 +9,16 @@
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
     <label for="username">Name</label>
     <input type="text" th:field="*{username}" id="username">
-    <br>
-
-
+    <br/>
     <label for="password">Password</label>
     <input type="password" th:field="*{password}" id="password">
-    <br>
-
-    <input type=checkbox th:field="*{roles}" id="admin_id" value="ADMIN">
-    <label for="admin_id">Admin</label>
-    <br>
-    <input type=checkbox th:field="*{roles}" id="user_id" value="USER">
-    <label for="user_id">USER</label>
-    <br>
-
-
+    <br/>
     <label for="surname">Surname</label>
     <input type="text" th:field="*{surname}" id="surname">
-    <br>
+    <br/>
     <label for="age">Age</label>
     <input type="text" th:field="*{age}" id="age">
-    <br>
+    <br/>
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email">
     <br/>

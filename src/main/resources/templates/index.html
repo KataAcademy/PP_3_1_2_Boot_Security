@@ -8,7 +8,6 @@
     <title>All Users</title>
 </head>
 <body>
-
 <div th:each="user : ${users}">
     <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">user</a>
 </div>

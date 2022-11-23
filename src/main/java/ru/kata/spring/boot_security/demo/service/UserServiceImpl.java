@@ -6,11 +6,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -52,6 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUser(Long id, User user) {
         Optional<User> userById = userRepository.findById(id);
         if (userById.isPresent()) {
@@ -62,9 +65,7 @@ public class UserServiceImpl implements UserService {
             userRepos.setSurname(user.getSurname());
             userRepos.setEmail(user.getEmail());
             userRepos.setAge(user.getAge());
-            System.out.println(user.getUsername() + "----------------------------");
-            userRepository.save(userRepos);
-            System.out.println(user.toString() + "ad--------------------------------");
+            userRepository.save(user);
         } else {
             throw new UsernameNotFoundException(String.format("User '%s' not found: ", user));
         }

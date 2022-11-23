@@ -29,10 +29,10 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY,
-    cascade = {CascadeType.MERGE})
+            cascade = {CascadeType.MERGE})
     @JoinTable(name = "users_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -86,13 +86,10 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    //UserDetails
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+//        return getRoles();
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
     @Override
@@ -138,5 +135,18 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, surname, age, email);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
