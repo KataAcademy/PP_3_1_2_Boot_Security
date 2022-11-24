@@ -36,7 +36,7 @@ public class DbInit {
         admin.setSurname("admin");
         admin.setAge(21);
         admin.setEmail("admin@mail.ru");
-        admin.setRoles(adminRoles);
+        admin.setRoles(new String[]{"ROLE_ADMIN"});
         userService.saveUser(admin);
 
         User user = new User();
@@ -48,7 +48,7 @@ public class DbInit {
         user.setSurname("user");
         user.setAge(22);
         user.setEmail("user@mail.ru");
-        user.setRoles(userRoles);
+        user.setRoles(new String[]{"ROLE_USER"});
         userService.saveUser(user);
 
     }

@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,20 +13,17 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    @Autowired
-    public UserServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void saveUser(User user) {
-        user.add(new Role("ROLE_USER"));
+//        user.add(new Role("ROLE_USER"));
         user.setPassword(user.getPassword());
         userRepository.saveAndFlush(user);
     }
@@ -73,6 +72,7 @@ public class UserServiceImpl implements UserService {
             userRepos.setSurname(user.getSurname());
             userRepos.setEmail(user.getEmail());
             userRepos.setAge(user.getAge());
+            userRepos.setRole(user.getRoles());
             userRepository.save(userRepos);
         } else {
             throw new UsernameNotFoundException(String.format("User '%s' not found: ", user));
@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 
     @Override

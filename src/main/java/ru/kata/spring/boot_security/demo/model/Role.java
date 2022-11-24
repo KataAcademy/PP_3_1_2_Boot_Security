@@ -11,30 +11,41 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "role")
-    private String name;
+    @Column(name = "role", unique = true)
+    private String role;
 
     @Transient
     @ManyToMany(mappedBy = "roles")
-    private Set<User> user;
+    private Set<User> users;
 
     public Role() {
+    }
+
+    public Role(String role) {
+        this.role = role;
+    }
+
+    public Role(Long id, String role) {
+        this.id = id;
+        this.role = role;
     }
 
     public Role(Long id) {
         this.id = id;
     }
 
-    public Role(String name) {
-        this.name = name;
+    public Role(Long id, String role, Set<User> users) {
+        this.id = id;
+        this.role = role;
+        this.users = users;
     }
 
-    public Role(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public Role(String role, Set<User> users) {
+        this.role = role;
+        this.users = users;
     }
 
     public Long getId() {
@@ -45,25 +56,26 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public Set<User> getUser() {
-        return user;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUser(Set<User> user) {
-        this.user = user;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
+
 
     @Override
     public String getAuthority() {
-        return getName();
+        return role;
     }
 
     @Override
@@ -72,16 +84,16 @@ public class Role implements GrantedAuthority {
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
         return Objects.equals(getId(), role.id) &&
-                Objects.equals(getName(), role.name)
-                && Objects.equals(getUser(), role.user);
+                Objects.equals(getRole(), role.role)
+                && Objects.equals(getUsers(), role.users);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getUser());
+        return Objects.hash(getId(), getRole(), getUsers());
     }
 
     @Override
     public String toString() {
-        return name;
+        return role;
     }
 }

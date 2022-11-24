@@ -20,6 +20,11 @@
   <label for="password">Password</label>
   <input class="form-control" type="password" th:field="*{password}" id="password"/>
   <br><br>
+  <input type=checkbox id=userId name=roles[] value="ROLE_USER">
+  <label for="userId">User</label>
+  <br><br>
+  <input type=checkbox id=adminId name=roles[] value="ROLE_ADMIN">
+  <label for="adminId">Admin</label>
   <input type="submit" value="UPDATE USER">
 
   <a href="/logout" type="submit">Logout</a>
