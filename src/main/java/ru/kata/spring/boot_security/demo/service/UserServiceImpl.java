@@ -10,13 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,7 +49,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUsername(username);
     }
 
-    @Transactional
+
     @Override
     public void saveUser(User user) {
 //        user.add(new Role("ROLE_USER"));
@@ -60,7 +58,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void updateUser(Long id, User user) {
         Optional<User> userById = userRepository.findById(id);
         if (userById.isPresent()) {
@@ -79,7 +76,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional
+
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
