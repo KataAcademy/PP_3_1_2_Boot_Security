@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void saveUser(User user) {
 //        user.add(new Role("ROLE_USER"));
         user.setPassword(user.getPassword());
@@ -58,6 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUser(Long id, User user) {
         Optional<User> userById = userRepository.findById(id);
         if (userById.isPresent()) {
@@ -78,6 +80,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
