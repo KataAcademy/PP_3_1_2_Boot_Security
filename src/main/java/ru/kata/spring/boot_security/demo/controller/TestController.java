@@ -17,7 +17,7 @@ public class TestController {
     @GetMapping("/test")
     public String adminPage(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "admin/adminFirsPage";
+        return "admin/test";
     }
 
 }
