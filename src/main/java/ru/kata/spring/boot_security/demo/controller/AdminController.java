@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -28,7 +29,6 @@ public class AdminController {
         System.out.println("getAllUsers----------------------------");
         return "index";
     }
-
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
@@ -70,5 +70,14 @@ public class AdminController {
         userService.deleteUserById(id);
         System.out.println("delete------------------------------------------------------------");
         return "redirect:/admin";
+    }
+///////////////////////////////////
+    @GetMapping("/test2")
+    public String testPage(Principal principal, Model model) {
+        User user = userService.getUserByUsername(principal.getName());
+        System.out.println(user.getEmail());
+        model.addAttribute("admin", userService.getUserById(user.getId()));
+        model.addAttribute("users", userService.getAllUsers());
+        return "admin/adminFirstPage";
     }
 }
