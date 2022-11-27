@@ -13,7 +13,6 @@
 </head>
 <body>
 
-
 <!--кнопка Logout-->
 
 <nav class="navbar" style="background-color: #313131">
@@ -118,10 +117,6 @@
                                                            class="btn btn-primary"
                                                            th:data-target="${'#edit-model' + user.id}">Edit</a>
                                                     </td>
-<!--                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
-<!--                                                            data-bs-target="#editModal">-->
-<!--                                                        Launch demo modal-->
-<!--                                                    </button>-->
 
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="editModal" tabindex="-1"
@@ -136,96 +131,92 @@
                                                                             aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    ...
+                                                                    <!--                                                                    ...-->
+
+
+                                                                    <form th:method="PUT"
+                                                                          th:action="@{/admin/users/{id}/editUser(id=${user.id})}"
+                                                                          th:object="${user.id}">
+
+
+                                                                        <label for="age"><strong> Age </strong></label>
+                                                                        <input th:name="age" th:type="number"
+                                                                               class="form-control" id="age_update"
+                                                                               th:value="${user.getAge()}"
+                                                                               placeholder="Age">
+
+                                                                        <label for="username"><strong>
+                                                                            Username </strong></label>
+                                                                        <input th:name="username" th:type="text"
+                                                                               class="form-control" id="username"
+                                                                               th:value="${user.getUsername()}"
+                                                                               placeholder="Age">
+
+                                                                    </form>
+
+
+                                                                    <!--                                                                  ...-->
                                                                 </div>
 
                                                                 <div class="modal-footer">
-                                                                    <button class="btn btn-secondary" data-dismiss="modal"
+                                                                    <button class="btn btn-secondary"
+                                                                            data-dismiss="modal"
                                                                             type="button" data-bs-dismiss="modal">Close
                                                                     </button>
                                                                     <button type="submit" class="btn btn-primary">
                                                                         Edit
                                                                     </button>
                                                                 </div>
-                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!--                                                                <td>-->
-                                                    <!--                                                                    <a type="button" data-toggle="modal"-->
-                                                    <!--                                                                       data-target="#delete-model"-->
-                                                    <!--                                                                       class="btn btn-danger"-->
-                                                    <!--                                                                       th:data-target="${'#delete-modal' + user.id}">Delete</a>-->
-                                                    <!--                                                                </td>-->
-
-
-                                                    <!-- Button trigger modal -->
-                                                    <!--                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-                                                    <!--                                                        Launch demo modal-->
-                                                    <!--                                                    </button>-->
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal"
-                                                         tabindex="-1"
-                                                         aria-labelledby="exampleModalLabel"
-                                                         aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title"
-                                                                        id="exampleModalLabel">
-                                                                        Modal title</h5>
-                                                                    <button type="button"
-                                                                            class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                 ///
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button"
-                                                                            class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">
-                                                                        Close
-                                                                    </button>
-                                                                    <button type="button"
-                                                                            class="btn btn-primary">
-                                                                        Save changes
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                 </tr>
                                                 </tbody>
                                             </table>
-
-
-
                                         </div>
-                                        </form>
+                                    </div>
+
+                                    <div class="modal fade" id="exampleModal"
+                                         tabindex="-1"
+                                         aria-labelledby="exampleModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLabel">
+                                                        Modal title</h5>
+                                                    <button type="button"
+                                                            class="btn-close"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ///
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button"
+                                                            class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn-primary">
+                                                        Save changes
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            </tr>
-                            </tbody>
-                            </table>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-</div>
 
-
-<div class="container-fluid">
     <div class="col-md-4 offset-md-4">
 
 
@@ -283,10 +274,8 @@
                                     </select>
                                 </div>
                             </div>
-                        </form>
                         <br>
                         <button type="submit" class="btn btn-success">Add new user</button>
-                        </fieldset>
                         </form>
                     </ul>
                 </div>
@@ -294,10 +283,7 @@
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

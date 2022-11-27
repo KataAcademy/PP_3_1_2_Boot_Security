@@ -76,15 +76,16 @@ public class AdminController {
     public String testPage(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
         System.out.println(user.getEmail());
-        model.addAttribute("admin", userService.getUserById(user.getId()));
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("admin", userService.getUserById(user.getId()));
+//        model.addAttribute("users", userService.getAllUsers());
         return "admin/adminFirstPage";
     }
 
     @PutMapping("/users/{id}/editUser")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.updateUser(id, user);
-        return "redirect:/admin";
+        return "redirect:/admin/test";
     }
 
 }
