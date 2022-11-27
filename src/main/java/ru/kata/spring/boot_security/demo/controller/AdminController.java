@@ -80,4 +80,11 @@ public class AdminController {
         model.addAttribute("users", userService.getAllUsers());
         return "admin/adminFirstPage";
     }
+
+    @PutMapping("/users/{id}/editUser")
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+        userService.updateUser(id, user);
+        return "redirect:/admin";
+    }
+
 }
