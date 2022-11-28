@@ -16,17 +16,17 @@
 
 <!--кнопка Logout-->
 
-<!--<nav class="navbar" style="background-color: #313131">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="text-white">-->
-<!--            <li class="list-inline-item"><h5 th:text="${admin.getEmail()}"></h5></li>-->
-<!--            <li class="list-inline-item"><h5 th:text="${admin.getRoles()}"></h5></li>-->
-<!--        </div>-->
-<!--        <form th:action="@{/logout}" method="POST">-->
-<!--            <input class="btn text-secondary" type="submit" value="Logout">-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</nav>-->
+<nav class="navbar" style="background-color: #313131">
+    <div class="container-fluid">
+        <div class="text-white">
+            <li class="list-inline-item"><h5 th:text="${admin.getEmail()}"></h5></li>
+            <li class="list-inline-item"><h5 th:text="${admin.getRoles()}"></h5></li>
+        </div>
+        <form th:action="@{/logout}" method="POST">
+            <input class="btn text-secondary" type="submit" value="Logout">
+        </form>
+    </div>
+</nav>
 
 
 <!--боковая панель-->
@@ -125,7 +125,8 @@
 
                                                     <!-- Modal -->
 
-                                                    <div class="modal fade" th:id="'editModal' + ${user.getId()}" tabindex="-1"
+                                                    <div class="modal fade" th:id="'editModal' + ${user.getId()}"
+                                                         tabindex="-1"
                                                          aria-labelledby="editModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -146,10 +147,11 @@
 
                                                                             <label for="username"><strong>
                                                                                 Username </strong></label>
-                                                                            <input  type="text"
-                                                                                    class="form-control" name="username" id="username"
-                                                                                    th:value="${user.getUsername()}"
-                                                                                    placeholder="username">
+                                                                            <input type="text"
+                                                                                   class="form-control" name="username"
+                                                                                   id="username"
+                                                                                   th:value="${user.getUsername()}"
+                                                                                   placeholder="username">
                                                                             </br>
 
 
@@ -221,33 +223,18 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
-
-
                                         </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
-
-                            </tr>
-                            </tbody>
-                            </table>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-</div>
 
-
-<div class="container-fluid">
     <div class="col-md-4 offset-md-4">
-
-
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="row>">
                 <div class="d-flex flex-column flex-shrink-0 p-1 text-dark col-10" style="height: 100%">
@@ -313,6 +300,8 @@
         </div>
     </div>
 </div>
+
+
 </div>
 </div>
 </div>

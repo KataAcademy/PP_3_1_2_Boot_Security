@@ -96,7 +96,7 @@ public class AdminController {
         model.addAttribute("roles", roleService.getRoles());
 //        roleService.getRoles(user);
         userService.updateUser(user.getId(), user);
-        return "redirect:/adminFirstPage";
+        return "redirect:/test2";
     }
 
     @GetMapping("/test2")
@@ -104,7 +104,7 @@ public class AdminController {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getRoles());
-        return "admin/adminFirstPage";
+        return "admin/test2";
     }
 
 }
