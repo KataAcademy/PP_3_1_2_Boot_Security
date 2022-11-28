@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<html lang="ru" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,19 +13,20 @@
 </head>
 <body>
 
+
 <!--кнопка Logout-->
 
-<nav class="navbar" style="background-color: #313131">
-    <div class="container-fluid">
-        <div class="text-white">
-            <li class="list-inline-item"><h5 th:text="${admin.getEmail()}"></h5></li>
-            <li class="list-inline-item"><h5 th:text="${admin.getRoles()}"></h5></li>
-        </div>
-        <form th:action="@{/logout}" method="POST">
-            <input class="btn text-secondary" type="submit" value="Logout">
-        </form>
-    </div>
-</nav>
+<!--<nav class="navbar" style="background-color: #313131">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="text-white">-->
+<!--            <li class="list-inline-item"><h5 th:text="${admin.getEmail()}"></h5></li>-->
+<!--            <li class="list-inline-item"><h5 th:text="${admin.getRoles()}"></h5></li>-->
+<!--        </div>-->
+<!--        <form th:action="@{/logout}" method="POST">-->
+<!--            <input class="btn text-secondary" type="submit" value="Logout">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</nav>-->
 
 
 <!--боковая панель-->
@@ -100,7 +101,7 @@
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
 
-                                                </tr>
+
                                                 </thead>
                                                 <tbody>
                                                 <tr th:each="user : ${users}">
@@ -115,11 +116,16 @@
                                                         <a type="button" data-bs-toggle="modal"
                                                            data-bs-target="#editModal"
                                                            class="btn btn-primary"
-                                                           th:data-target="${'#edit-model' + user.id}">Edit</a>
+                                                           th:data-target="'edit-model' + ${user.getId()}">Edit</a>
                                                     </td>
+                                                    <!--                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
+                                                    <!--                                                            data-bs-target="#editModal">-->
+                                                    <!--                                                        Launch demo modal-->
+                                                    <!--                                                    </button>-->
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="editModal" tabindex="-1"
+
+                                                    <div class="modal fade" th:id="'editModal' + ${user.getId()}" tabindex="-1"
                                                          aria-labelledby="editModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -131,76 +137,87 @@
                                                                             aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-<!--                                                                    ...-->
+                                                                    adasd
+                                                                    <form th:method="PUT"
+                                                                          th:action="@{/admin/users/{id}/editUser(id=${user.id})}"
+                                                                          th:object="${user}">
+                                                                        <div class="modal-body col-md text-center">
+                                                                            <br>
+
+                                                                            <label for="username"><strong>
+                                                                                Username </strong></label>
+                                                                            <input  type="text"
+                                                                                    class="form-control" name="username" id="username"
+                                                                                    th:value="${user.getUsername()}"
+                                                                                    placeholder="username">
+                                                                            </br>
 
 
-                                                                  <label for="age_del"><strong> Age </strong></label>
-                                                                  <input type="number" class="form-control"
-                                                                         th:value="${user.getAge()}"
-                                                                         id="age_del" placeholder="Age" disabled>
+                                                                        </div>
 
-
-
-
-
-
-
-
-
-
-
-
-<!--                                                                  ...-->
-                                                                </div>
-
-                                                                <div class="modal-footer">
-                                                                    <button class="btn btn-secondary"
-                                                                            data-dismiss="modal"
-                                                                            type="button" data-bs-dismiss="modal">Close
-                                                                    </button>
-                                                                    <button type="submit" class="btn btn-primary">
-                                                                        Edit
-                                                                    </button>
-                                                                </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal"
-                                                         tabindex="-1"
-                                                         aria-labelledby="exampleModalLabel"
-                                                         aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title"
-                                                                        id="exampleModalLabel">
-                                                                        Modal title</h5>
-                                                                    <button type="button"
-                                                                            class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    ///
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button"
-                                                                            class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">
-                                                                        Close
-                                                                    </button>
-                                                                    <button type="button"
-                                                                            class="btn btn-primary">
-                                                                        Save changes
-                                                                    </button>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-secondary"
+                                                                                    data-dismiss="modal"
+                                                                                    type="button"
+                                                                                    data-bs-dismiss="modal">Close
+                                                                            </button>
+                                                                            <button type="submit"
+                                                                                    class="btn btn-primary">
+                                                                                Edit
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        <!--                                                                <td>-->
+                                                        <!--                                                                    <a type="button" data-toggle="modal"-->
+                                                        <!--                                                                       data-target="#delete-model"-->
+                                                        <!--                                                                       class="btn btn-danger"-->
+                                                        <!--                                                                       th:data-target="${'#delete-modal' + user.id}">Delete</a>-->
+                                                        <!--                                                                </td>-->
 
+
+                                                        <!-- Button trigger modal -->
+                                                        <!--                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+                                                        <!--                                                        Launch demo modal-->
+                                                        <!--                                                    </button>-->
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal"
+                                                             tabindex="-1"
+                                                             aria-labelledby="exampleModalLabel"
+                                                             aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="exampleModalLabel">
+                                                                            Modal title</h5>
+                                                                        <button type="button"
+                                                                                class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        ///
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+                                                                        <button type="button"
+                                                                                class="btn btn-primary">
+                                                                            Save changes
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </tr>
                                                 </tbody>
                                             </table>

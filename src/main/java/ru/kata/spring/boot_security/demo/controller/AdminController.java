@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,18 +10,18 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Set;
 
 
 @Controller
 @RequestMapping("admin")
 public class AdminController {
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    AdminController(UserService userService, RoleService roleService) {
+    AdminController(UserService userService, RoleService roleService, RoleService roleService1) {
         this.userService = userService;
+        this.roleService = roleService1;
     }
 
     @GetMapping()
@@ -72,20 +73,38 @@ public class AdminController {
         return "redirect:/admin";
     }
 ///////////////////////////////////
-    @GetMapping("/test2")
-    public String testPage(Principal principal, Model model) {
-        User user = userService.getUserByUsername(principal.getName());
-        System.out.println(user.getEmail());
-        model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("admin", userService.getUserById(user.getId()));
+//    @GetMapping("/test2")
+//    public String testPage(Principal principal, Model model) {
+//        User user = userService.getUserByUsername(principal.getName());
+//        System.out.println(user.getEmail());
+//        System.out.println(user.getUsername());
 //        model.addAttribute("users", userService.getAllUsers());
-        return "admin/adminFirstPage";
+//        model.addAttribute("admin", userService.getUserById(user.getId()));
+////        model.addAttribute("users", userService.getAllUsers());
+//        return "admin/adminFirstPage";
+//    }
+
+//    @PutMapping("/users/{id}/editUser")
+//    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+//        userService.updateUser(id, user);
+//        System.out.println(user);
+//        return "redirect:/admin/adminFirstPage";
+//    }
+
+    @PutMapping("/{id}/update")
+    public String updateUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("roles", roleService.getRoles());
+//        roleService.getRoles(user);
+        userService.updateUser(user.getId(), user);
+        return "redirect:/adminFirstPage";
     }
 
-    @PutMapping("/users/{id}/editUser")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
-        userService.updateUser(id, user);
-        return "redirect:/admin/test";
+    @GetMapping("/test2")
+    public String showAdminPage(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getRoles());
+        return "admin/adminFirstPage";
     }
 
 }
