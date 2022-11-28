@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -24,54 +25,60 @@ public class AdminController {
         this.roleService = roleService1;
     }
 
-    @GetMapping()
-    public String getAllUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        System.out.println("getAllUsers----------------------------");
-        return "index";
-    }
+//    @GetMapping()
+//    public String getAllUsers(Model model) {
+//        model.addAttribute("users", userService.getAllUsers());
+//        System.out.println("getAllUsers----------------------------");
+//        return "index";
+//    }
+//
+//    @GetMapping("/{id}")
+//    public String show(@PathVariable("id") Long id, Model model) {
+//        model.addAttribute("user", userService.getUserById(id));
+//        System.out.println("show----------------------------");
+//        return "show";
+//    }
+//
+//    @GetMapping("/new")
+//    public String addUser(@ModelAttribute("user") User user) {
+//        System.out.println("addUser----------------------------");
+//        return "new";
+//    }
+//
+//    @PostMapping()
+//    public String create(@ModelAttribute("user") User user) {
+//        userService.saveUser(user);
+//        System.out.println("create----------------------------");
+//        return "redirect:/admin/test2";
+//    }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        System.out.println("show----------------------------");
-        return "show";
-    }
+//    @GetMapping("/{id}/update")
+//    public String edit(Model model, @PathVariable("id") Long id) {
+//        System.out.println("edit-----------------------------------------");
+//        model.addAttribute("user", userService.getUserById(id));
+//        return "edit";
+//    }
 
-    @GetMapping("/new")
-    public String addUser(@ModelAttribute("user") User user) {
-        System.out.println("addUser----------------------------");
-        return "new";
-    }
-
-    @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        System.out.println("create----------------------------");
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id) {
-        System.out.println("edit-----------------------------------------");
-        model.addAttribute("user", userService.getUserById(id));
-        return "edit";
-    }
-
-    @PostMapping("/{id}")
+    @PutMapping("/{id}/update")
     public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") Long id) {
+        System.out.println(user.getUsername());
+        System.out.println(user.getAge());
+        System.out.println(user.getEmail());
+        System.out.println(user.getSurname());
+        System.out.println(user.getRoles());
+
         System.out.println("flag update---------------------------------------------");
         userService.updateUser(id, user);
         return "redirect:/admin";
     }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        userService.deleteUserById(id);
-        System.out.println("delete------------------------------------------------------------");
-        return "redirect:/admin";
-    }
+//
+//    @DeleteMapping("/{id}")
+//    public String delete(@PathVariable("id") Long id) {
+//        userService.deleteUserById(id);
+//        System.out.println("delete------------------------------------------------------------");
+//        return "redirect:/admin";
+//    }
 ///////////////////////////////////
 //    @GetMapping("/test2")
 //    public String testPage(Principal principal, Model model) {
@@ -91,20 +98,23 @@ public class AdminController {
 //        return "redirect:/admin/adminFirstPage";
 //    }
 
-    @PutMapping("/{id}/update")
-    public String updateUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("roles", roleService.getRoles());
-//        roleService.getRoles(user);
-        userService.updateUser(user.getId(), user);
-        return "redirect:/test2";
-    }
+//    @PutMapping("/{id}/update")
+//    public String updateUser(@ModelAttribute("user") User user, Model model) {
+//        model.addAttribute("roles", roleService.getRoles());
+////        roleService.getRoles(user);
+//        userService.updateUser(user.getId(), user);
+//        return "redirect:/test2";
+//    }
 
-    @GetMapping("/test2")
+    @GetMapping()
     public String showAdminPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getRoles());
         return "admin/test2";
     }
+
+
+
 
 }
