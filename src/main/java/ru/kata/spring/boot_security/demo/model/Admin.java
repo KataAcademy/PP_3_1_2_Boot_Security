@@ -13,7 +13,7 @@ public class Admin implements Principal {
 
     public Admin(String name) {
         this.name = name;
-        this.role = new String[] {"ADMIN", "USER"};
+        this.role = new String[] {"ROLE_ADMIN", "ROLE_USER"};
     }
 
     @Override
