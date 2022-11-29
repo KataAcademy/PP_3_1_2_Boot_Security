@@ -140,7 +140,15 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
+    @PostMapping()
+    public String create(@ModelAttribute("user") User user) {
+        System.out.println(user.toString());
+        System.out.println(user.getUsername());
+        System.out.println(user.getAge());
+        userService.saveUser(user);
+        System.out.println("create----------------------------");
+        return "redirect:/admin";
+    }
 
 
 

@@ -305,54 +305,57 @@
         <div class="row>">
             <div class="d-flex flex-column flex-shrink-0 p-1 text-dark col-10" style="height: 100%">
                 <ul class="nav nav-pills flex-column mb-auto">
-                    <form>
+                    <form class="text-center" role="form" th:method="POST" th:object="${user}" th:action="@{/admin}">
                         <div class="form-group">
                             <div class="col text-center">
-                                <label for="name">First name</label>
-                                <input type="text" class="form-control" id="name"
-                                       placeholder="First name">
+                                <label for="username"><b>First name</b></label>
+                                <input th:name="username" th:type="text" class="form-control" id="username" placeholder="First name"/>
+                                <br>
                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
                             <div class="col text-center">
-                                <label for="surname">Last name</label>
-                                <input type="text" class="form-control" id="surname"
-                                       placeholder="Last name">
+                                <label for="surname"><b>First name</b></label>
+                                <input th:name="surname" th:type="text" class="form-control" id="surname" placeholder="Last name"/>
                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
                             <div class="col text-center">
-                                <label for="age">Age</label>
-                                <input type="number" class="form-control" id="age"
-                                       placeholder="Age">
+                                <label for="age"><b>First name</b></label>
+                                <input th:name="age" th:type="number" class="form-control" id="age" placeholder="Age"/>
                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
                             <div class="col text-center">
-                                <label for="email">Email address</label>
-                                <input type="email" class="form-control" id="email"
-                                       placeholder="Email">
+                                <label for="email"><b>Email</b></label>
+                                <input th:name="email" th:type="email" class="form-control" id="email" placeholder="Email"/>
                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
-                            <div class="col text-center">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password"
-                                       placeholder="Password">
-                            </div>
+                            <label for="password"><b>Password</b></label>
+                            <input th:name="password" th:type="password" class="form-control" id="password" placeholder="Password"/>
+                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
                             <div class="col text-center">
-                                <label for="role">Role</label>
-                                <select multiple class="form-control" id="role">
-                                    <option>ADMIN</option>
-                                    <option>USER</option>
-                                </select>
+
+                                                        <label for="roles"><b>Role</b></label>
+                                                        <select multiple
+                                                                class="form-control form-control-sm"
+                                                                id="roles" name="roles" size="2"
+                                                                required>
+                                                            <option th:each="roleNew: ${roles}"
+                                                                    th:value="${roleNew.role}"
+
+                                                                        th:text="${roleNew.role}">
+
+                                                            </option>
+                                                        </select>
                             </div>
                         </div>
                         <br>
