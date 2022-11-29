@@ -111,7 +111,17 @@ public class AdminController {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getRoles());
+        System.out.println(roleService.getRoles());
         return "admin/test2";
+    }
+
+    @GetMapping("/a")
+    public String show111AdminPage(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getRoles());
+        System.out.println(roleService.getRoles());
+        return "admin/testtesttest";
     }
 
 

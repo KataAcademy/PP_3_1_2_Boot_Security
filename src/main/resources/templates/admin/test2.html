@@ -165,18 +165,18 @@
                                                                                        id="password0"
                                                                                        th:value="${user.password}"/>
                                                                                 <br>
-<!--                                                                                <label for="roles"><b>Role</b></label>-->
-<!--                                                                                <select multiple-->
-<!--                                                                                        class="form-control form-control-sm"-->
-<!--                                                                                        id="roles" name="roles" size="2"-->
-<!--                                                                                        required>-->
-<!--                                                                                    <option th:each="role: ${roles}"-->
-<!--                                                                                            th:value="${role.userRole}"-->
-<!--                                                                                            th:selected="${user.roles.contains(role)}">-->
-<!--                                                                                        <th:block-->
-<!--                                                                                                th:text="${role.userRole}">-->
-<!--                                                                                        </th:block>-->
-<!--                                                                                    </option>-->
+                                                                                <label for="roles"><b>Role</b></label>
+                                                                                <select multiple
+                                                                                        class="form-control form-control-sm"
+                                                                                        id="roles" name="roles" size="2"
+                                                                                        required>
+                                                                                    <option th:each="role: ${roles}"
+                                                                                            th:value="${role.role}"
+                                                                                            th:selected="${user.roles.contains(role)}">
+                                                                                        <th:block
+                                                                                                th:text="${role.role}">
+                                                                                        </th:block>
+                                                                                    </option>
                                                                                 </select>
                                                                                 <br><br>
                                                                             </div>
