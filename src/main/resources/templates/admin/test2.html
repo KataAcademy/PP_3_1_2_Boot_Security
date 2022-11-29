@@ -245,6 +245,20 @@
                                                                                        th:value="${user.email}"
                                                                                        disabled/>
                                                                                 <br>
+                                                                                <label for="roles1"><b>Role</b></label>
+                                                                                <select multiple
+                                                                                        class="form-control form-control-sm"
+                                                                                        id="roles1" name="roles" size="2"
+                                                                                        required>
+                                                                                    <option th:each="role: ${roles}"
+                                                                                            th:value="${role.role}"
+                                                                                            th:selected="${user.roles.contains(role)}" disabled>
+                                                                                        <th:block
+                                                                                                th:text="${role.role}">
+                                                                                        </th:block>
+                                                                                    </option>
+                                                                                </select>
+                                                                                <br>
                                                                             </div>
 
                                                                             <div class="modal-footer">

@@ -137,7 +137,7 @@ public class AdminController {
     @DeleteMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
-        return "redirect:/admin/";
+        return "redirect:/admin";
     }
 
 
