@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Admin;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -107,21 +108,29 @@ public class AdminController {
 //    }
 
     @GetMapping()
-    public String showAdminPage(@AuthenticationPrincipal User user, Model model) {
+    public String showAdminPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
+       Admin admin = new Admin(principal.getName());
+        System.out.println(principal + "++++++++++ +++++++++++++++++++");
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("user", user);
+        model.addAttribute("admin", admin);
+
+//        model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getRoles());
         System.out.println(roleService.getRoles());
         return "admin/test2";
     }
 
     @GetMapping("/a")
-    public String show111AdminPage(@AuthenticationPrincipal User user, Model model) {
+    public String show111AdminPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
+        User user1 = new User();
+        user1.setUsername(principal.getName());
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("user", user);
+        model.addAttribute("user", user1);
+        System.out.println("-----------------------------------");
+        System.out.println(user1.getUsername());
         model.addAttribute("roles", roleService.getRoles());
         System.out.println(roleService.getRoles());
-        return "admin/testtesttest";
+        return "admin/editCnopka";
     }
 
 
