@@ -59,20 +59,6 @@ public class AdminController {
 //        model.addAttribute("user", userService.getUserById(id));
 //        return "edit";
 //    }
-
-    @PutMapping("/{id}/update")
-    public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") Long id) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getAge());
-        System.out.println(user.getEmail());
-        System.out.println(user.getSurname());
-        System.out.println(user.getRoles());
-
-        System.out.println("flag update---------------------------------------------");
-        userService.updateUser(id, user);
-        return "redirect:/admin";
-    }
 //
 //    @DeleteMapping("/{id}")
 //    public String delete(@PathVariable("id") Long id) {
@@ -107,31 +93,53 @@ public class AdminController {
 //        return "redirect:/test2";
 //    }
 
+//    @GetMapping("/a")
+//    public String show111AdminPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
+//        User user1 = new User();
+//        user1.setUsername(principal.getName());
+//        model.addAttribute("users", userService.getAllUsers());
+//        model.addAttribute("user", user1);
+//        System.out.println("-----------------------------------");
+//        System.out.println(user1.getUsername());
+//        model.addAttribute("roles", roleService.getRoles());
+//        System.out.println(roleService.getRoles());
+//        return "admin/editCnopka";
+//    }
+
+    /////////////////////////////////////////////
+
     @GetMapping()
     public String showAdminPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
        Admin admin = new Admin(principal.getName());
         System.out.println(principal + "++++++++++ +++++++++++++++++++");
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("admin", admin);
-
 //        model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getRoles());
         System.out.println(roleService.getRoles());
         return "admin/test2";
     }
 
-    @GetMapping("/a")
-    public String show111AdminPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
-        User user1 = new User();
-        user1.setUsername(principal.getName());
-        model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("user", user1);
-        System.out.println("-----------------------------------");
-        System.out.println(user1.getUsername());
-        model.addAttribute("roles", roleService.getRoles());
-        System.out.println(roleService.getRoles());
-        return "admin/editCnopka";
+    @PutMapping("/{id}/update")
+    public String update(@ModelAttribute("user") User user,
+                         @PathVariable("id") Long id) {
+        System.out.println(user.getUsername());
+        System.out.println(user.getAge());
+        System.out.println(user.getEmail());
+        System.out.println(user.getSurname());
+        System.out.println(user.getRoles());
+
+        System.out.println("flag update---------------------------------------------");
+        userService.updateUser(id, user);
+        return "redirect:/admin";
     }
+
+    @DeleteMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id) {
+        userService.deleteUserById(id);
+        return "redirect:/admin/";
+    }
+
 
 
 
