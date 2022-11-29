@@ -225,7 +225,8 @@
                                                                                        th:value="${user.username}"
                                                                                        disabled/>
                                                                                 <br>
-                                                                                <label for="surname1"><b>Last name</b></label>
+                                                                                <label for="surname1"><b>Last
+                                                                                    name</b></label>
                                                                                 <input th:name="surname" th:type="text"
                                                                                        class="form-control"
                                                                                        id="surname1"
@@ -248,11 +249,13 @@
                                                                                 <label for="roles1"><b>Role</b></label>
                                                                                 <select multiple
                                                                                         class="form-control form-control-sm"
-                                                                                        id="roles1" name="roles" size="2"
+                                                                                        id="roles1" name="roles"
+                                                                                        size="2"
                                                                                         required>
                                                                                     <option th:each="role: ${roles}"
                                                                                             th:value="${role.role}"
-                                                                                            th:selected="${user.roles.contains(role)}" disabled>
+                                                                                            th:selected="${user.roles.contains(role)}"
+                                                                                            disabled>
                                                                                         <th:block
                                                                                                 th:text="${role.role}">
                                                                                         </th:block>
@@ -309,7 +312,8 @@
                         <div class="form-group">
                             <div class="col text-center">
                                 <label for="username"><b>First name</b></label>
-                                <input th:name="username" th:type="text" class="form-control" id="username" placeholder="First name"/>
+                                <input th:name="username" th:type="text" class="form-control" id="username"
+                                       placeholder="First name"/>
                                 <br>
                             </div>
                         </div>
@@ -317,7 +321,8 @@
                         <div class="form-group">
                             <div class="col text-center">
                                 <label for="surname"><b>First name</b></label>
-                                <input th:name="surname" th:type="text" class="form-control" id="surname" placeholder="Last name"/>
+                                <input th:name="surname" th:type="text" class="form-control" id="surname"
+                                       placeholder="Last name"/>
                             </div>
                         </div>
                         <br/>
@@ -331,40 +336,40 @@
                         <div class="form-group">
                             <div class="col text-center">
                                 <label for="email"><b>Email</b></label>
-                                <input th:name="email" th:type="email" class="form-control" id="email" placeholder="Email"/>
+                                <input th:name="email" th:type="email" class="form-control" id="email"
+                                       placeholder="Email"/>
                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
                             <label for="password"><b>Password</b></label>
-                            <input th:name="password" th:type="password" class="form-control" id="password" placeholder="Password"/>
-                             </div>
+                            <input th:name="password" th:type="password" class="form-control" id="password"
+                                   placeholder="Password"/>
                         </div>
-                        <br/>
-                        <div class="form-group">
-                            <div class="col text-center">
-
-                                                        <label for="roles"><b>Role</b></label>
-                                                        <select multiple
-                                                                class="form-control form-control-sm"
-                                                                id="roles" name="roles" size="2"
-                                                                required>
-                                                            <option th:each="roleNew: ${roles}"
-                                                                    th:value="${roleNew.role}"
-
-                                                                        th:text="${roleNew.role}">
-
-                                                            </option>
-                                                        </select>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-success">Add new user</button>
-                    </form>
-                </ul>
             </div>
+            <br/>
+            <div class="form-group">
+                <div class="col text-center">
+
+                    <label for="roles"><b>Role</b></label>
+                    <select multiple
+                            class="form-control form-control-sm"
+                            id="roles" name="roles" size="2"
+                            required>
+                        <option th:each="roleNew: ${roles}"
+                                th:value="${roleNew.role}"
+                                th:text="${roleNew.role}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success">Add new user</button>
+            </form>
+            </ul>
         </div>
     </div>
+</div>
 </div>
 </div>
 
