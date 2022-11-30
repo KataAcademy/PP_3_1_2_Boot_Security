@@ -25,7 +25,6 @@ public class UserController {
     @GetMapping("")
     public String userPage(Model model, Principal principal) {
         User userTest = userService.getUserByUsername(principal.getName());
-        model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("login", userTest);
         return "admin/userPage";
     }
