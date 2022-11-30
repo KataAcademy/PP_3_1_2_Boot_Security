@@ -25,10 +25,11 @@ public class UserController {
 
     @GetMapping("")
     public String userPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
-        Admin admin = new Admin(principal.getName());
-        System.out.println(principal + "++++++++++ +++++++++++++++++++");
+//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
+//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
+//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
+//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("admin", admin);
         Long id = userService.getUserByUsername(principal.getName()).getId();
         model.addAttribute("user", userService.getUserById(id));
         return "admin/userPage";
