@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,17 +30,12 @@ public class AdminController {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("roles", roleService.getRoles());
         model.addAttribute("login", userTest);
-        return "admin/test2";
+        return "adminPage";
     }
 
     @PutMapping("/{id}/update")
     public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") Long id) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getAge());
-        System.out.println(user.getEmail());
-        System.out.println(user.getSurname());
-        System.out.println(user.getRoles());
         userService.updateUser(id, user);
         return "redirect:/admin";
     }
@@ -54,9 +48,6 @@ public class AdminController {
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
-        System.out.println(user.toString());
-        System.out.println(user.getUsername());
-        System.out.println(user.getAge());
         userService.saveUser(user);
         return "redirect:/admin";
     }
