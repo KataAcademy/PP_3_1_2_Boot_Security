@@ -106,6 +106,7 @@ public class User implements UserDetails {
             if (role != null) {
                 if (role.equals("ROLE_ADMIN")) {
                     roleSet.add(new Role(1L, role));
+                    roleSet.add(new Role(2L, "ROLE_USER"));
                 }
                 if (role.equals("ROLE_USER")) {
                     roleSet.add(new Role(2L, role));
