@@ -5,7 +5,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Admin;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -21,17 +20,17 @@ public class AdminController {
     private final RoleService roleService;
 
     @Autowired
-    AdminController(UserService userService, RoleService roleService, RoleService roleService1) {
+    AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.roleService = roleService1;
+        this.roleService = roleService;
     }
 
     @GetMapping()
-    public String showAdminPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
-       Admin admin = new Admin(principal.getName());
+    public String showAdminPage(Model model, Principal principal) {
+        User userTest = userService.getUserByUsername(principal.getName());
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("admin", admin);
         model.addAttribute("roles", roleService.getRoles());
+        model.addAttribute("login", userTest);
         return "admin/test2";
     }
 
@@ -61,7 +60,5 @@ public class AdminController {
         userService.saveUser(user);
         return "redirect:/admin";
     }
-
-
 
 }

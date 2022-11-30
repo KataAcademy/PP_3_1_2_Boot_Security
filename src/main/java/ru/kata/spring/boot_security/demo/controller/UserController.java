@@ -23,10 +23,10 @@ public class UserController {
     }
 
     @GetMapping("")
-    public String userPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
+    public String userPage(Model model, Principal principal) {
+        User userTest = userService.getUserByUsername(principal.getName());
         model.addAttribute("users", userService.getAllUsers());
-        Long id = userService.getUserByUsername(principal.getName()).getId();
-        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("login", userTest);
         return "admin/userPage";
     }
 
