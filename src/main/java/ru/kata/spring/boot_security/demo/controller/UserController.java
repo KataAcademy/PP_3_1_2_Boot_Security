@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.Admin;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -25,10 +24,6 @@ public class UserController {
 
     @GetMapping("")
     public String userPage(@AuthenticationPrincipal User user, Model model, Principal principal) {
-//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
-//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
-//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
-//        System.out.println(user.getAuthorities() + "++++++++++ +++++++++++++++++++");
         model.addAttribute("users", userService.getAllUsers());
         Long id = userService.getUserByUsername(principal.getName()).getId();
         model.addAttribute("user", userService.getUserById(id));
