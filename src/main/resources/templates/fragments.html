@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="headerFiles">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+<div th:fragment="header">
+    <div class="container-fluid p-0 bg-dark text-white">
+        <div class="row d-flex align-items-center m-0 p-0" style="height: 3rem">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <strong th:text="${user.email}"></strong> <span>with roles:</span>
+                    <span th:each="role, i : ${userRoles}" th:text="${i.last} ? ${role} : ${role} + ', '"></span>
+                </div>
+                <div>
+                    <form th:method="post" th:action="@{/logout}">
+                        <button class="btn btn-link" type="submit"
+                                style="color: gray; text-decoration: none; padding: 0">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

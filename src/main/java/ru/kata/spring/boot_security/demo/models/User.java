@@ -1,14 +1,9 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Collection;
@@ -18,9 +13,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
-@Getter
-@Setter
 public class User implements UserDetails, CredentialsContainer {
 
     @Id
@@ -30,7 +22,6 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
-    @NaturalId
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -45,20 +36,86 @@ public class User implements UserDetails, CredentialsContainer {
     @Column(name = "age")
     private Integer age;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+             },
+            mappedBy = "users")
     private Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role) {
-        this.roles.add(role);
-        role.getUsers().add(this);
+    public User() {
     }
 
-    public void deleteRole(Role role) {
-        this.roles.remove(role);
-        role.getUsers().remove(this);
+    public void addRole(Role role) {
+        if (!roles.contains(role)) {
+            this.roles.add(role);
+            role.addUser(this);
+        }
+    }
+
+    public void removeRole(Role role) {
+        if (roles.contains(role)) {
+            this.roles.remove(role);
+            role.removeUser(this);
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

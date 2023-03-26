@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="1" author="Ponomarev">
+        <update tableName="users">
+            <column
+                    name="password"
+                    value="$2a$12$cgb/9a2fmukO8OB0W8DgreYW.wgeES5iuHRAd3tZ6JzQ17sd1.RH."
+                    type="varchar(255)"/>
+            <where>
+                id = '1'
+            </where>
+        </update>
+        <rollback>
+            <update tableName="users">
+                <column
+                        name="password"
+                        value="admin"
+                        type="varchar(255)"/>
+                <where>
+                    id = '1'
+                </where>
+            </update>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

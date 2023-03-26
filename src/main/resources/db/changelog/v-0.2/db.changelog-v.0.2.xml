@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <include file="10-changeset-add-default-user.xml" relativeToChangelogFile="true"/>
+    <include file="01-changeset-add-default-roles.xml" relativeToChangelogFile="true"/>
+    <include file="001-changeset-add-default-admin.xml" relativeToChangelogFile="true"/>
+    <include file="010-changeset-add-default-crypted-pass.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>
