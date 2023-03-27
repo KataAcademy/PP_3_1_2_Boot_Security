@@ -16,7 +16,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDao.findUserByEmailFetchRoles(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Incorrect username or password"));
