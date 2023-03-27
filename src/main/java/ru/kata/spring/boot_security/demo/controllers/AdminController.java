@@ -29,25 +29,26 @@ public class AdminController {
     @GetMapping
     public String index(Model model, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user);
+
         List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+
         Set<String> userRolesUtil = AuthorityUtils.authorityListToSet(user.getAuthorities());
-        System.out.println(userRolesUtil);
-        Set<String> totalRolesUtil = AuthorityUtils.authorityListToSet(roleService.findAll());
-        System.out.println(totalRolesUtil);
         Set<String> userRoles = new HashSet<>();
         for (String role : userRolesUtil) {
             userRoles.add(role.replace("ROLE_", ""));
         }
+        model.addAttribute("userRoles", userRoles);
+
+
+        Set<String> totalRolesUtil = AuthorityUtils.authorityListToSet(roleService.findAll());
         Set<String> totalRoles = new HashSet<>();
         for (String role : totalRolesUtil) {
             totalRoles.add(role.replace("ROLE_", ""));
         }
-        model.addAttribute("user", user);
-        model.addAttribute("users", users);
-        model.addAttribute("userRoles", userRoles);
-        System.out.println(userRoles);
         model.addAttribute("roles", totalRoles);
-        System.out.println(totalRoles);
+
         return "/admin";
     }
 

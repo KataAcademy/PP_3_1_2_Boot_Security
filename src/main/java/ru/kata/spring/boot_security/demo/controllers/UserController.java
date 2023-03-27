@@ -20,19 +20,20 @@ public class UserController {
     public UserController(RoleService roleService) {
         this.roleService = roleService;
     }
-
     @GetMapping
     public String showUserInfo(Model model, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user);
+
         Set<String> rolesUtil = AuthorityUtils.authorityListToSet(user.getAuthorities());
-        Set<String> totalRolesUtil = AuthorityUtils.authorityListToSet(roleService.findAll());
         Set<String> roles = new HashSet<>();
         for (String role : rolesUtil) {
             roles.add(role.replace("ROLE_", ""));
         }
-        model.addAttribute("user", user);
         model.addAttribute("userRoles", roles);
-        model.addAttribute("totalRoles", totalRolesUtil);
+
+        Set<String> totalRoles = AuthorityUtils.authorityListToSet(roleService.findAll());
+        model.addAttribute("totalRoles", totalRoles);
         return "/user";
     }
 }
