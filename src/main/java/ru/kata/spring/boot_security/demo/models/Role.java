@@ -22,11 +22,9 @@ public class Role implements GrantedAuthority, Comparable<Role> {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
-            })
-    @JoinTable(name = "users_roles",
-            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+                    CascadeType.MERGE
+            },
+            mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
 
