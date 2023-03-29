@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="headerFiles">
     <meta charset="utf-8">
@@ -14,8 +14,9 @@
         <div class="row d-flex align-items-center m-0 p-0" style="height: 3rem">
             <div class="d-flex justify-content-between">
                 <div>
-                    <strong th:text="${user.email}"></strong> <span>with roles:</span>
-                    <span th:each="role, i : ${userRoles}" th:text="${i.last} ? ${role} : ${role} + ', '"></span>
+                    <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.models.User"*/-->
+                    <strong th:object="${user}" th:text="${user.email}"></strong> <span>with roles:</span>
+                    <span th:each="role, i : ${user.roles}" th:text="${i.last} ? ${role.name.replace('ROLE_','')} : ${role.name.replace('ROLE_','')} + ', '"></span>
                 </div>
                 <div>
                     <form th:method="post" th:action="@{/logout}">

@@ -1,56 +1,50 @@
 package ru.kata.spring.boot_security.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
-import ru.kata.spring.boot_security.demo.dao.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.dao.repositories.UserRepository;
-import ru.kata.spring.boot_security.demo.security.UserResolver;
 
 import java.util.*;
 
 @Service
-@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
     private final UserDao userDao;
-    private final UserResolver userResolver;
+    private final RoleDao roleDao;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserDao userDao, UserResolver userResolver) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-        this.userResolver = userResolver;
+        this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<User> findAll() {
-        return userDao.findAllFetchRoles().stream().toList();
+        return userDao.findAllFetchRoles().stream().distinct().toList();
     }
 
-    @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
-    }
-
-    @Override
-    public Optional<User> findByName(String name) {
-        return userRepository.findUserByEmail(name);
-    }
-
-    @Override
-    public Optional<User> findByNameFetch(String name) {
-        return userDao.findUserByEmailFetchRoles(name);
-    }
 
     @Override
     @Transactional
-    public User saveOrUpdate(User user, String role) {
-        User resolvedUser = userResolver.resolveUserPasswordAndRole(user, role);
-        userDao.save(resolvedUser);
+    public User saveOrUpdate(User user) {
+        if (user.getId() == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Collections.singleton(roleDao.findByName(user.getRoles().stream().findFirst().orElseThrow().getName()).orElseThrow()));
+            return userDao.save(user);
+        }
+        User foundUser = userDao.findByIdFetchRoles(user.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("Can't find user to update"));
+        resolvePassword(user, foundUser.getPassword());
+        resolveRoles(user, user.getRoles(), foundUser.getRoles());
+        userDao.save(user);
         return user;
     }
 
@@ -58,5 +52,27 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteById(Long id) {
         userDao.deleteById(id);
+    }
+
+    private void resolvePassword(User user, String encodedPassword) {
+        if (user.getPassword().equals("") || user.getPassword().isEmpty()) {
+            user.setPassword(encodedPassword);
+            return;
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    }
+
+    private void resolveRoles(User user, Set<Role> roles, Set<Role> foundRoles) {
+        if (roles == null || roles.isEmpty()) {
+            user.setRoles(foundRoles);
+            return;
+        }
+        Role newRole = roleDao.findByName(roles.stream().findAny().orElseThrow().getName()).orElseThrow();
+        if (foundRoles.contains(newRole)) {
+            user.setRoles(foundRoles);
+            return;
+        }
+        user.setRoles(foundRoles);
+        user.addRole(newRole);
     }
 }

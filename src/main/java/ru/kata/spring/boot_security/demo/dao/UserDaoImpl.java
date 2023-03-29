@@ -1,13 +1,11 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
-import ru.kata.spring.boot_security.demo.dao.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.models.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -25,9 +23,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Set<User> findAllFetchRoles() {
-        return new HashSet<>(entityManager.createQuery("select u from User u join fetch u.roles", User.class)
-                .getResultList());
+    public List<User> findAllFetchRoles() {
+        return entityManager.createQuery("select u from User u join fetch u.roles", User.class)
+                .getResultList();
     }
 
     @Override
@@ -40,5 +38,11 @@ public class UserDaoImpl implements UserDao {
         entityManager.createQuery("delete from User u where u.id = :userId")
                 .setParameter("userId", id)
                 .executeUpdate();
+    }
+
+    @Override
+    public Optional<User> findByIdFetchRoles(Long id) {
+        return entityManager.createQuery("select u from User u join fetch u.roles where u.id=:id", User.class)
+                .setParameter("id", id).getResultList().stream().findAny();
     }
 }

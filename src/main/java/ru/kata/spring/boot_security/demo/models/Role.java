@@ -22,7 +22,8 @@ public class Role implements GrantedAuthority, Comparable<Role> {
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.MERGE
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST
             },
             mappedBy = "roles")
     private Set<User> users = new HashSet<>();
@@ -76,6 +77,7 @@ public class Role implements GrantedAuthority, Comparable<Role> {
     public int hashCode() {
         return Objects.hash(name);
     }
+
     public void addUser(User user) {
         if (!users.contains(user)) {
             this.users.add(user);

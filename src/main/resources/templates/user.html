@@ -58,7 +58,7 @@
                             <td th:text="${user.age}"></td>
                             <td th:text="${user.email}"></td>
                             <td>
-                                <span th:each="role, i : ${userRoles}" th:text="${i.last} ? ${role} : ${role} + ', '"></span>
+                                <span th:each="role, i : ${user.roles}" th:text="${i.last} ? ${role.name.replace('ROLE_','')} : ${role.name.replace('ROLE_','')} + ', '"></span>
                             </td>
                         </tr>
                         </tbody>

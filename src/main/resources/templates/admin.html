@@ -67,14 +67,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${users}">
+                                    <tr th:each="user : ${allUsers}">
                                         <td th:text="${user.id}"></td>
                                         <td th:text="${user.firstName}"></td>
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.age}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td>
-                                            <span th:each="role : ${user.roles.stream().sorted().toList()}" th:text="${role.name.replace('ROLE_','')} + ' '"></span>
+                                            <span th:each="role, i : ${user.roles}" th:text="${i.last} ? ${role.name.replace('ROLE_','')} : ${role.name.replace('ROLE_','')} + ', '"></span>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -146,11 +146,9 @@
                                                                 <div class="mb-3">
                                                                     <label for="role"
                                                                            class="form-label align-content-center"><strong>Role</strong></label>
-                                                                    <select class="form-select" multiple id="role"
-                                                                            th:name="stringRole">
-                                                                        <option th:each="role : ${roles}"
-                                                                                th:value="${role}"
-                                                                                th:text="${role}"></option>
+                                                                    <select class="form-select" multiple id="role" name="roles">
+                                                                        <option th:each="role : ${totalRoles}" th:value="${role.name}"
+                                                                                th:text="${role.name.replace('ROLE_', '')}"></option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -197,7 +195,7 @@
                                                                     <label for="deleteFirstName"
                                                                            class="form-label align-content-center"><strong>First
                                                                         name</strong></label>
-                                                                    <input type="text" class="form-control" readonly
+                                                                    <input type="text" class="form-control bg-light" readonly
                                                                            id="deleteFirstName"
                                                                            name="firstName"
                                                                            th:value="${user.getFirstName()}">
@@ -206,7 +204,7 @@
                                                                     <label for="deleteLastName"
                                                                            class="form-label align-content-center"><strong>Last
                                                                         name</strong></label>
-                                                                    <input type="text" class="form-control" readonly
+                                                                    <input type="text" class="form-control bg-light" readonly
                                                                            id="deleteLastName"
                                                                            name="lastName"
                                                                            th:value="${user.getLastName()}">
@@ -214,7 +212,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="deleteAge"
                                                                            class="form-label align-content-center"><strong>Age</strong></label>
-                                                                    <input type="number" class="form-control" readonly
+                                                                    <input type="number" class="form-control bg-light" readonly
                                                                            id="deleteAge"
                                                                            name="age"
                                                                            th:value="${user.getAge()}">
@@ -222,7 +220,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="deleteEmail"
                                                                            class="form-label align-content-center"><strong>Email</strong></label>
-                                                                    <input type="email" class="form-control" readonly
+                                                                    <input type="email" class="form-control bg-light" readonly
                                                                            id="deleteEmail"
                                                                            name="email"
                                                                            th:value="${user.getEmail()}">
@@ -230,11 +228,9 @@
                                                                 <div class="mb-3">
                                                                     <label for="deleteRole"
                                                                            class="form-label align-content-center"><strong>Role</strong></label>
-                                                                    <select class="form-select" multiple id="deleteRole" disabled
-                                                                            th:name="stringRole">
-                                                                        <option th:each="role : ${roles}"
-                                                                                th:value="${role}"
-                                                                                th:text="${role}"></option>
+                                                                    <select class="form-select" multiple id="deleteRole" name="roles">
+                                                                        <option th:each="role : ${totalRoles}" th:value="${role.name}"
+                                                                                th:text="${role.name.replace('ROLE_', '')}"></option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -312,9 +308,9 @@
                                     <div class="mb-3">
                                         <label for="newRole"
                                                class="form-label align-content-center"><strong>Role</strong></label>
-                                        <select class="form-select" multiple id="newRole" th:name="stringRole">
-                                            <option th:each="role : ${roles}" th:value="${role}"
-                                                    th:text="${role}"></option>
+                                        <select class="form-select" multiple id="newRole" name="roles">
+                                            <option th:each="role : ${totalRoles}" th:value="${role.name}"
+                                                    th:text="${role.name.replace('ROLE_', '')}"></option>
                                         </select>
                                     </div>
                                     <div>
