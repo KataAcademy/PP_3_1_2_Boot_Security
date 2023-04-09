@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>spring_boot_security_CRUD</title>
+    <style>
+        a.remove:link {
+            color: red;
+        }
+
+        a.remove:visited {
+            color: darkred;
+        }
+
+        a.edit:link {
+            color: green;
+        }
+
+        a.edit:visited {
+            color: darkgreen;;
+        }
+
+        @keyframes fade-out {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        .fadeOut {
+            animation: fade-out 1s forwards;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .removeUserErr {
+            background-color: red;
+            border: double;
+            padding: 1em;
+            font-weight: bold;
+        }
+
+        .tg {
+            border-collapse: collapse;
+            border-color: #aabcfe;
+            border-spacing: 0;
+        }
+
+        .tg td {
+            background-color: #e8edff;
+            border-color: #aabcfe;
+            border-style: solid;
+            border-width: 1px;
+            color: #669;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            background-color: #b9c9fe;
+            border-color: #aabcfe;
+            border-style: solid;
+            border-width: 1px;
+            color: #039;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-c3ow {
+            border-color: inherit;
+            text-align: center;
+        }
+
+        .tg .tg-svo0 {
+            background-color: #D2E4FC;
+            border-color: inherit;
+            text-align: center;
+        }
+
+        .button {
+            border-radius: 10px;
+            border: 1px solid #4e6096;
+            display: inline-block;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 4px 18px;
+            text-decoration: none;
+        }
+
+        .addButton {
+            box-shadow: 0 0 0 2px #9fb4f2;
+            background: #7892c2 linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+            color: #ffffff;
+            text-shadow: 0 1px 0 #283966;
+        }
+
+        .addButton:hover {
+            background: #476e9e linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+        }
+
+        .addButton:active {
+            position: relative;
+            top: 1px;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex; flex-flow: column; align-items: center; justify-content: center; height: 100vh;">
+    <div th:if="${userRemoveErrMsg}" class="removeUserErr" role="alert">
+        <span th:text="${userRemoveErrMsg}"></span>
+    </div>
+    <table class="tg">
+        <thead>
+        <tr>
+            <th class="tg-c3ow">First name</th>
+            <th class="tg-c3ow">Last name</th>
+            <th class="tg-c3ow">email</th>
+            <th class="tg-c3ow">User name</th>
+            <th class="tg-c3ow">User group</th>
+            <th class="tg-c3ow">User actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:id="row- + ${user.getId()}" th:each="user : ${usersList}">
+            <td class="tg-c3ow">
+                <p class="firstName" th:text="${user.getFirstName()}">firstName</p>
+            </td>
+            <td class="tg-svo0">
+                <p class="lastName" th:text="${user.getLastName()}">lastName</p>
+            </td>
+            <td class="tg-c3ow">
+                <p class="email" th:text="${user.getEmail()}">email</p>
+            </td>
+            <td class="tg-svo0">
+                <p class="lastName" th:text="${user.getUsername()}">lastName</p>
+            </td>
+            <td class="tg-c3ow">
+                <p th:each="authority : ${user.getAuthorities()}" th:text="${authority.getAuthority()}"></p>
+            </td>
+            <td class="tg-c3ow">
+                <a href="#" class="edit" th:id="edit- + ${user.getId()}">Edit</a>
+                <a th:href="@{/remove/{id}
+                                        (id=${user.getId()})
+                                    }"
+                   class="remove">Remove</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/add}" method="post">
+        <label for="firstName">First name:</label>
+        <input type="text" name="firstName" id="firstName" placeholder="Enter user first name" size="12"
+               required>
+        <label for="lastName">Last name:</label>
+        <input type="text" name="lastName" id="lastName" placeholder="Enter user last name" size="12"
+               required>
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" placeholder="Enter user email" size="12" required>
+        <button type="submit" class="button addButton">add new User</button>
+    </form>
+</div>
+<script>
+    //Get all the Edit links in the table
+    const editLinks = document.querySelectorAll("a[id^='edit-']");
+
+    saveHandler = (e) => {
+        e.preventDefault();
+
+        // Get save link id
+        const id = e.target.id.split("-")[1];
+
+        // Get row with inputs by target id
+        const row = document.getElementById(`row-${id}`);
+
+        // Get all the inputs tags in the row
+        const inputTags = row.querySelectorAll("input");
+        console.log(inputTags);
+        // Create object by iterating through each input tag and get values
+        const userFetchData = {
+            id: id
+        };
+        inputTags.forEach(inputTag => {
+            userFetchData[inputTag.name] = inputTag.value;
+        });
+
+        // Remove event listener from save link
+        const saveLink = e.target;
+        saveLink.removeEventListener("click", saveHandler);
+
+        console.log(userFetchData)
+        // Fetch user data to database
+        fetch("updateUserData", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userFetchData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Request succeeded");
+                    location.reload();
+                } else {
+                    console.log("Request failed");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    editHandler = (e) => {
+        e.preventDefault();
+
+        // Get target id
+        const id = e.target.id.split("-")[1];
+
+        // Get p with target id
+        const row = document.getElementById(`row-${id}`);
+
+        // Get all the p tags in the row
+        const pTags = row.querySelectorAll("p");
+
+        // Loop through each p tag and replace it with an input tag
+        pTags.forEach((pTag) => {
+            const inputTag = document.createElement("input");
+            inputTag.type = "text";
+            inputTag.name = pTag.className;
+            inputTag.value = pTag.innerText;
+            pTag.parentNode.replaceChild(inputTag, pTag);
+            console.log("pTag replaced");
+        });
+
+        // Remove the click event listeners from all edit links
+        editLinks.forEach(link => {
+            link.removeEventListener("click", editHandler);
+            console.log("Listeners removed");
+        });
+
+        // Replace the Edit link with a Save link
+        const saveLink = document.createElement("a");
+        saveLink.href = "#";
+        saveLink.id = `save-${id}`;
+        saveLink.innerText = "Save";
+        const editLink = e.target;
+        editLink.parentNode.replaceChild(saveLink, editLink);
+
+        // Add event listener to new Save link
+        saveLink.addEventListener("click", saveHandler);
+    }
+
+    onPageLoad = () => {
+        // Remove the onPageLoad listener
+        document.removeEventListener("DOMContentLoaded", onPageLoad);
+
+        // Add event listeners to edit links
+        editLinks.forEach(link => link.addEventListener("click", editHandler));
+
+        // Check if an error div is present in the html
+        const errorDivTag = document.querySelector(".removeUserErr");
+
+        // Fade out the error block
+        if (errorDivTag) {
+            setTimeout(function () {
+                errorDivTag.classList.add("fadeOut");
+                setTimeout(function () {
+                    errorDivTag.remove();
+                }, 2000);
+            }, 2000);
+        }
+    }
+
+    // Add the onPageLoad listener
+    document.addEventListener("DOMContentLoaded", onPageLoad);
+</script>
+</body>
+</html>
