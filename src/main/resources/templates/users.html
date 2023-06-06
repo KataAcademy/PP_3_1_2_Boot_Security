@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Users table</title>
+</head>
+<body>
+<div align="center">
+    <table border="5">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+
+            <th>LAST NAME</th>
+            <th>edit</th>
+            <th>delete</th>
+        </tr>
+
+        <tr th:each="u : ${users}">
+            <td th:utext="${u.getId()}">...</td>
+            <td th:utext="${u.getName}">...</td>
+            <td th:utext="${u.getLastName}">...</td>
+            <td><a th:href="@{users/{id}/edit(id=${u.getId()})}">Edit</a></td>
+            <td>
+                <form th:method="DELETE" th:action="@{/users/{id}(id=${u.getId()})}">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <br/>
+    <form th:method="POST" th:action="@{/users}" th:object="${user}">
+        <label for="name"> Enter name: </label>
+        <br/>
+        <input type="text" th:field="*{name}" id="name"/>
+        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+        <br/>
+        <label for="lastName"> Enter last name: </label>
+        <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div>
+        <br/>
+        <input type="text" th:field="*{lastName}" id="lastName"/>
+        <br/>
+        <br/>
+        <input type="submit" value="Add user">
+    </form>
+</div>
+</body>
+</html>
