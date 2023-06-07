@@ -36,6 +36,14 @@ public class User {
         this.username = username;
     }
 
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
     public String getPassword() {
         return password;
     }
