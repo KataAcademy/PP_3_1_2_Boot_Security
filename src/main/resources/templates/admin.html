@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admins page</title>
+</head>
+<body>
+<div align="center">
+    <table border="5">
+        <tr>
+            <th> Id</th>
+            <th> Username</th>
+            <th> email</th>
+            <th>role</th>
+            <th>edit</th>
+            <th>delete</th>
+
+        </tr>
+
+        <tr th:each="u : ${users}">
+            <td th:utext="${u.getId()}">id</td>
+            <td th:utext="${u.getUsername()}">username</td>
+            <td th:utext="${u.getEmail()}">email</td>
+            <td th:utext="${u.getAuthorities()}">role</td>
+            <td><a th:href="@{users/{id}/edit(id=${u.getId()})}">Edit</a></td>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>

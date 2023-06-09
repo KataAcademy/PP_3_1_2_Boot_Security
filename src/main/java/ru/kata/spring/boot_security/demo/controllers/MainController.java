@@ -22,7 +22,6 @@ public class MainController {
         return "home";
     }
 
-    // Вход после Аутентификации
     @GetMapping("/authenticated")
     public String pageForAuthenticatedUser(Principal principal) {
         User user = userService.findByUsername(principal.getName());
@@ -30,10 +29,6 @@ public class MainController {
     }
 
 
-    @GetMapping("/admin")
-    public String page_only_for_admins() {
-        return "admin page";
-    }
 
 
     public UserService getUserService() {
