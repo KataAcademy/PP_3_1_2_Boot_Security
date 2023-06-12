@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+</head>
+<body>
+<div>
+    <form>
+        <table align="center" border="1">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Edit</th>
+            </tr>
+
+            <tr th:each="u : ${user}">
+                <td th:text="${user.getId()}">Id</td>
+                <td th:text="${user.getUsername()}">Name</td>
+                <td th:text="${user.getEmail()}">Email</td>
+                <td th:text="${user.getAuthorities()}">role</td>
+                <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit</a></td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+<br>
+
+
+</body>
+</html>

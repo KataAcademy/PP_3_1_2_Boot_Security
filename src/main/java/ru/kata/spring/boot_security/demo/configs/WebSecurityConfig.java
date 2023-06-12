@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 }
 
-    //    private final SuccessUserHandler successUserHandler;
+//    private final SuccessUserHandler successUserHandler;
 //
 //    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
 //        this.successUserHandler = successUserHandler;

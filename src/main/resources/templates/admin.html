@@ -36,7 +36,7 @@
 
 
     <br/>
-    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+    <form th:method="POST" th:action="@{/admin}" th:object="${users}">
         <label for="username"> Enter username: </label>
         <br/>
         <input type="text" th:field="*{username}" id="username"/>
