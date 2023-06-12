@@ -37,15 +37,14 @@ public class AdminController {
         return "redirect:/admin";
     }
     @PostMapping()
-    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String addUser(@ModelAttribute("user")User user) {
         userService.saveUser(user);
+
         return "redirect:/admin";
     }
 
     @PatchMapping
-    public String updateUser(@ModelAttribute("user") @Valid User user,
-                              BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return "form";
+    public String updateUser(@ModelAttribute("user")User user){
         userService.saveUser(user);
         return "redirect:/admin";
     }

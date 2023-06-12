@@ -17,14 +17,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
-    @NotEmpty(message = "Name should not be empty")
     private String username;
-    @NotEmpty(message = "password should not be empty")
+
     private String password;
-    @NotEmpty(message = "password should not be empty")
-    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",
-            message = "Incorrect email, dude")
     private String email;
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
