@@ -5,21 +5,28 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
 
 @Entity
+@Valid
 @Table(name = "users")
 @NamedEntityGraph(name = "User.roles", attributeNodes = @NamedAttributeNode("roles"))
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "empty field username")
     private String username;
 
+    @NotEmpty(message = "empty field password")
     private String password;
+
+    @NotEmpty(message = "empty field email")
+    @Pattern(regexp = "^(.+)@(\\S+)$")
     private String email;
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

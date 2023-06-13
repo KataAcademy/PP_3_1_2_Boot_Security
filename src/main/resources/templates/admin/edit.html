@@ -12,26 +12,31 @@
 
     <label for="password">Change password: </label>
     <input type="text" th:field="*{password}" id="password">
+
+
     <br><br>
 
     <label for="Email">Change mail: </label>
     <input type="text" th:field="*{email}" id="Email">
     <br><br>
-        <p>
-            <label>Roles:
-                <input type="checkbox" name="roles"
-                       th:each="role : ${allRoles}"
-                       th:text="${role.name}"
-                       th:value="${role.id}"
-                       th:field="*{roles}"
-                />
-            </label>
-        </p>
-        <input type="submit" value="Update">
+    <p>
+        <label>Roles:
+            <input type="checkbox" name="roles"
+                   th:each="role : ${allRoles}"
+                   th:text="${role.name}"
+                   th:value="${role.id}"
+                   th:field="*{roles}"
+            />
+        </label>
+    </p>
+    <input type="submit" value="Update">
     <input type="button" onclick="history.back();" value="Back"/>
 
-
-
+    <div th:if="${#fields.hasAnyErrors()}">
+        <ul>
+            <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </ul>
+    </div>
 
 </form>
 </body>

@@ -14,9 +14,6 @@ public class RoleService {
     @Autowired
     RoleRepository RoleRepository;
 
-    public Role getRoleById(Long id) {
-        return RoleRepository.getById(id);
-    }
     public List<Role> getRolesList() {
         return RoleRepository.findAll();
     }
