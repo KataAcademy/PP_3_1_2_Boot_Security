@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+</head>
+<body>
+<div align="center">
+
+
+    <table align="center" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <tr
+                th:each="u : ${user}">
+            <td th:text="${user.getId()}">Id</td>
+            <td th:text="${user.getUsername()}">Name</td>
+            <td th:text="${user.getEmail()}">Email</td>
+            <td th:text="${user.getAuthorities()}">role</td>
+            <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit</a></td>
+            <td>
+                <form th:method="DELETE" th:action="@{/admin/delete/{id}/(id=${user.getId()})}">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <input type="button" onclick="history.back();" value="Back"/>
+
+
+</div>
+
+
+</body>
+</html>
