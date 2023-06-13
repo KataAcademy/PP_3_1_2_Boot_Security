@@ -17,10 +17,7 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
-    @Autowired
-    private RoleRepository roleRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -34,13 +31,9 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("User '%s not found", username));
         }
         return user;
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-//                mapRolesToAuthorities(user.getRoles()));
     }
 
-//    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-//    }
+
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).get();
