@@ -19,9 +19,8 @@
         </tr>
     </table>
     <br>
-
-
     <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+        <fieldset>
         <label for="username"> Enter username: </label>
         <br/>
         <input type="text" th:field="*{username}" id="username"/>
@@ -35,7 +34,6 @@
         <input type="text" th:field="*{password}" id="password"/>
         <br/>
         <br/>
-        <fieldset>
             <p>
                 <label>Roles:
                     <input type="checkbox" name="roles"
@@ -46,10 +44,12 @@
                     />
                 </label>
             </p>
-        </fieldset>
+
         <br/>
         <input type="submit" value="Add user">
-
+        <br/>
+        <br/>
+    </fieldset>
     </form>
 </div>
 </body>

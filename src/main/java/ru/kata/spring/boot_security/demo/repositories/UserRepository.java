@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findById(Long id);
     @Query("select distinct u from User u left join fetch u.roles")
     List<User> findUsers();
+
+    void deleteUserById(Long id);
+
 }

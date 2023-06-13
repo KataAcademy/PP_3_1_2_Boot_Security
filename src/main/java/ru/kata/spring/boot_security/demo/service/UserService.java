@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class UserService implements UserDetailsService {
 
@@ -24,7 +25,6 @@ public class UserService implements UserDetailsService {
 
     //Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         if (user == null) {
@@ -55,9 +55,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
-        }
+        userRepository.deleteUserById(userId);
     }
 
 
