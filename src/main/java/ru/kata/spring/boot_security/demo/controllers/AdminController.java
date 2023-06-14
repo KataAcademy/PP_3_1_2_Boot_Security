@@ -18,8 +18,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
@@ -53,9 +53,9 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User editedUser, BindingResult bindingResult, Model model) {
-        if (!editedUser.getPassword().isEmpty()) {
-            editedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
-        }
+//        if (!editedUser.getPassword().isEmpty()) {
+//            editedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
+//        }
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);
         if (bindingResult.hasErrors()) {
@@ -67,9 +67,9 @@ public class AdminController {
 
     @PostMapping()
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        if (!user.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
+//        if (!user.getPassword().isEmpty()) {
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        }
         model.addAttribute("users", userService.allUsers());
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);
