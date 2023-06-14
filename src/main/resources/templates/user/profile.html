@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <table align="center" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        <tr
+                th:each="u : ${user}">
+            <td th:text="${user.getId()}">Id</td>
+            <td th:text="${user.getUsername()}">Name</td>
+            <td th:text="${user.getEmail()}">Email</td>
+            <td th:text="${user.getRoles()}">role</td>
+        </tr>
+    </table>
+    <br>
+</div>
+<div th:replace="fragments/logout :: logout"></div>
+</body>
+</html>

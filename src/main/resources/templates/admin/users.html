@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <div align="center">
-    <table border="4">
+    <table border="1">
         <tr>
             <th>Username</th>
             <th>Email</th>
@@ -19,38 +19,53 @@
         </tr>
     </table>
     <br>
+
     <form th:method="POST" th:action="@{/admin}" th:object="${user}">
         <fieldset>
-        <label for="username"> Enter username: </label>
-        <br/>
-        <input type="text" th:field="*{username}" id="username"/>
-        <br/>
-        <label for="email"> email: </label>
-        <br/>
-        <input type="text" th:field="*{email}" id="email"/>
-        <br/>
-        <label for="password"> password: </label>
-        <br/>
-        <input type="text" th:field="*{password}" id="password"/>
-        <br/>
-        <br/>
+            <label for="username"> Enter username: </label>
+            <br/>
+            <input type="text" th:field="*{username}" id="username"/>
+            <br/>
+            <br/>
+            <label for="email"> email: </label>
+            <br/>
+            <input type="text" th:field="*{email}" id="email"/>
+            <br/>
+
+
+            <label for="password"> password: </label>
+            <br/>
+            <input type="text" th:field="*{password}" id="password"/>
+            <br/>
+            <br/>
+            <br/>
             <p>
-                <label>Roles:
+                <label> Roles:
                     <input type="checkbox" name="roles"
                            th:each="role : ${allRoles}"
                            th:text="${role.name}"
                            th:value="${role.id}"
                            th:field="*{roles}"
-                    />
+                    >
                 </label>
             </p>
 
+            <br/>
+            <input type="submit" value="Add user">
+            <br/>
+            <br/>
+        </fieldset>
+
+        <div th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+            </ul>
+        </div>
         <br/>
-        <input type="submit" value="Add user">
-        <br/>
-        <br/>
-    </fieldset>
+        <br><br>
     </form>
 </div>
+<div th:replace="fragments/logout :: logout"></div>
+
 </body>
 </html>

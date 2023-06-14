@@ -5,34 +5,51 @@
     <title>Edit user</title>
 </head>
 <body>
-<form align="center" th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+<form align="center" th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" autocomplete="off"
+      th:object="${user}">
     <label for="name">Change username: </label>
     <input type="text" th:field="*{username}" id="name">
     <br> <br>
 
     <label for="password">Change password: </label>
-    <input type="text" th:field="*{password}" id="password">
+    <input type="text" th:field="*{password}" id="password" autocomplete="off">
+
+
     <br><br>
 
     <label for="Email">Change mail: </label>
     <input type="text" th:field="*{email}" id="Email">
     <br><br>
-        <p>
-            <label>Roles:
-                <input type="checkbox" name="roles"
-                       th:each="role : ${allRoles}"
-                       th:text="${role.name}"
-                       th:value="${role.id}"
-                       th:field="*{roles}"
-                />
-            </label>
-        </p>
-        <input type="submit" value="Update">
+    <p>
+        <label>Roles:
+            <input type="checkbox" name="roles"
+                   th:each="role : ${allRoles}"
+                   th:text="${role.name}"
+                   th:value="${role.id}"
+                   th:field="*{roles}"
+            />
+        </label>
+    </p>
+    <input type="submit" value="Update">
     <input type="button" onclick="history.back();" value="Back"/>
 
-
-
-
+    <div th:if="${#fields.hasAnyErrors()}">
+        <ul>
+            <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </ul>
+    </div>
+    <br><br>
 </form>
+<div th:replace="fragments/logout :: logout"></div>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+    $('document').ready(function () {
+        $('#password').val("");
+    })
+</script>
+
 </body>
+
+
 </html>
