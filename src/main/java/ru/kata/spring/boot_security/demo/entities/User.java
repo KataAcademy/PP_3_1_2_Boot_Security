@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
@@ -32,11 +34,13 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-    public User(String username, String password, String email, Collection<Role> roles) {
+    public User(String username, String password, String email, Role... roles) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.roles = roles;
+        this.roles = new ArrayList<>();
+        this.roles.addAll(Arrays.asList(roles));
+
     }
 
     public User() {

@@ -40,8 +40,8 @@
             <br/>
             <br/>
             <p>
-                <label>  Roles:
-                    <input  type="checkbox" name="roles"
+                <label> Roles:
+                    <input type="checkbox" name="roles"
                            th:each="role : ${allRoles}"
                            th:text="${role.name}"
                            th:value="${role.id}"
@@ -58,11 +58,14 @@
 
         <div th:if="${#fields.hasAnyErrors()}">
             <ul>
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
             </ul>
         </div>
-
+        <br/>
+        <br><br>
     </form>
 </div>
+<div th:replace="fragments/logout :: logout"></div>
+
 </body>
 </html>

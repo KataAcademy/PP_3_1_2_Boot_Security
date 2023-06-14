@@ -12,9 +12,15 @@ import java.util.List;
 @Transactional
 public class RoleService {
     @Autowired
-    RoleRepository RoleRepository;
+   private RoleRepository roleRepository;
 
+    public void saveRole(Role role){
+        roleRepository.save(role);
+    }
+    public Role getRoleById(Long id) {
+        return roleRepository.getById(id);
+    }
     public List<Role> getRolesList() {
-        return RoleRepository.findAll();
+        return roleRepository.findAll();
     }
 }

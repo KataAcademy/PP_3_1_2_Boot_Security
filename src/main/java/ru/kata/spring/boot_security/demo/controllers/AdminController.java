@@ -2,13 +2,13 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -18,13 +18,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private RoleService roleService;
-
 
     @GetMapping()
     public String allUsers(Model model) {
@@ -51,7 +52,10 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@PathVariable("id") Long id, @ModelAttribute("user") @Valid User editedUser, BindingResult bindingResult, Model model) {
+    public String updateUser(@ModelAttribute("user") @Valid User editedUser, BindingResult bindingResult, Model model) {
+        if (!editedUser.getPassword().isEmpty()) {
+            editedUser.setPassword(passwordEncoder.encode(editedUser.getPassword()));
+        }
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);
         if (bindingResult.hasErrors()) {
@@ -63,6 +67,9 @@ public class AdminController {
 
     @PostMapping()
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+        if (!user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         model.addAttribute("users", userService.allUsers());
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);
