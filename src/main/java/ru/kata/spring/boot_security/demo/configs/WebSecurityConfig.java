@@ -7,25 +7,21 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
-
-    private final SuccessUserHandler successUserHandler;
-
-    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
-        this.successUserHandler = successUserHandler;
-    }
-
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    private UserDetailsService userDetailsServiceImpl;
+    private final SuccessUserHandler successUserHandler;
+    @Autowired
+    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
+        this.successUserHandler = successUserHandler;
     }
 
     @Override
@@ -35,21 +31,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                 .and()
-                .formLogin().successHandler(successUserHandler);
-
-
+                .formLogin()
+                .usernameParameter("email").
+                successHandler(successUserHandler);
     }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(userDetailsServiceImpl);
         return authenticationProvider;
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
+        System.out.println("passEnc");
         return new BCryptPasswordEncoder();
     }
 }

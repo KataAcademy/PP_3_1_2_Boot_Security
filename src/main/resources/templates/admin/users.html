@@ -1,78 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Title</title>
+            <title>Title</title>
 </head>
 <body>
-<div align="center">
-    <table border="1">
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Details</th>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.getUsername()}">name</td>
-            <td th:text="${user.getEmail()}">email</td>
-            <td><a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="See"></a></td>
-        </tr>
-    </table>
-    <br>
+<div th:replace="fragments/navBar :: navBar"></div>
 
-    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-        <fieldset>
-            <label for="username"> Enter username: </label>
-            <br/>
-            <input type="text" th:field="*{username}" id="username"/>
-            <br/>
-            <br/>
-            <label for="email"> email: </label>
-            <br/>
-            <input type="text" th:field="*{email}" id="email"/>
-            <br/>
-
-
-            <label for="password"> password: </label>
-            <br/>
-            <input type="text" th:field="*{password}" id="password"/>
-            <br/>
-            <br/>
-            <br/>
-            <p>
-                <label> Roles:
-                    <input type="checkbox" name="roles"
-                           th:each="role : ${allRoles}"
-                           th:text="${role.name}"
-                           th:value="${role.id}"
-                           th:field="*{roles}"
-                    >
-                </label>
-            </p>
-
-            <br/>
-            <input type="submit" value="Add user">
-            <br/>
-            <br/>
-        </fieldset>
-
-        <div th:if="${#fields.hasAnyErrors()}">
-            <ul>
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+<div class="container-fluid" style="padding-top: 20px">
+    <div class="row">
+        <div class="col-md-2 p-0 h-100 rounded-top sidebar-sticky">
+            <ul class="nav flex-column">
+                <li><a href="/admin">
+                    <button type="button" class="btn  btn-primary w-100">Admin</button>
+                </a></li>
+                <li><a href="/user">
+                    <button type="button" class="btn btn-primary w-100">User</button>
+                </a></li>
             </ul>
         </div>
-        <br/>
-        <br><br>
-    </form>
-</div>
-<div th:replace="fragments/logout :: logout"></div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <div class="col">
+            <div>
+                <h2> Admin panel </h2>
+
+                <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="/admin" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                    <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="/newUser" role="tab" aria-controls="nav-profile" aria-selected="false">New user</a>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item" style="font-weight: bold; font-size: large; background-color: whitesmoke">
+                                All users
+                            </li>
+                            <li class="list-group-item p-4">
+                                <table class="table caption-top">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="user : ${users}">
+                                        <td th:text="${user.getUsername()}">name</td>
+                                        <td th:text="${user.getEmail()}">email</td>
+                                        <td><a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="See"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, natus sed soluta necessitatibus tempore aspernatur? Praesentium, odit explicabo distinctio dolore adipisci officia iure, ut magnam optio aliquam at similique veritatis.</div>
+                    <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium minima repellat incidunt facilis obcaecati blanditiis corrupti ad officia doloribus ullam sapiente ipsum, nemo a, excepturi voluptatem voluptatibus velit eum dignissimos ut, nam tempora? Reiciendis illo itaque veritatis eligendi fuga, mollitia ratione totam veniam esse in.</div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
