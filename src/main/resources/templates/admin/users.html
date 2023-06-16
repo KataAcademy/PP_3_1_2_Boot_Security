@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-            <title>Title</title>
+    <title>Title</title>
 </head>
 <body>
 <div th:replace="fragments/navBar :: navBar"></div>
@@ -30,39 +30,117 @@
                 <h2> Admin panel </h2>
 
                 <nav class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="/admin" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-                    <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="/newUser" role="tab" aria-controls="nav-profile" aria-selected="false">New user</a>
+                    <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="/admin" role="tab"
+                       aria-controls="nav-home" aria-selected="true">Home</a>
+                    <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="/newUser" role="tab"
+                       aria-controls="nav-profile" aria-selected="false">New user</a>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <ul class="list-group">
-                            <li class="list-group-item" style="font-weight: bold; font-size: large; background-color: whitesmoke">
+                            <li class="list-group-item"
+                                style="font-weight: bold; font-size: large; background-color: whitesmoke">
                                 All users
                             </li>
                             <li class="list-group-item p-4">
-                                <table class="table caption-top">
+                                <table class="table table-striped">
                                     <thead>
                                     <tr>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Username</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Details</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Edit</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="user : ${users}">
+                                        <td th:text="${user.getId()}">name</td>
                                         <td th:text="${user.getUsername()}">name</td>
                                         <td th:text="${user.getEmail()}">email</td>
-                                        <td><a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="See"></a></td>
+                                        <td th:text="${user.getAuthorities()}"> Role</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal" data-whatever="@mdo"> Edit
+                                            </button>
+                                        </td>
+
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit
+                                                            user</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true"></span>
+                                                        </button>
+                                                    </div>
+                                                    <div align="center" class="modal-body ">
+                                                        <form>
+
+                                                            <div class="form-group">
+                                                                <label for="id" class="col-form-label">
+                                                                    <b> ID: </b> </label>
+                                                                <input type="text" class="form-control col-sm-6"
+                                                                       id="id">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="username" class="col-form-label">
+                                                                    <b> Username: </b> </label>
+                                                                <input type="text" class="form-control col-sm-6"
+                                                                       id="username">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email" class="col-form-label">
+                                                                    <b>Email:</b></label>
+                                                                <input type="text" class="form-control col-sm-6"
+                                                                       id="email">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="password" class="col-form-label">
+                                                                    <b>Password:</b></label>
+                                                                <input type="text" class="form-control col-sm-6"
+                                                                       id="password">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="editRole"><b>Role</b></label>
+                                                                <select multiple class="custom-select" size="2"
+                                                                        id="editRole"
+                                                                        th:field="*{allRoles}">
+                                                                    <option th:each="role : ${allRoles}"
+                                                                            th:text="${role.name}"
+                                                                            th:value="${role.id}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close
+                                                        </button>
+
+                                                        <a th:href="@{/admin/edit/{id} (id=${user.getId()})}">
+                                                            <button type="button" class="btn btn-primary"> Edit</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </tr>
                                     </tbody>
                                 </table>
                             </li>
                         </ul>
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, natus sed soluta necessitatibus tempore aspernatur? Praesentium, odit explicabo distinctio dolore adipisci officia iure, ut magnam optio aliquam at similique veritatis.</div>
-                    <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium minima repellat incidunt facilis obcaecati blanditiis corrupti ad officia doloribus ullam sapiente ipsum, nemo a, excepturi voluptatem voluptatibus velit eum dignissimos ut, nam tempora? Reiciendis illo itaque veritatis eligendi fuga, mollitia ratione totam veniam esse in.</div>
                 </div>
-
 
 
             </div>
