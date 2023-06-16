@@ -17,10 +17,10 @@
         <div class="col-md-2 p-0 h-100 rounded-top sidebar-sticky">
             <ul class="nav flex-column">
                 <li><a href="/admin">
-                    <button type="button" class="btn  btn-primary w-100">Admin</button>
+                    <button type="button" class="btn  btn-primary  w-100 " style="text-align: left">Admin</button>
                 </a></li>
                 <li><a href="/user">
-                    <button type="button" class="btn btn-primary w-100">User</button>
+                    <button type="button" class="btn btn-link w-100" style="text-align: left">User</button>
                 </a></li>
             </ul>
         </div>
@@ -43,6 +43,8 @@
                                 All users
                             </li>
                             <li class="list-group-item p-4">
+
+                                <!--TABLE-->
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
@@ -51,6 +53,7 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Role</th>
                                         <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,80 +62,22 @@
                                         <td th:text="${user.getUsername()}">name</td>
                                         <td th:text="${user.getEmail()}">email</td>
                                         <td th:text="${user.getAuthorities()}"> Role</td>
+
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal" data-whatever="@mdo"> Edit
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                    data-target="#editModal"> Edit
                                             </button>
                                         </td>
 
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit
-                                                            user</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div align="center" class="modal-body ">
-                                                        <form>
+                                        <td>
+                                            <a type="button" class="btn btn-danger py-1 deleteButton"
+                                               data-toggle="modal"
+                                               data-target="#deleteModal" th:href="@{/admin/delete/{id} (id=${user.getId})}">Delete</a>
+                                        </td>
 
-                                                            <div class="form-group">
-                                                                <label for="id" class="col-form-label">
-                                                                    <b> ID: </b> </label>
-                                                                <input type="text" class="form-control col-sm-6"
-                                                                       id="id">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="username" class="col-form-label">
-                                                                    <b> Username: </b> </label>
-                                                                <input type="text" class="form-control col-sm-6"
-                                                                       id="username">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="email" class="col-form-label">
-                                                                    <b>Email:</b></label>
-                                                                <input type="text" class="form-control col-sm-6"
-                                                                       id="email">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="password" class="col-form-label">
-                                                                    <b>Password:</b></label>
-                                                                <input type="text" class="form-control col-sm-6"
-                                                                       id="password">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="editRole"><b>Role</b></label>
-                                                                <select multiple class="custom-select" size="2"
-                                                                        id="editRole"
-                                                                        th:field="*{allRoles}">
-                                                                    <option th:each="role : ${allRoles}"
-                                                                            th:text="${role.name}"
-                                                                            th:value="${role.id}"></option>
-                                                                </select>
-                                                            </div>
-                                                        </form>
-
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-
-                                                        <a th:href="@{/admin/edit/{id} (id=${user.getId()})}">
-                                                            <button type="button" class="btn btn-primary"> Edit</button>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        <!--MODAL-->
+                                        <div th:replace="fragments/editModal :: editModal"></div>
+                                        <div th:replace="fragments/deleteModal :: deleteModal"></div>
 
                                     </tr>
                                     </tbody>

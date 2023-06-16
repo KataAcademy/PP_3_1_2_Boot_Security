@@ -44,6 +44,8 @@ public class AdminController {
     @GetMapping("/{id}")
     public String user(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userServiceImpl.findUserById(id));
+        List<Role> allRoles = roleService.getRolesList();
+        model.addAttribute("allRoles", allRoles);
         return "admin/user";
     }
 
