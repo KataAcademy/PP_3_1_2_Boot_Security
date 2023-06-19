@@ -9,59 +9,49 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div align="center" class="modal-body ">
-                    <form>
-                        <fieldset disabled>
+                <div class="modal-body">
+                    <fieldset disabled>
+
+                        <form class="text-center mx-auto" style="font-weight: bold; max-width: 300px"
+                              th:object="${user}">
                             <div class="form-group">
-                                <label for="id" class="col-form-label">
-                                    <b> ID: </b> </label>
-                                <input type="text" class="form-control col-sm-6"
-                                       id="id">
+                                <label for="deleteId">ID</label>
+                                <input type="text" class="form-control" id="deleteId" placeholder="ID"
+                                       th:field="*{id}">
                             </div>
                             <div class="form-group">
-                                <label for="username" class="col-form-label">
-                                    <b> Username: </b> </label>
-                                <input type="text" class="form-control col-sm-6"
-                                       id="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">
-                                    <b>Email:</b></label>
-                                <input type="text" class="form-control col-sm-6"
-                                       id="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="col-form-label">
-                                    <b>Password:</b></label>
-                                <input type="text" class="form-control col-sm-6"
-                                       id="password">
+                                <label for="deleteName">First name</label>
+                                <input type="text" class="form-control" id="deleteName" placeholder="First name"
+                                       th:field="*{username}">
                             </div>
 
                             <div class="form-group">
-                                <label for="editRole"><b>Role</b></label>
-                                <select multiple class="custom-select" size="2"
-                                        id="editRole"
-                                        th:field="*{allRoles}">
+                                <label for="deleteLastName">Last name</label>
+                                <input type="text" class="form-control" id="deleteLastName" placeholder="Last name"
+                                       th:field="*{email}">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="deleteRole">Role</label>
+                                <select multiple class="custom-select" size="2" id="deleteRole"
+                                        th:field="*{roles}">
                                     <option th:each="role : ${allRoles}"
-                                            th:text="${role.name}"
-                                            th:value="${role.id}"></option>
+                                            th:text="${role.name}" th:value="${role.id}"></option>
                                 </select>
                             </div>
-                        </fieldset>
-                    </form>
+                        </form>
+
+                    </fieldset>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    <form th:method="DELETE" th:action="@{/admin/delete/{id}/(id=${user.getId()})}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                    <form th:method="DELETE" id="deleteForm" action="">
+                        <button type="submit" class="btn btn-danger" id="deleteBtn">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
-</div>
-</div>
+
