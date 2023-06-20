@@ -56,8 +56,6 @@
                                 <input th:field="*{username}"
                                        type="text" class="form-control" required id="formName"
                                        placeholder="Username">
-                                <p th:if="${#fields.hasErrors('username')}" class="text-danger"
-                                   th:errors="*{username}"></p>
                             </div>
                         </div>
 
@@ -66,8 +64,6 @@
                             <div class="input-email">
                                 <input type="text" class="form-control" required id="formEmail" placeholder="Email"
                                        th:field="*{email}">
-                                <p th:if="${#fields.hasErrors('email')}" class="text-danger"
-                                   th:errors="*{email}"></p>
                             </div>
                         </div>
 
@@ -78,8 +74,6 @@
                                 <input type="password" class="form-control" required id="formPassword"
                                        placeholder="Password"
                                        th:field="*{password}">
-                                <p th:if="${#fields.hasErrors('password')}" class="text-danger"
-                                   th:errors="*{password}"></p>
                             </div>
                         </div>
 

@@ -16,21 +16,19 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
-@Valid
 @Table(name = "users")
 @NamedEntityGraph(name = "User.roles", attributeNodes = @NamedAttributeNode("roles"))
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "empty field username")
+
     private String username;
 
-    @NotEmpty(message = "empty field password")
+
     private String password;
 
-    @NotEmpty(message = "empty field email")
-    @Email
+
     private String email;
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

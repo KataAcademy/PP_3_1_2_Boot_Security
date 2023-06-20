@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -53,27 +51,22 @@ public class AdminController {
     }
 
     @PostMapping("/newUser")
-    public String addUser(Model model,@Valid @ModelAttribute("user")  User user, BindingResult bindingResult) {
+    public String addUser(Model model, @ModelAttribute("user")  User user) {
         model.addAttribute("users", userServiceImpl.allUsers());
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("addUser",user);
-            return "admin/newUser";
-        }
+
         userServiceImpl.saveUser(user);
         return "redirect:/admin/";
     }
 
 
     @PutMapping("/edit/{id}")
-    public String updateUser( @Valid @ModelAttribute("user")  User editedUser, BindingResult bindingResult, Model model) {
+    public String updateUser(@ModelAttribute("user")  User user,  Model model) {
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);
-        if (bindingResult.hasErrors()) {
-            return "/edit/{id}";
-        }
-        userServiceImpl.saveUser(editedUser);
+
+        userServiceImpl.saveUser(user);
         return "redirect:/admin/";
     }
 
