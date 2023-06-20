@@ -58,6 +58,7 @@
                         </thead>
                         <tbody>
                         <th:block th:each="u : ${users}">
+
                             <tr>
                                 <td th:utext="${u.getId}">...</td>
                                 <td th:utext="${u.getUsername}">...</td>
@@ -74,8 +75,10 @@
                         </th:block>
                         </tbody>
                     </table>
+
                 </li>
             </ul>
+
             <!--MODALS-->
             <div th:replace="fragments/deleteModal"></div>
             <div th:replace="fragments/editModal"></div>
@@ -98,7 +101,6 @@
 
 <script>
     $('document').ready(function () {
-
         $(".editButton").on('click', function (event) {
             event.preventDefault()
             let href = $(this).attr('href');

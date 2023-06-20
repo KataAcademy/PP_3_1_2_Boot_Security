@@ -46,26 +46,41 @@
                     Add new user
                 </li>
                 <li class="list-group-item p-4">
-                    <form class="text-center mx-auto" style="font-weight: bold; max-width: 300px"
-                          th:method="POST" th:action="@{/admin/new_user}" th:object="${newUser}" autocomplete="off">
-
+                    <form class="text-center mx-auto" action="" novalidate
+                          style="font-weight: bold; max-width: 300px"
+                          th:method="POST" th:action="@{/admin/newUser}" th:object="${newUser}" autocomplete="off"
+                          id="add-form">
                         <div class="form-group">
                             <label for="formName">Username</label>
-                            <input type="text" class="form-control" id="formName" placeholder="Username"
-                                   th:field="*{username}">
+                            <div class="input-username">
+                                <input th:field="*{username}"
+                                       type="text" class="form-control" required id="formName"
+                                       placeholder="Username">
+                                <p th:if="${#fields.hasErrors('username')}" class="text-danger"
+                                   th:errors="*{username}"></p>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="formLastName">Email</label>
-                            <input type="text" class="form-control" id="formLastName" placeholder="Email"
-                                   th:field="*{email}">
+                            <label for="formEmail">Email</label>
+                            <div class="input-email">
+                                <input type="text" class="form-control" required id="formEmail" placeholder="Email"
+                                       th:field="*{email}">
+                                <p th:if="${#fields.hasErrors('email')}" class="text-danger"
+                                   th:errors="*{email}"></p>
+                            </div>
                         </div>
 
 
                         <div class="form-group">
                             <label for="formPassword" id="formPassword2">Password</label>
-                            <input type="password" class="form-control" id="formPassword" placeholder="Password"
-                                   th:field="*{password}">
+                            <div class="input-password">
+                                <input type="password" class="form-control" required id="formPassword"
+                                       placeholder="Password"
+                                       th:field="*{password}">
+                                <p th:if="${#fields.hasErrors('password')}" class="text-danger"
+                                   th:errors="*{password}"></p>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -73,7 +88,7 @@
                             <select multiple class="custom-select" size="2" id="formRole"
                                     th:field="*{roles}">
                                 <option th:each="role : ${allRoles}"
-                                        th:text="${role.name}" th:value="${role.id}"></option>
+                                        th:text="${role.name}" th:value="${role.id} "></option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-success">Add new user</button>
@@ -85,7 +100,7 @@
 
 
 </div>
-</div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -97,5 +112,52 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+<!--<script>-->
+<!--    function validation(form) {-->
+
+<!--        function removeError(input) {-->
+<!--            const parent = input.parentNode;-->
+<!--            if(parent.classList.contains('error')){-->
+<!--                parent.querySelector('.error-label').remove()-->
+<!--                parent.classList.remove('error')-->
+<!--            }-->
+<!--        }-->
+<!--        function createError(input, text) {-->
+<!--            const parent = input.parentNode;-->
+<!--            const errorLabel = document.createElement('label')-->
+<!--            errorLabel.classList.add('error-label')-->
+<!--            errorLabel.textContent = text-->
+<!--            parent.classList.add('error')-->
+<!--            parent.append(errorLabel)-->
+<!--        }-->
+
+<!--        console.log(form)-->
+<!--        let result = true;-->
+<!--        const allInputs = form.querySelectorAll('input');-->
+<!--        for (const input of allInputs) {-->
+
+<!--            removeError(input)-->
+
+<!--            if (input.value=="") {-->
+<!--                console.log("field wrong")-->
+<!--                createError(input,"The field is filled incorrectly")-->
+<!--                result = false-->
+<!--            }-->
+<!--        }-->
+<!--        return result;-->
+
+<!--    }-->
+
+<!--    document.getElementById('add-form').addEventListener('submit', function (event) {-->
+<!--        event.preventDefault()-->
+<!--        if (validation(this) == true) {-->
+<!--            event.returnValue = true-->
+<!--        }-->
+
+<!--    })-->
+<!--</script>-->
+
+
 </body>
 </html>
