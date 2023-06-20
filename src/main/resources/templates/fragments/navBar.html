@@ -1,0 +1,11 @@
+<div th:fragment="navBar">
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="text-white p-1"  style="font-weight: bold" th:utext="${principal.getEmail()}"></span>
+        <span class="text-white p-1"> with roles: </span>
+        <span class="text-white" th:utext="${principal.getAuthorities()}"></span>
+        <span class="text-white mx-auto"></span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
+        </form>
+    </nav>
+</div>

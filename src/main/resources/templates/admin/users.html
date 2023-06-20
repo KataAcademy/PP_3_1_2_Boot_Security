@@ -1,71 +1,136 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Admin panel</title>
 </head>
-<body>
-<div align="center">
-    <table border="1">
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Details</th>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.getUsername()}">name</td>
-            <td th:text="${user.getEmail()}">email</td>
-            <td><a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="See"></a></td>
-        </tr>
-    </table>
-    <br>
-
-    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-        <fieldset>
-            <label for="username"> Enter username: </label>
-            <br/>
-            <input type="text" th:field="*{username}" id="username"/>
-            <br/>
-            <br/>
-            <label for="email"> email: </label>
-            <br/>
-            <input type="text" th:field="*{email}" id="email"/>
-            <br/>
-
-
-            <label for="password"> password: </label>
-            <br/>
-            <input type="text" th:field="*{password}" id="password"/>
-            <br/>
-            <br/>
-            <br/>
-            <p>
-                <label> Roles:
-                    <input type="checkbox" name="roles"
-                           th:each="role : ${allRoles}"
-                           th:text="${role.name}"
-                           th:value="${role.id}"
-                           th:field="*{roles}"
-                    >
-                </label>
-            </p>
-
-            <br/>
-            <input type="submit" value="Add user">
-            <br/>
-            <br/>
-        </fieldset>
-
-        <div th:if="${#fields.hasAnyErrors()}">
-            <ul>
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+<body class="bg-light h-100">
+<div th:replace="fragments/navBar :: navBar"></div>
+<div class="container-fluid bg-light" style="padding-top: 20px; height: calc(100vh - 50px)">
+    <div class="row h-100">
+        <nav class="rounded-top col-md-2 d-none d-md-block bg-white sidebar p-0">
+            <div class="sidebar-sticky ">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="/admin">
+                            <button type="submit" class="btn btn-primary w-100 text-left">Admin</button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user">
+                            <button type="submit" class="btn btn-white w-100 text-left text-primary">User</button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-10 ml-sm-auto col-lg-10" style="padding-right: 28px; padding-left: 28px">
+            <h1>Admin panel</h1>
+            <ul class="nav nav-tabs pt-2">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/newUser">New User</a>
+                </li>
             </ul>
-        </div>
-        <br/>
-        <br><br>
-    </form>
-</div>
-<div th:replace="fragments/logout :: logout"></div>
+            <ul class="list-group">
+                <li class="list-group-item" style="font-weight: bold; font-size: large; background-color: whitesmoke">
+                    All users
+                </li>
+                <li class="list-group-item p-4">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="u : ${users}">
 
+                            <tr>
+                                <td th:utext="${u.getId}">...</td>
+                                <td th:utext="${u.getUsername}">...</td>
+                                <td th:utext="${u.getEmail()}">...</td>
+                                <td th:utext="${u.getRoles}">...</td>
+                                <td><a type="button" class="btn btn-info py-1 editButton"
+                                       th:href="@{/admin/edit/{id} (id=${u.getId})}">Edit</a></td>
+
+                                <td>
+                                    <a type="button" class="btn btn-danger py-1 deleteButton"
+                                       data-toggle="modal" th:href="@{/admin/delete/{id} (id=${u.getId})}">Delete</a>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+
+                </li>
+            </ul>
+
+            <!--MODALS-->
+            <div th:replace="fragments/deleteModal"></div>
+            <div th:replace="fragments/editModal"></div>
+        </main>
+    </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script>
+    $('document').ready(function () {
+        $(".editButton").on('click', function (event) {
+            event.preventDefault()
+            let href = $(this).attr('href');
+            $.get(href, function (user, status) {
+                $('#editId').val(user.id)
+                $('#editUsername').val(user.username)
+                $('#editEmail').val(user.email)
+                $('#editPassword').val("")
+                $('#editRole').val(user.role)
+                $("#editForm").attr('action', href)
+            })
+            $('#editModal').modal()
+        })
+
+
+        $(".deleteButton").on('click', function (event) {
+            event.preventDefault()
+
+            let href = $(this).attr('href');
+
+            $.get(href, function (user, status) {
+                $('#deleteId').val(user.id)
+                $('#deleteUsername').val(user.username)
+                $('#deleteEmail').val(user.email)
+                $('#deleteRole').val(user.role)
+            })
+            $("#deleteForm").attr('action', href)
+            $('#deleteModal').modal()
+        })
+    })
+</script>
 </body>
 </html>

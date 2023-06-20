@@ -1,0 +1,66 @@
+<div th:fragment="editModal">
+    <div class="modal fade editModal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" >
+
+
+                    <form class="text-center mx-auto" style="font-weight: bold; max-width: 300px" th:method="PUT"
+                          id="editForm" action="" th:object="${user}">
+
+                        <fieldset disabled>
+                            <div class="form-group">
+                                <label for="editId">ID</label>
+                                <input type="text" class="form-control" id="editId" placeholder="ID"
+                                       th:field="*{id}">
+                            </div>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <label for="editUsername">Username</label>
+                            <input type="text" class="form-control" id="editUsername" placeholder="Username"
+                                   th:field="*{username}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                            <input type="text" class="form-control" id="editEmail" placeholder="Email"
+                                   th:field="*{email}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="editPassword" id="formPassword2">Password</label>
+                            <input type="password" class="form-control" id="editPassword" placeholder="Password"
+                                   th:field="*{password}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editRole">Role</label>
+                            <select multiple class="custom-select" size="2" id="editRole"
+                                    th:field="*{roles}">
+                                <option th:each="role : ${allRoles}"
+                                        th:text="${role.name}" th:value="${role.id}"></option>
+                            </select>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            <button type="submit" class="btn btn-primary" id="editBtn">Edit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

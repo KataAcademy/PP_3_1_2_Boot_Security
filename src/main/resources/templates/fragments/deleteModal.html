@@ -1,0 +1,57 @@
+<div th:fragment="deleteModal">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <fieldset disabled>
+
+                        <form class="text-center mx-auto" style="font-weight: bold; max-width: 300px"
+                              th:object="${user}">
+                            <div class="form-group">
+                                <label for="deleteId">ID</label>
+                                <input type="text" class="form-control" id="deleteId" placeholder="ID"
+                                       th:field="*{id}">
+                            </div>
+                            <div class="form-group">
+                                <label for="deleteName">First name</label>
+                                <input type="text" class="form-control" id="deleteName" placeholder="First name"
+                                       th:field="*{username}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="deleteLastName">Last name</label>
+                                <input type="text" class="form-control" id="deleteLastName" placeholder="Last name"
+                                       th:field="*{email}">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="deleteRole">Role</label>
+                                <select multiple class="custom-select" size="2" id="deleteRole"
+                                        th:field="*{roles}">
+                                    <option th:each="role : ${allRoles}"
+                                            th:text="${role.name}" th:value="${role.id}"></option>
+                                </select>
+                            </div>
+                        </form>
+
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form th:method="DELETE" id="deleteForm" action="">
+                        <button type="submit" class="btn btn-danger" id="deleteBtn">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

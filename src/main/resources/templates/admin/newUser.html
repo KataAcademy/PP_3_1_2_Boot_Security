@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Admin panel</title>
+</head>
+<body class="bg-light h-100">
+<div th:replace="fragments/navBar :: navBar"></div>
+<div class="container-fluid bg-light" style="padding-top: 20px; height: calc(100vh - 50px)">
+    <div class="row h-100">
+        <nav class="rounded-top col-md-2 d-none d-md-block bg-white sidebar p-0">
+            <div class="sidebar-sticky ">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="/admin">
+                            <button type="submit" class="btn btn-primary w-100 text-left">Admin</button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/user">
+                            <button type="submit" class="btn btn-white w-100 text-left text-primary">User</button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-10 ml-sm-auto col-lg-10" style="padding-right: 28px; padding-left: 28px">
+            <h1>Admin panel</h1>
+            <ul class="nav nav-tabs pt-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/newUser">New User</a>
+                </li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item" style="font-weight: bold; font-size: large; background-color: whitesmoke">
+                    Add new user
+                </li>
+                <li class="list-group-item p-4">
+                    <form class="text-center mx-auto" action="" novalidate
+                          style="font-weight: bold; max-width: 300px"
+                          th:method="POST" th:action="@{/admin/newUser}" th:object="${newUser}" autocomplete="off"
+                          id="add-form">
+                        <div class="form-group">
+                            <label for="formName">Username</label>
+                            <div class="input-username">
+                                <input th:field="*{username}"
+                                       type="text" class="form-control" required id="formName"
+                                       placeholder="Username">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formEmail">Email</label>
+                            <div class="input-email">
+                                <input type="text" class="form-control" required id="formEmail" placeholder="Email"
+                                       th:field="*{email}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="formPassword" id="formPassword2">Password</label>
+                            <div class="input-password">
+                                <input type="password" class="form-control" required id="formPassword"
+                                       placeholder="Password"
+                                       th:field="*{password}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formRole">Role</label>
+                            <select multiple class="custom-select" size="2" id="formRole"
+                                    th:field="*{roles}">
+                                <option th:each="role : ${allRoles}"
+                                        th:text="${role.name}" th:value="${role.id} "></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add new user</button>
+                    </form>
+                </li>
+            </ul>
+        </main>
+    </div>
+
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<!--<script>-->
+<!--    function validation(form) {-->
+
+<!--        function removeError(input) {-->
+<!--            const parent = input.parentNode;-->
+<!--            if(parent.classList.contains('error')){-->
+<!--                parent.querySelector('.error-label').remove()-->
+<!--                parent.classList.remove('error')-->
+<!--            }-->
+<!--        }-->
+<!--        function createError(input, text) {-->
+<!--            const parent = input.parentNode;-->
+<!--            const errorLabel = document.createElement('label')-->
+<!--            errorLabel.classList.add('error-label')-->
+<!--            errorLabel.textContent = text-->
+<!--            parent.classList.add('error')-->
+<!--            parent.append(errorLabel)-->
+<!--        }-->
+
+<!--        console.log(form)-->
+<!--        let result = true;-->
+<!--        const allInputs = form.querySelectorAll('input');-->
+<!--        for (const input of allInputs) {-->
+
+<!--            removeError(input)-->
+
+<!--            if (input.value=="") {-->
+<!--                console.log("field wrong")-->
+<!--                createError(input,"The field is filled incorrectly")-->
+<!--                result = false-->
+<!--            }-->
+<!--        }-->
+<!--        return result;-->
+
+<!--    }-->
+
+<!--    document.getElementById('add-form').addEventListener('submit', function (event) {-->
+<!--        event.preventDefault()-->
+<!--        if (validation(this) == true) {-->
+<!--            event.returnValue = true-->
+<!--        }-->
+
+<!--    })-->
+<!--</script>-->
+
+
+</body>
+</html>
