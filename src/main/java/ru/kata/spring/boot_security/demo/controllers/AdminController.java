@@ -68,7 +68,7 @@ public class AdminController {
     }
 
     @PostMapping("/newUser")
-    public String addUser(Model model, @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String addUser(Model model, @RequestBody @Valid User user, BindingResult bindingResult) {
         model.addAttribute("users", userServiceImpl.allUsers());
         List<Role> allRoles = roleService.getRolesList();
         model.addAttribute("allRoles", allRoles);

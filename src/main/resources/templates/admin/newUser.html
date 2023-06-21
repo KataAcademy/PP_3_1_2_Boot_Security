@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      >
+>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -51,7 +51,8 @@
 
                     <form class="text-center mx-auto" action=""
                           style="font-weight: bold; max-width: 300px"
-                          th:method="POST" th:action="@{/admin/newUser}" th:object="${user}"
+                          th:method="POST"
+                          th:action="@{/admin/newUser}" th:object="${user}"
                           id="add-form">
 
                         <div class="form-group">
@@ -112,11 +113,11 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-<script>
+<script th:inline="javascript">
     async function validation(form) {
-        // let response = await fetch("/admin/newUser/usernames")
-        // let usernames = await response.json();
-        // console.log(usernames)
+        let response = await fetch("/admin/newUser/usernames")
+        let usernames = await response.json();
+
         function removeError(input) {
             const parent = input.parentNode;
             if(parent.classList.contains('error')){
@@ -137,36 +138,65 @@
         let result = true;
         const allInputs = form.querySelectorAll('input');
         for (const input of allInputs) {
+
             removeError(input)
             if (input.value === "") {
                 console.log("field wrong")
-                createError(input,"The field is filled incorrectly")
+                createError(input, "The field is filled incorrectly")
                 result = false
+            } else if (input.id === "formName") {
+                let currentUsername = input.value
+                for (let i = 0; i < usernames.length; i++) {
+                    if (usernames[i] === currentUsername) {
+                        console.log("need unique username")
+                        createError(input, "need unique username")
+                        result = false;
+                    }
+                }
             }
-            // if (input.id === "formName") {
-            //     let currentUsername = input.value
-            //     for (let i = 0; i < usernames.length; i++) {
-            //         if (usernames[i]===currentUsername) {
-            //             console.log("need unique username")
-            //             createError(input,"need unique username")
-            //             result = false;
-            //         }
-            //     }
-            //
-            //
-            // }
 
         }
 
         return result;
 
     }
-    document.getElementById('add-form').addEventListener('submit', function (event) {
-        if (validation(this) === false) {
-            event.preventDefault()
+
+    document.getElementById('add-form').addEventListener('submit', async function (event) {
+        event.preventDefault()
+        const form = $(event.target);
+        const json = convertFormToJSON(form);
+        delete json['_method']
+
+        if (await validation(this) === true) {
+            await fetch("/admin/newUser", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json', // то что мы отправляем контроллеру
+                    'Accept': 'application/json' // то что мы принимаем от контроллера
+                },
+                body: JSON.stringify(json) // пихаем user-json и передаём в controller
+            })
+
+            location.href = '/admin';
         }
 
     })
+
+    function convertFormToJSON(form) {
+        const array = $(form).serializeArray();
+        const json = {};
+        json.roles = []
+        let role = {"id": 0}
+        $.each(array, function () {
+            if (this.name === "roles") {
+                role.id = this.value
+                json.roles.push(Object.assign({}, role))
+            } else {
+                json[this.name] = this.value || ""
+            }
+        })
+        return json;
+    }
 
 </script>
 
