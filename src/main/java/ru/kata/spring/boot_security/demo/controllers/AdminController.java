@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,14 +54,17 @@ public class AdminController {
         model.addAttribute("principal", principal);
         model.addAttribute("user", new User());
         model.addAttribute("allRoles", roleService.getRolesList());
-        List<String> usersList = new ArrayList<>();
-        for (User us: userServiceImpl.allUsers()) {
-            usersList.add(us.getUsername());
-        }
-        model.addAttribute("usernames", usersList);
-
 
         return "admin/newUser";
+    }
+    @ResponseBody
+    @GetMapping("/newUser/usernames")
+    public ResponseEntity<List<String>>  usernamesList() {
+        List<String> usernames = new ArrayList<>();
+        for (User us: userServiceImpl.allUsers()) {
+            usernames.add(us.getUsername());
+        }
+        return  ResponseEntity.ok(usernames);
     }
 
     @PostMapping("/newUser")

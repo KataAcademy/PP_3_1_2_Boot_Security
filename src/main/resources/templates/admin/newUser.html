@@ -112,9 +112,11 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-<!-- атрибут дружбы ТЛ и ДС-->
-<script th:inline="javascript">
-    function validation(form) {
+<script>
+    async function validation(form) {
+        // let response = await fetch("/admin/newUser/usernames")
+        // let usernames = await response.json();
+        // console.log(usernames)
         function removeError(input) {
             const parent = input.parentNode;
             if(parent.classList.contains('error')){
@@ -135,31 +137,30 @@
         let result = true;
         const allInputs = form.querySelectorAll('input');
         for (const input of allInputs) {
-
             removeError(input)
-
-
-
-
-
             if (input.value === "") {
                 console.log("field wrong")
                 createError(input,"The field is filled incorrectly")
                 result = false
             }
-            if (input.id === "formName") {
-
-                console.log("need unique username")
-                createError(input,"need unique username")
-                result = false;
-            }
+            // if (input.id === "formName") {
+            //     let currentUsername = input.value
+            //     for (let i = 0; i < usernames.length; i++) {
+            //         if (usernames[i]===currentUsername) {
+            //             console.log("need unique username")
+            //             createError(input,"need unique username")
+            //             result = false;
+            //         }
+            //     }
+            //
+            //
+            // }
 
         }
 
         return result;
 
     }
-
     document.getElementById('add-form').addEventListener('submit', function (event) {
         if (validation(this) === false) {
             event.preventDefault()
@@ -168,6 +169,7 @@
     })
 
 </script>
+
 
 </body>
 </html>
