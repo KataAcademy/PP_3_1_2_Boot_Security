@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
@@ -57,6 +56,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
         userRep.deleteById(id);
     }
