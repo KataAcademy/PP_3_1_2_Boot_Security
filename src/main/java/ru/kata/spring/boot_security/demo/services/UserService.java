@@ -12,7 +12,7 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User findUserByUserName(String userName);
+    /*User findUserByUserName(String userName);*/
 
 
     void saveUser(User user);
