@@ -8,11 +8,13 @@ import ru.kata.spring.boot_security.demo.services.RoleServiceImp;
 import ru.kata.spring.boot_security.demo.services.UserServiceImp;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
 public class TestInit {
+
     private final UserServiceImp userService;
     private final RoleServiceImp roleServiceImp;
 
@@ -21,6 +23,7 @@ public class TestInit {
         this.userService = userService;
         this.roleServiceImp = roleServiceImp;
     }
+
 
     @PostConstruct
     public void initDataBase() {
