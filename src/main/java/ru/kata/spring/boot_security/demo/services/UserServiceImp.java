@@ -33,10 +33,10 @@ public class UserServiceImp implements UserService {
         return userRep.getById(id);
     }
 
-    /*@Override
+    @Override
     public User findUserByUserName(String userName) {
         return userRep.findByUserName(userName);
-    }*/
+    }
 
     @Override
     @Transactional

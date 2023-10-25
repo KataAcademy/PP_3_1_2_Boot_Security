@@ -27,12 +27,17 @@ public class RoleServiceImp implements RoleService {
     }
 
     @Override
-    public void saveRole(Role role) {
+    public Role getRoleByName(String roleName) {
+        return roleRep.findRoleByRoleName(roleName);
+    }
 
+    @Override
+    public void saveRole(Role role) {
+        roleRep.save(role);
     }
 
     @Override
     public void deleteRole(Long id) {
-
+        roleRep.deleteById(id);
     }
 }
