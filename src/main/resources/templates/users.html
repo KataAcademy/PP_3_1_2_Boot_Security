@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>ID</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Email</td>
+        <td>Action</td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.firstname}"></td>
+        <td th:text="${user.lastname}"></td>
+        <td th:text="${user.email}"></td>
+        <td>
+            <a th:href="@{'/edit?id=' + ${user.id}}">Edit</a> or <a th:href="@{'/delete?id=' + ${user.id}}" title="Non active yet">Delete</a>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/new-user}">Create new user</a>
+
+</body>
+</html>

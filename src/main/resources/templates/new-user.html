@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New User</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/new-user}" th:object="${user}">
+    <label for="firstname">Enter first name: </label>
+    <input type="text" th:field="*{firstname}" id="firstname" tabindex="1"/>
+    <span class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span><br/>
+    <label for="lastname">Enter last name: </label>
+    <input type="text" th:field="*{lastname}" id="lastname" tabindex="2"/>
+    <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span><br/>
+    <label for="email">Email: </label>
+    <input type="text" th:field="*{email}" id="email" tabindex="3"/>
+    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
+    <input type="submit" value="Save User"/>
+</form>
+<a href="/">Back to Main Page</a>
+</body>
+</html>
