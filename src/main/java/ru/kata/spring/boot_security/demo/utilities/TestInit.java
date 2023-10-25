@@ -24,6 +24,7 @@ public class TestInit {
 
     @PostConstruct
     public void initDataBase() {
+
         roleServiceImp.saveRole(new Role("ADMIN"));
         roleServiceImp.saveRole(new Role("USER"));
         User user = new User();
@@ -36,7 +37,7 @@ public class TestInit {
         user.setEmail("user@user.com");
         user.setPassword("user");
         user.setRoles(userRoles);
-        userService.saveUser(user);
+        userService.saveUser(user); //почему не работает?
     }
 
 
