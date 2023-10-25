@@ -28,12 +28,6 @@ public class LameUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Unknown user: " + username);
         }
 
-        String[] collect = user.getRoles().stream().map(Role::getRoleName).toArray(String[]::new);
-
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(collect)
-                .build();
+        return user;
     }
 }
