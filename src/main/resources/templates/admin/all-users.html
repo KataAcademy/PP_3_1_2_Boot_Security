@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+<div th:replace="~{/menu::menu-bar}"></div>
+<table>
+    <tr>
+        <td>ID</td>
+        <td>Login</td>
+        <td>Email</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Action</td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.getFirstName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
+        <td>
+            <a th:href="@{/admin/user-details(id=${user.getId()})}">Edit</a> /
+            <a th:href="@{/admin/delete-user(id=${user.getId()})}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -9,8 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.services.LameUserDetailsService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -26,8 +31,13 @@ public class UserController {
     public String userPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        model.addAttribute("user",
-                lameUserDetailsService.loadUserByUsername(userDetails.getUsername()));
+        User user = (User) lameUserDetailsService.loadUserByUsername(userDetails.getUsername());
+        List<String> userRoles = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            userRoles.add(role.getRoleName());
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("roles", userRoles);
         return "user";
     }
 }

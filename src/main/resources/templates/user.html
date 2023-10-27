@@ -7,6 +7,6 @@
 <div th:insert="~{menu::menu-bar}"></div>
 <h1 th:text="${user.getFirstName()} + ', welcome spring boot security page!'"></h1>
 <p th:text="'Your email is: ' + ${user.getEmail()}"></p>
-
+<p th:each="role : ${user.getRoles()}" th:if="${role.getRoleName()} == 'ROLE_USER'" th:text="${role.getRoleName()}"></p>
 </body>
 </html>
