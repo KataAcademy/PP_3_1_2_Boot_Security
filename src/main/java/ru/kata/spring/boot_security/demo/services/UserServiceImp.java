@@ -67,6 +67,8 @@ public class UserServiceImp implements UserService {
     public void updateUserDetails(User user) {
         User userFromDb = getUserById(user.getId());
         userFromDb.setUserName(user.getUsername());
+        userFromDb.setFirstName(user.getFirstName());
+        userFromDb.setLastName(user.getLastName());
         userFromDb.setEmail(user.getEmail());
         userFromDb.setRoles(user.getRoles());
         userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));

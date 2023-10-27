@@ -30,25 +30,31 @@ public class TestInit {
     @PostConstruct
     public void initDataBase() {
 
-        roleServiceImp.saveRole(new Role("ADMIN"));
-        roleServiceImp.saveRole(new Role("USER"));
+        roleServiceImp.saveRole(new Role("ROLE_ADMIN"));
+        roleServiceImp.saveRole(new Role("ROLE_USER"));
         User user = new User();
         User admin = new User();
         User uAdmin = new User();
         Set<Role> userRoles = new HashSet<>();
         Set<Role> adminRoles = new HashSet<>();
         Set<Role> uAdminRoles = new HashSet<>();
-        userRoles.add(roleServiceImp.getRoleByName("USER"));
-        adminRoles.add(roleServiceImp.getRoleByName("ADMIN"));
+        userRoles.add(roleServiceImp.getRoleByName("ROLE_USER"));
+        adminRoles.add(roleServiceImp.getRoleByName("ROLE_ADMIN"));
         uAdminRoles.addAll(userRoles);
         uAdminRoles.addAll(adminRoles);
         user.setUserName("user");
+        user.setFirstName("Ivan");
+        user.setLastName("Ivanov");
         user.setEmail("user@user.com");
         user.setPassword("user");
         admin.setUserName("admin");
+        admin.setFirstName("Noah");
+        admin.setLastName("Bernstein");
         admin.setEmail("admin@admin.com");
         admin.setPassword("admin");
         uAdmin.setUserName("uadmin");
+        uAdmin.setFirstName("Anna");
+        uAdmin.setLastName("Karenina");
         uAdmin.setEmail("user@admin.com");
         uAdmin.setPassword("uadmin");
 

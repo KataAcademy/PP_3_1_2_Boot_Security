@@ -24,6 +24,13 @@ public class User implements UserDetails {
     @NotNull(message = "Can not be empty")
     private String userName;
 
+    @Column(name = "first_name")
+    @NotNull(message = "Can not be empty")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
     @Column(name = "email", unique = true)
     @Email(message = "Mismatch email pattern.")
     private String email;
