@@ -20,9 +20,8 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long   id;
 
-    @Column(name = "user_name", unique = true)
-    @NotNull(message = "Can not be empty")
-    private String userName;
+    @Column(name = "username", unique = true)
+    private String username;
 
     @Column(name = "first_name")
     @NotNull(message = "Can not be empty")
@@ -36,7 +35,6 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "password")
-    @NotNull(message = "Can not be empty")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -49,11 +47,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
     }
 
     @Override
@@ -75,4 +68,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

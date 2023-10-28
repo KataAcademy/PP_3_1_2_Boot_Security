@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<th:block th:fragment="create-user-form">
+    <form th:method="post"
+          th:object="${user}"
+          th:action="@{/admin/create-or-edit-user}">
+        <fieldset>
+            <legend>User data</legend>
+            <label>Username: </label>
+            <input type="text" id="username" th:field="*{username}" placeholder="Choose wisely."/>
+            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br/>
+
+            <label>First name: </label>
+            <input type="text" id="firstname" th:field="*{firstName}" placeholder="How does your mama call you?"/>
+            <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
+
+            <label>Last name: </label>
+            <input type="text" id="lastname" th:field="*{lastName}" placeholder="To which kin dost thou belong?"/>
+            <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
+
+            <label>Email: </label>
+            <input type="text" id="email" th:field="*{email}" placeholder="Where shall we send an owl?"/>
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
+
+            <label>Password: </label>
+            <input type="text" id="password" th:field="*{password}" placeholder="Be sneaky."/>
+            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br/>
+        </fieldset>
+        <fieldset>
+            <legend>Select roles: </legend>
+            <label for="ROLE_USER">User </label> <input type="checkbox" th:name="isUser" id="ROLE_USER" th:checked="${isUserChecked}">
+            <label for="ROLE_ADMIN">Admin </label> <input type="checkbox" th:name="isAdmin" id="ROLE_ADMIN" th:checked="${isAdminChecked}">
+        </fieldset>
+        <input type="submit" name="submit" id="submit" value="Create!">
+    </form>
+</th:block>
+
+
+<th:block th:fragment="edit-user-form">
+    <form th:method="POST"
+          th:action="@{/admin/create-or-edit-user(id=${user.getId()})}"
+          th:object="${user}">
+<!--        <input type="number" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}" disabled/>-->
+        <input type="text" th:field="*{username}" th:placeholder="*{username}" disabled/><br/>
+        <label for="firstname">First Name: </label>
+        <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="*{firstName}" autofocus/>
+        <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
+        <label for="lastname">Last Name: </label>
+        <input type="text" id="lastname" th:placeholder="*{lastName}" th:field="*{lastName}"/>
+        <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
+        <label for="email">Email: </label>
+        <input type="email" id="email" th:field="*{email}" th:placeholder="*{email}"/>
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
+        <label for="password">Password: </label>
+        <input type="password" id="password" th:field="*{password}" placeholder="*****"/>
+        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{email}"></span><br/>
+        <input type="text" th:field="*{roles}" hidden="hidden">
+        <input type="submit" value="Save Changes"/>
+    </form>
+</th:block>

@@ -32,12 +32,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = (User) lameUserDetailsService.loadUserByUsername(userDetails.getUsername());
-        List<String> userRoles = new ArrayList<>();
-        for (Role role : user.getRoles()) {
-            userRoles.add(role.getRoleName());
-        }
         model.addAttribute("user", user);
-        model.addAttribute("roles", userRoles);
         return "user";
     }
 }

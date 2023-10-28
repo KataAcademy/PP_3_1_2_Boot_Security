@@ -40,8 +40,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User findUserByUserName(String userName) {
-        return userRep.findByUserName(userName);
+    public User findUserByUserName(String username) {
+        return userRep.findUserByUsername(username);
     }
 
     @Override
@@ -54,25 +54,15 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void saveUser(User user, Set<Role> roleSet) {
-        Set<Role> roles = new HashSet<>();
-        for (Role role : roleSet) {
-            roles.add(roleService.getRoleByName(role.getRoleName()));
-        }
-        user.setRoles(roles);
+
+        user.setRoles(roleSet);
         saveUser(user);
     }
 
     @Override
     @Transactional
     public void updateUserDetails(User user) {
-        User userFromDb = getUserById(user.getId());
-        userFromDb.setUserName(user.getUsername());
-        userFromDb.setFirstName(user.getFirstName());
-        userFromDb.setLastName(user.getLastName());
-        userFromDb.setEmail(user.getEmail());
-        userFromDb.setRoles(user.getRoles());
-        userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRep.save(userFromDb);
+        userRep.save(user);
     }
 
     @Override

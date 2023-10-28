@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>User's Home Page</title>
 </head>
 <body>
-<div th:insert="~{menu::menu-bar}"></div>
-<h1 th:text="${user.getFirstName()} + ', welcome spring boot security page!'"></h1>
-<p th:text="'Your email is: ' + ${user.getEmail()}"></p>
-<p th:each="role : ${user.getRoles()}" th:if="${role.getRoleName()} == 'ROLE_USER'" th:text="${role.getRoleName()}"></p>
+<h1 th:text="'Welcome home, ' + ${user.getFirstName()}"></h1>
+<h2>Your details: </h2>
+<p th:text="'First name: ' + ${user.getFirstName()}"></p>
+<p th:text="'Last name: ' + ${user.getLastName()}"></p>
+<p th:text="'Email: ' + ${user.getEmail()}"></p>
 </body>
 </html>

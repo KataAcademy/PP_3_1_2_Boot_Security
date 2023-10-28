@@ -13,7 +13,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 @Service
 public class LameUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRep;
+    private final UserRepository userRep;
 
     @Autowired
     public LameUserDetailsService(UserRepository userRep) {
@@ -22,7 +22,7 @@ public class LameUserDetailsService implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRep.findByUserName(username);
+        User user = userRep.findUserByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("Unknown user: " + username);

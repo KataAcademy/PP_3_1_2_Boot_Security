@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Page</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/admin/edit-user(id=${user.getId()})}" th:object="${user}">
+    <input type="number" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}" disabled/>
+    <input type="text" th:field="*{username}" th:value="*{username}" th:placeholder="*{username}" disabled/><br/>
+    <label for="firstname">First Name: </label>
+    <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="*{firstName}" autofocus/>
+    <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
+    <label for="lastname">Last Name: </label>
+    <input type="text" id="lastname" th:placeholder="*{lastName}" th:field="*{lastName}"/>
+    <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
+    <label for="email">Email: </label>
+    <input type="email" id="email" th:field="*{email}" th:placeholder="*{email}"/>
+    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
+    <label for="password">Password: </label>
+    <input type="password" id="password" th:field="*{password}" placeholder="*****"/>
+    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{email}"></span><br/>
+    <input type="submit" value="Save Changes"/>
+</form>
+</body>
+</html>
