@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Set;
 
 @Data
@@ -14,16 +15,17 @@ public class Role implements GrantedAuthority {
 //    todo здесь тоже исправить импорты
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "role_name", unique = true)
     @NotNull
-    private String roleName;
+    private String            roleName;
+/*
 
     @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+*/
 
     public Role() {
 

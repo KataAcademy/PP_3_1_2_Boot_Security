@@ -4,12 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.services.RoleServiceImp;
-import ru.kata.spring.boot_security.demo.services.UserServiceImp;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.util.HashSet;
 import java.util.Set;
 

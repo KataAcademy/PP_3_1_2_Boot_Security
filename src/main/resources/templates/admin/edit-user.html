@@ -7,8 +7,10 @@
 <body>
 
 <form th:method="POST" th:action="@{/admin/edit-user(id=${user.getId()})}" th:object="${user}">
-    <input type="number" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}" disabled/>
-    <input type="text" th:field="*{username}" th:value="*{username}" th:placeholder="*{username}" disabled/><br/>
+    <input type="hidden" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}"/>
+    <input type="hidden" th:field="*{username}" th:value="*{username}" th:placeholder="*{username}"/>
+    <input type="hidden" th:field="*{password}" th:value="*{password}" th:placeholder="*{password}"/>
+    <input type="hidden" th:field="*{roles}" th:value="*{roles}" th:placeholder="*{roles}"/>
     <label for="firstname">First Name: </label>
     <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="*{firstName}" autofocus/>
     <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
@@ -18,9 +20,6 @@
     <label for="email">Email: </label>
     <input type="email" id="email" th:field="*{email}" th:placeholder="*{email}"/>
     <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
-    <label for="password">Password: </label>
-    <input type="password" id="password" th:field="*{password}" placeholder="*****"/>
-    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{email}"></span><br/>
     <input type="submit" value="Save Changes"/>
 </form>
 </body>

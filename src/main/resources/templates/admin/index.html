@@ -22,12 +22,12 @@
         <td th:text="${user.getLastName()}"></td>
         <td th:text="${user.getEmail()}"></td>
         <td>
-            <a th:href="@{admin/create-or-edit-user(id=${user.getId()})}" title="Edit user details">Edit</a> /
+            <a th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details">Edit</a> /
             <a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user">Delete</a>
         </td>
     </tr>
 </table>
-<a th:href="@{admin/create-or-edit-user}">Create new user.</a>
+<a th:href="@{admin/create-user}">Create new user.</a>
 
 </body>
 </html>

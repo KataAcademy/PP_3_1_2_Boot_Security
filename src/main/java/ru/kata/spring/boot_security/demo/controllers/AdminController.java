@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.configs.SuccessUserHandler;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.services.RoleServiceImp;
-import ru.kata.spring.boot_security.demo.services.UserServiceImp;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -36,7 +34,7 @@ public class AdminController {
         return "admin/index";
     }
 
-    /*@GetMapping("/edit-user")
+    @GetMapping("/edit-user")
     public String showUserDetails(@RequestParam(name = "id") Long id,
                                   Model model) {
         model.addAttribute("user", userService.getUserById(id));
@@ -53,7 +51,7 @@ public class AdminController {
         }
         userService.updateUserDetails(user);
         return "redirect:/admin";
-    }*/
+    }
 
     @GetMapping("/delete-user")
     public String deleteUserPage(@RequestParam(name = "id") Long id,
@@ -68,12 +66,12 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    /*@GetMapping("/create-user")
+    @GetMapping("/create-user")
     public String newUserPage(@ModelAttribute("user") User user) {
         return "admin/create-user";
-    }*/
+    }
 
-    /*@PostMapping("/create-user")
+    @PostMapping("/create-user")
     public String createUser(@Valid @ModelAttribute("user") User user,
                              @RequestParam(name = "isUser", required = false) boolean isUserChecked,
                              @RequestParam(name = "isAdmin", required = false) boolean isAdminChecked,
@@ -96,9 +94,9 @@ public class AdminController {
         System.out.println(user.toString());
         userService.saveUser(user, roles);
         return "redirect:/admin";
-    }*/
+    }
 
-    @GetMapping("/create-or-edit-user")
+    /*@GetMapping("/create-or-edit-user")
     public String createOrEditUserPage(Model model,
                                        @RequestParam(name = "id", required = false) Long id) {
 
@@ -108,9 +106,9 @@ public class AdminController {
             model.addAttribute("user", userService.getUserById(id));
         }
         return "admin/create-or-edit-user";
-    }
+    }*/
 
-    @PostMapping("/create-or-edit-user")
+    /*@PostMapping("/create-or-edit-user")
     public String createOrEditUser(@Valid @ModelAttribute(name = "user") User user,
                                    BindingResult result,
                                    Model model,
@@ -139,5 +137,5 @@ public class AdminController {
             userService.updateUserDetails(user);
         }
         return "redirect:/admin";
-    }
+    }*/
 }
