@@ -5,7 +5,7 @@
     <title>Edit Page</title>
 </head>
 <body>
-
+<div th:insert="~{elements::top-bar}"></div>
 <form th:method="POST" th:action="@{/admin/edit-user(id=${user.getId()})}" th:object="${user}">
     <input type="hidden" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}"/>
     <input type="hidden" th:field="*{username}" th:value="*{username}" th:placeholder="*{username}"/>

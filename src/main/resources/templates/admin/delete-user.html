@@ -5,6 +5,7 @@
     <title>Delete User Page</title>
 </head>
 <body>
+<div th:insert="~{elements::top-bar}"></div>
 <form th:method="post" th:action="@{/admin/delete-user(id=${user.getId()})}" th:object="${user}">
     <table>
         <thead>You are about to delete user</thead>

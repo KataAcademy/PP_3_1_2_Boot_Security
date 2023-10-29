@@ -5,6 +5,7 @@
     <title>User's Home Page</title>
 </head>
 <body>
+<div th:insert="~{elements::top-bar}"></div>
 <h1 th:text="'Welcome home, ' + ${user.getFirstName()}"></h1>
 <h2>Your details: </h2>
 <p th:text="'First name: ' + ${user.getFirstName()}"></p>

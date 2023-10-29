@@ -5,6 +5,7 @@
     <title>New User</title>
 </head>
 <body>
+<div th:insert="~{elements::top-bar}"></div>
 <form th:method="post" th:action="@{/admin/create-user}" th:object="${user}">
     <fieldset>
         <legend>User data</legend>

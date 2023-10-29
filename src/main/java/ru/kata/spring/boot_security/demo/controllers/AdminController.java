@@ -32,6 +32,7 @@ import java.util.HashSet;
 
     @GetMapping() public String getAllUsers(Model model) {
         model.addAttribute("users", userService.allUsers());
+        model.addAttribute("isOwnerAdmin", true);
         return "admin/index";
     }
 
@@ -39,6 +40,7 @@ import java.util.HashSet;
     public String userDetailsPage(@RequestParam(name = "id") Long id,
                                   Model model) {
         model.addAttribute("user", userService.showUserDetails(id));
+        model.addAttribute("isOwnerAdmin", true);
         return "admin/edit-user";
     }
 
@@ -49,6 +51,7 @@ import java.util.HashSet;
                            Model model) {
         if (result.hasErrors()) {
             model.addAttribute("error", result.getAllErrors());
+            model.addAttribute("isOwnerAdmin", true);
             return "admin/edit-user";
         }
         userService.updateUserDetails(id, user);
@@ -59,6 +62,7 @@ import java.util.HashSet;
     public String createUserPage(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("isOwnerAdmin", true);
         return "admin/create-user";
     }
 
@@ -90,6 +94,7 @@ import java.util.HashSet;
     public String deleteUserPage(@RequestParam(name = "id") Long id,
                                  Model model) {
         model.addAttribute("user", userService.showUserDetails(id));
+        model.addAttribute("isOwnerAdmin", true);
         return "admin/delete-user";
     }
 
