@@ -9,22 +9,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final LameUserDetailsService lameUserDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public UserController(LameUserDetailsService lameUserDetailsService) {
-        this.lameUserDetailsService = lameUserDetailsService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
     public String userPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = (User) lameUserDetailsService.loadUserByUsername(userDetails.getUsername());
+        User user = userService.findByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
         return "user";
     }

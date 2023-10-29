@@ -23,7 +23,6 @@ public class User implements UserDetails {
     private String username;
 
     @Column(name = "first_name")
-    @NotNull(message = "Can not be empty")
     private String firstName;
 
     @Column(name = "last_name")
@@ -41,6 +40,18 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
+
+    public User() {
+    }
+
+    public User(String username, String firstName, String lastName, String email, String password, Collection<Role> roles) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

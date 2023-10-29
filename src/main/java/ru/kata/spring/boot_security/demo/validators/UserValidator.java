@@ -7,16 +7,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Component
 public class UserValidator implements Validator {
 
-    private final LameUserDetailsService lameUserDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public UserValidator(LameUserDetailsService lameUserDetailsService) {
-        this.lameUserDetailsService = lameUserDetailsService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
     }
+
 
     @Override
     public boolean supports(@NotNull Class<?> clazz) {
@@ -28,12 +30,15 @@ public class UserValidator implements Validator {
         User user = (User) target;
 
         try {
-            lameUserDetailsService.loadUserByUsername(user.getUsername());
+            userService.loadUserByUsername(user.getUsername());
         } catch (UsernameNotFoundException ignored) {
             return;
         }
 
-        errors.rejectValue("username","", "Человек с таким именем пользователя уже существует");
-
+        errors.rejectValue(
+                "username",
+                "",
+                "Пользователь уже существует"
+        );
     }
 }

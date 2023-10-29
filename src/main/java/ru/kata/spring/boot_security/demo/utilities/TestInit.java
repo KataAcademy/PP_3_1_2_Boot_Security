@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -13,50 +15,56 @@ import java.util.Set;
 public class TestInit {
 
 
-    private final UserServiceImp userService;
-    private final RoleServiceImp roleServiceImp;
+    private final UserService    userService;
+    private final RoleRepository roleRep;
 
     @Autowired
-    public TestInit(UserServiceImp userService, RoleServiceImp roleServiceImp) {
+    public TestInit(UserService userService, RoleRepository roleRep) {
         this.userService = userService;
-        this.roleServiceImp = roleServiceImp;
+        this.roleRep = roleRep;
     }
 
 
     @PostConstruct
     public void initDataBase() {
 
-        roleServiceImp.saveRole(new Role("ROLE_ADMIN"));
-        roleServiceImp.saveRole(new Role("ROLE_USER"));
-        User user = new User();
-        User admin = new User();
-        User uAdmin = new User();
+        roleRep.save(new Role("ROLE_ADMIN"));
+        roleRep.save(new Role("ROLE_USER"));
         Set<Role> userRoles = new HashSet<>();
         Set<Role> adminRoles = new HashSet<>();
         Set<Role> uAdminRoles = new HashSet<>();
-        userRoles.add(roleServiceImp.getRoleByName("ROLE_USER"));
-        adminRoles.add(roleServiceImp.getRoleByName("ROLE_ADMIN"));
+        userRoles.add(roleRep.findRoleByRolename("ROLE_USER"));
+        adminRoles.add(roleRep.findRoleByRolename("ROLE_ADMIN"));
         uAdminRoles.addAll(userRoles);
         uAdminRoles.addAll(adminRoles);
-        user.setUsername("user");
-        user.setFirstName("Ivan");
-        user.setLastName("Ivanov");
-        user.setEmail("user@user.com");
-        user.setPassword("user");
-        admin.setUsername("admin");
-        admin.setFirstName("Noah");
-        admin.setLastName("Bernstein");
-        admin.setEmail("admin@admin.com");
-        admin.setPassword("admin");
-        uAdmin.setUsername("uadmin");
-        uAdmin.setFirstName("Anna");
-        uAdmin.setLastName("Karenina");
-        uAdmin.setEmail("user@admin.com");
-        uAdmin.setPassword("uadmin");
+        User user1 = new User(
+                "user",
+                "Ivan",
+                "Ivanov",
+                "user@user.com",
+                "user",
+                userRoles
+        );
+        User user2 = new User(
+                "admin",
+                "Noah",
+                "Bernstein",
+                "admin@admin.com",
+                "admin",
+                adminRoles);
+        User user3 = new User(
+                "usmin",
+                "Sarah",
+                "Kahabidze",
+                "user@admin.com",
+                "usmin",
+                uAdminRoles
+        );
 
-        userService.saveUser(user, userRoles);
-        userService.saveUser(admin, adminRoles);
-        userService.saveUser(uAdmin, uAdminRoles);
+
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+        userService.saveUser(user3);
     }
 
 

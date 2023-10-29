@@ -5,8 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
-import java.util.Set;
 
 @Data
 @Entity
@@ -17,9 +15,9 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "role_name", unique = true)
+    @Column(name = "rolename", unique = true)
     @NotNull
-    private String            roleName;
+    private String rolename;
 /*
 
     @Transient
@@ -30,8 +28,8 @@ public class Role implements GrantedAuthority {
     public Role() {
 
     }
-    public Role(String roleName) {
-        this.roleName = roleName;
+    public Role(String rolename) {
+        this.rolename = rolename;
     }
     public void setId(Long id) {
         this.id = id;
@@ -39,6 +37,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return getRoleName();
+        return getRolename();
     }
 }

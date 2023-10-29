@@ -10,7 +10,7 @@
     <input type="hidden" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}"/>
     <input type="hidden" th:field="*{username}" th:value="*{username}" th:placeholder="*{username}"/>
     <input type="hidden" th:field="*{password}" th:value="*{password}" th:placeholder="*{password}"/>
-    <input type="hidden" th:field="*{roles}" th:value="*{roles}" th:placeholder="*{roles}"/>
+<!--    <input type="hidden" th:field="*{roles}" th:value="*{roles}" th:placeholder="*{roles}"/>-->
     <label for="firstname">First Name: </label>
     <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="*{firstName}" autofocus/>
     <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
