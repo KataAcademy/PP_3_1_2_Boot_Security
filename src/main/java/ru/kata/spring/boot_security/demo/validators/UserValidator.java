@@ -1,6 +1,4 @@
 package ru.kata.spring.boot_security.demo.validators;
-
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -21,12 +19,12 @@ public class UserValidator implements Validator {
 
 
     @Override
-    public boolean supports(@NotNull Class<?> clazz) {
+    public boolean supports(Class<?> clazz) {
         return User.class.equals(clazz);
     }
 
     @Override
-    public void validate(@NotNull Object target, @NotNull Errors errors) {
+    public void validate(Object target, Errors errors) {
         User user = (User) target;
 
         try {

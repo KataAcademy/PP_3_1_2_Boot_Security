@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.validators.UserValidator;
 
+
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.HashSet;
@@ -67,7 +68,7 @@ import java.util.HashSet;
     }
 
     @PostMapping("/create-user")
-    public String createUser(@Valid @ModelAttribute("user") User user,
+    public String createUser(@Valid User user,
                              @RequestParam(name = "isUser", required = false) boolean isUserChecked,
                              @RequestParam(name = "isAdmin", required = false) boolean isAdminChecked,
                              BindingResult result,

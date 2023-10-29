@@ -4,11 +4,11 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
-import java.util.Set;
 
 @Data
 @Entity
@@ -19,17 +19,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long   id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "first_name")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Can't contain digits and special symbols.")
     private String firstName;
 
     @Column(name = "last_name")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Can't contain digits and special symbols.")
     private String lastName;
 
     @Column(name = "email", unique = true)
-    @Email(message = "Mismatch email pattern.")
+    @Email
     private String email;
 
     @Column(name = "password")
