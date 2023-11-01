@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+
+<div th:fragment="top-bar">
+    <div><a th:if="${isOwnerAdmin}" th:href="@{/admin}" th:text="'Back to admin panel.'"></a></div>
+    <div>
+        <form th:action="@{/logout}">
+            <input type="submit" value="Log Out">
+        </form>
+    </div>
+</div>
