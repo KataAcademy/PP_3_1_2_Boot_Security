@@ -1,51 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit Page</title>
+    meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>All Users List</title>
 </head>
 <body>
 <div th:insert="~{elements::top-bar}"></div>
-<!--<form th:method="POST" th:action="@{/admin/edit-user(id=${user.getId()})}" th:object="${user}">
-    <input type="hidden" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}"/>
-    <input type="hidden" th:field="*{username}" th:value="*{username}" th:placeholder="*{username}"/>
-    <input type="hidden" th:field="*{password}" th:value="*{password}" th:placeholder="*{password}"/>
-    <label for="firstname">First Name: </label>
-    <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="*{firstName}" autofocus/>
-    <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
-    <label for="lastname">Last Name: </label>
-    <input type="text" id="lastname" th:placeholder="*{lastName}" th:field="*{lastName}"/>
-    <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
-    <label for="email">Email: </label>
-    <input type="email" id="email" th:field="*{email}" th:placeholder="*{email}"/>
-    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
-    <input type="submit" value="Save Changes"/>
-</form>-->
+<th:block th:insert="~{elements::save-user-details-form}"></th:block>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-<form th:method="post" th:action="@{/admin/edit-user(id=${user.getId()})}" th:object="${user}">
-    <fieldset>
-        <legend>Edit user</legend>
-        <input type="hidden" th:field="*{id}" th:value="*{id}" th:placeholder="*{id}"/>
-        <input type="hidden" th:field="*{username}" th:value="*{username}"/>
-        <input type="hidden" th:field="*{password}" th:value="${user.getPassword()}"/>
-        <label for="firstname">First Name: </label>
-        <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="*{firstName}" autofocus/>
-        <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
-        <label for="lastname">Last Name: </label>
-        <input type="text" id="lastname" th:placeholder="*{lastName}" th:field="*{lastName}"/>
-        <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
-        <label for="email">Email: </label>
-        <input type="email" id="email" th:field="*{email}" th:placeholder="*{email}"/>
-        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
-        <label for="role">Role</label>
-        <select name="role" id="role" th:field="*{roles}" multiple>
-            <option th:each="role : ${allRoles}"
-                    th:value="${{role.id}}"
-                    th:selected="${#sets.contains(allRoles, role)}"
-                    th:text="${role.getRolename()}"></option>
-        </select>
-    </fieldset>
-    <input type="submit" name="submit" id="submit" value="Edit user">
-</form>
 </body>
 </html>

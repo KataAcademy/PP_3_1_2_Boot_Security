@@ -2,7 +2,7 @@
 
 
 <th:block th:fragment="top-bar"  th:object="${currentUser}">
-    <header class="navbar navbar-expand flex-column flex-md-row navbar-dark bg-dark mr-auto">
+    <header class="navbar navbar-expand flex-md-row justify-content-between navbar-dark bg-dark">
         <div class="navbar-brand">
             <span  th:text="*{email} + ' with roles: '"></span>
             <th:block th:each="role : *{roles}">
@@ -10,18 +10,117 @@
                 <span th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:text="'USER'"> VALUE</span>
             </th:block>
         </div>
-        <div class="navbar-item"><a th:href="@{/logout}" class="nav-link">Log Out</a></div>
+        <div class="nav nav-pills"><a th:href="@{/logout}" class="nav-item nav-link btn text-secondary">Log Out</a></div>
     </header>
 </th:block>
-    <!--<div class="row">
-
-    </div>-->
 
 
-<div th:fragment="side-bar" th:object="${currentUser}" class="col-2 list-group">
+<div th:fragment="side-bar" th:object="${currentUser}" class="col-2 bd-sidebar list-group bg-white">
     <th:block th:each="role : *{roles}">
         <a class="list-group-item list-group-item-action active" th:if="${role.getRolename()} == 'ROLE_ADMIN'" th:href="@{/admin}" th:text="'ADMIN'"></a>
         <a class="list-group-item list-group-item-action" th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:href="@{/user}" th:text="'USER'"></a>
     </th:block>
 </div>
 
+<table class="table table-striped" id="users-table" th:fragment="all-users-table" th:object="${users}">
+    <caption>All users</caption>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Login</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th >Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getFirstName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td><a th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details" class="btn btn-info">Edit</a></td>
+        <td><a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user" class="btn btn-danger">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<form th:fragment="save-user-details-form" th:action="'#'" th:method="post" th:object="${user}">
+        <fieldset>
+            <legend th:text="*{id} == null ? 'Add new user' : 'Edit user'"></legend>
+            <div class="form-group">
+                <label >Username: </label>
+                <input th:type="*{id} == null ? text : hidden"
+                       class="form-control"
+                       id="username"
+                       th:field="*{username}"
+                       th:placeholder="*{id} == null ? 'Choose wisely.' : *{username}"/>
+                <span class="error"
+                      th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br/>
+            </div>
+            <div class="form-group">
+                <label>First name: </label>
+                <input type="text"
+                       class="form-control"
+                       id="firstname"
+                       th:field="*{firstName}"
+                       th:placeholder="*{id} == null ? 'How does your mama call you?' : *{firstName}"/>
+                <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
+            </div>
+
+            <div class="form-group">
+                <label>Last name: </label>
+                <input type="text"
+                       class="form-control"
+                       id="lastname"
+                       th:field="*{lastName}"
+                       style="width: auto"
+                       th:placeholder="*{id} == null ? 'To which kin dost thou belong?' : *{lastName}"/>
+                <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
+            </div>
+
+            <div class="form-group">
+                <label>Email: </label>
+                <input type="text"
+                       class="form-control"
+                       id="email"
+                       th:field="*{email}"
+                       th:placeholder="*{id} == null ? 'Where shall we send an owl?' : *{email}"/>
+                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
+            </div>
+
+            <div class="form-group">
+                <label>Password: </label>
+                <input th:type="*{id} == null ? text : hidden"
+                       class="form-control"
+                       id="password"
+                       th:field="*{password}"
+                       style="width: auto"
+                       placeholder="Be sneaky."/>
+                <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br/>
+            </div>
+
+            <label for="role">Role</label>
+            <select multiple="multiple"
+                    class="form-control"
+                    name="roles"
+                    id="role"
+                    th:field="*{roles}">
+                <option th:each="role : ${allRoles}"
+                        th:value="${{role.id}}"
+                        th:text="${role.getRolename()}">
+                </option>
+            </select>
+
+        </fieldset>
+        <input type="submit"
+               class="btn btn-primary mb-2"
+               name="submit"
+               id="submit"
+               th:value="*{id} == null ? 'Add new user' : 'Edit user'"
+               th:formaction="*{id} == null ? @{/admin/create-user} : @{/admin/edit-user(id=${user.getId()})}">
+
+</form>

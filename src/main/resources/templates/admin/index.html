@@ -7,48 +7,34 @@
     <title>All Users List</title>
 </head>
 <body>
+<th:block th:replace="~{elements::top-bar}"></th:block>
+<div class="container-fluid">
 
-<div th:replace="~{elements::top-bar}"></div>
-<!--<div class="row">
-    <div th:replace="~{elements::side-bar}"></div>
-    <div class="col-6">
-        <h1 class="h1">Admin panel</h1>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a href="#users-table">All users</a>
-                <table class="table" id="users-table">
-                    &lt;!&ndash;<thead class="table-header">Users table</thead>&ndash;&gt;
-                    <tr>
-                        <td>ID</td>
-                        <td>Login</td>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Email</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
-                    </tr>
-                    <tr th:each="user : ${users}">
-                        <td th:text="${user.getId()}"></td>
-                        <td th:text="${user.getUsername()}"></td>
-                        <td th:text="${user.getFirstName()}"></td>
-                        <td th:text="${user.getLastName()}"></td>
-                        <td th:text="${user.getEmail()}"></td>
-                        <td><a th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details" class="btn btn-info">Edit</a></td>
-                        <td><a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user" class="btn btn-danger">Delete</a></td>
-                    </tr>
-                </table>
-            </li>
-            <li class="nav-item">
-                <a th:href="@{admin/create-user}" class="">New user</a>
-            </li>
-        </ul>
+    <div class="row flex-xl-nowrap bg-light">
+        <div th:replace="~{elements::side-bar}"></div>
+        <main class="bg-content col-10">
+            <h1 class="h1">Admin panel</h1>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/create-user}"></a>
+                </li>
+            </ul>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#users-table">Users table</a>
+
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{admin/create-user}" class="nav-link">New user</a>
+                </li>
+            </ul>
+            <th:block th:insert="~{elements::all-users-table}"></th:block>
+        </main>
     </div>
-
-</div>-->
-
-
-
-
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
