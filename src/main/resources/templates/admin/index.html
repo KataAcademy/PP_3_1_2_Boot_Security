@@ -2,33 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>All Users List</title>
 </head>
 <body>
-<div th:insert="~{elements::top-bar}"></div>
-<table>
-    <thead>All users list</thead>
-    <tr>
-        <td>ID</td>
-        <td>Login</td>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Email</td>
-        <td>Action</td>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.getId()}"></td>
-        <td th:text="${user.getUsername()}"></td>
-        <td th:text="${user.getFirstName()}"></td>
-        <td th:text="${user.getLastName()}"></td>
-        <td th:text="${user.getEmail()}"></td>
-        <td>
-            <a th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details">Edit</a> /
-            <a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user">Delete</a>
-        </td>
-    </tr>
-</table>
-<a th:href="@{admin/create-user}">Create new user.</a>
 
+<div th:replace="~{elements::top-bar}"></div>
+<!--<div class="row">
+    <div th:replace="~{elements::side-bar}"></div>
+    <div class="col-6">
+        <h1 class="h1">Admin panel</h1>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a href="#users-table">All users</a>
+                <table class="table" id="users-table">
+                    &lt;!&ndash;<thead class="table-header">Users table</thead>&ndash;&gt;
+                    <tr>
+                        <td>ID</td>
+                        <td>Login</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Email</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.getId()}"></td>
+                        <td th:text="${user.getUsername()}"></td>
+                        <td th:text="${user.getFirstName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td><a th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details" class="btn btn-info">Edit</a></td>
+                        <td><a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                </table>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{admin/create-user}" class="">New user</a>
+            </li>
+        </ul>
+    </div>
+
+</div>-->
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

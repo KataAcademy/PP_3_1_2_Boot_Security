@@ -71,10 +71,12 @@ public class UserService implements UserDetailsService {
     public void updateUserDetails(Long id, User user) {
         User userFromDb = showUserDetails(id);
         Optional.ofNullable(user.getUsername()).ifPresent(userFromDb::setUsername);
-        Optional.ofNullable(user.getPassword())
+        /*
+        // todo поменять логику смены пароля. Сейчас эта опция отключена
+            Optional.ofNullable(user.getPassword())
                 .ifPresent(password -> userFromDb.
                         setPassword(passwordEncoder
-                                .encode(password)));
+                                .encode(password)));*/
         Optional.ofNullable(user.getEmail()).ifPresent(userFromDb::setEmail);
         Optional.ofNullable(user.getFirstName()).ifPresent(userFromDb::setFirstName);
         Optional.ofNullable(user.getLastName()).ifPresent(userFromDb::setLastName);

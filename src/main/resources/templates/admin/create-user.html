@@ -8,35 +8,37 @@
 <div th:insert="~{elements::top-bar}"></div>
 <form th:method="post" th:action="@{/admin/create-user}" th:object="${user}">
     <fieldset>
-        <legend>User data</legend>
+        <legend>Create user</legend>
 
         <label>Username: </label>
-        <input type="text" id="username" th:field="${user.username}" placeholder="Choose wisely."/>
+        <input type="text" id="username" th:field="${user.username}" style="width: auto" placeholder="Choose wisely."/>
         <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br/>
 
         <label>First name: </label>
-        <input type="text" id="firstname" th:field="*{firstName}" placeholder="How does your mama call you?"/>
+        <input type="text" id="firstname" th:field="*{firstName}" style="width: auto" placeholder="How does your mama call you?"/>
         <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br/>
 
         <label>Last name: </label>
-        <input type="text" id="lastname" th:field="*{lastName}" placeholder="To which kin dost thou belong?"/>
+        <input type="text" id="lastname" th:field="*{lastName}" style="width: auto" placeholder="To which kin dost thou belong?"/>
         <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br/>
 
         <label>Email: </label>
-        <input type="text" id="email" th:field="*{email}" placeholder="Where shall we send an owl?"/>
+        <input type="text" id="email" th:field="*{email}" style="width: auto" placeholder="Where shall we send an owl?"/>
         <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br/>
 
         <label>Password: </label>
-        <input type="text" id="password" th:field="*{password}" placeholder="Be sneaky."/>
+        <input type="text" id="password" th:field="*{password}" style="width: auto" placeholder="Be sneaky."/>
         <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br/>
 
+        <label for="role">Role</label>
+        <select multiple="multiple" name="roles" id="role" th:field="*{roles}">
+            <option th:each="role : ${allRoles}"
+                    th:value="${{role.id}}"
+                    th:text="${role.getRolename()}">
+            </option>
+        </select>
     </fieldset>
-    <fieldset>
-        <legend>Select roles: </legend>
-        <label for="ROLE_USER">User </label> <input type="checkbox" th:name="isUser" id="ROLE_USER" th:checked="${isUserChecked}">
-        <label for="ROLE_ADMIN">Admin </label> <input type="checkbox" th:name="isAdmin" id="ROLE_ADMIN" th:checked="${isAdminChecked}">
-    </fieldset>
-    <input type="submit" name="submit" id="submit" value="Create!">
+    <input type="submit" name="submit" id="submit" value="Add new user">
 </form>
 </body>
 </html>

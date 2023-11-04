@@ -26,7 +26,12 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userService.findByUsername(userDetails.getUsername());
+        model.addAttribute("currentUser", getPrincipal());
         model.addAttribute("user", user);
         return "user";
+    }
+    public User getPrincipal() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUsername(userDetails.getUsername());
     }
 }

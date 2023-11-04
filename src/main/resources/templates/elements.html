@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 
 
-<div th:fragment="top-bar">
-    <div><a th:if="${isOwnerAdmin}" th:href="@{/admin}" th:text="'Back to admin panel.'"></a></div>
-    <div>
-        <form th:action="@{/logout}">
-            <input type="submit" value="Log Out">
-        </form>
-    </div>
+<th:block th:fragment="top-bar"  th:object="${currentUser}">
+    <header class="navbar navbar-expand flex-column flex-md-row navbar-dark bg-dark mr-auto">
+        <div class="navbar-brand">
+            <span  th:text="*{email} + ' with roles: '"></span>
+            <th:block th:each="role : *{roles}">
+                <span th:if="${role.getRolename()} == 'ROLE_ADMIN'" th:text="'ADMIN'"> VALUE</span>
+                <span th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:text="'USER'"> VALUE</span>
+            </th:block>
+        </div>
+        <div class="navbar-item"><a th:href="@{/logout}" class="nav-link">Log Out</a></div>
+    </header>
+</th:block>
+    <!--<div class="row">
+
+    </div>-->
+
+
+<div th:fragment="side-bar" th:object="${currentUser}" class="col-2 list-group">
+    <th:block th:each="role : *{roles}">
+        <a class="list-group-item list-group-item-action active" th:if="${role.getRolename()} == 'ROLE_ADMIN'" th:href="@{/admin}" th:text="'ADMIN'"></a>
+        <a class="list-group-item list-group-item-action" th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:href="@{/user}" th:text="'USER'"></a>
+    </th:block>
 </div>
+

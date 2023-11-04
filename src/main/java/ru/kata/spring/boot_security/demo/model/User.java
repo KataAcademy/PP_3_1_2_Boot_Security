@@ -23,11 +23,11 @@ public class User implements UserDetails {
     private String username;
 
     @Column(name = "first_name")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Can't contain digits and special symbols.")
+    @Pattern(regexp = "^([a-zA-Z]+|[а-яА-Я]+)$", message = "Can't contain digits and special symbols.")
     private String firstName;
 
     @Column(name = "last_name")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Can't contain digits and special symbols.")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Can't contain digits and special symbols.")
     private String lastName;
 
     @Column(name = "email", unique = true)
