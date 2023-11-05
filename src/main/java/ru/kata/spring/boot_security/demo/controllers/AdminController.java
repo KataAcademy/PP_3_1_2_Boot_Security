@@ -97,8 +97,11 @@ import java.util.Collection;
     }
 
     @PostMapping("/delete-user")
-    public String deleteUser(@RequestParam(name = "id") Long id) {
-        userService.deleteUser(id);
+    public String deleteUser(@RequestParam(name = "id") Long id,
+                             @RequestParam(name = "cancel", required = false) boolean cancel) {
+        if (!cancel) {
+            userService.deleteUser(id);
+        }
         return "redirect:/admin";
     }
 

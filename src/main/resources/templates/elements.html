@@ -21,33 +21,20 @@
     </th:block>
 </div>
 
-<table class="table table-striped" id="users-table" th:fragment="all-users-table" th:object="${users}">
-    <caption>All users</caption>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Login</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Edit</th>
-        <th >Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.getId()}"></td>
-        <td th:text="${user.getUsername()}"></td>
-        <td th:text="${user.getFirstName()}"></td>
-        <td th:text="${user.getLastName()}"></td>
-        <td th:text="${user.getEmail()}"></td>
-        <td><a th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details" class="btn btn-info">Edit</a></td>
-        <td><a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user" class="btn btn-danger">Delete</a></td>
-    </tr>
-    </tbody>
-</table>
+<ul th:fragment="body-nav" class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin}">Users table</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/create-user}">New user</a>
+    </li>
+</ul>
 
-<form class="col-4 bg-white no-gutters align-items-start container-fluid" th:fragment="save-user-details-form" th:action="'#'" th:method="post" th:object="${user}">
+<form class="col-4 bg-white no-gutters align-items-start container-fluid"
+      th:fragment="save-user-details-form"
+      th:action="'#'"
+      th:method="post"
+      th:object="${user}">
     <legend class="h4"
             th:text="*{id} == null ? 'Add new user' : 'Edit user'"></legend>
     <fieldset>
@@ -128,3 +115,21 @@
            th:formaction="*{id} == null ? @{/admin/create-user} : @{/admin/edit-user(id=${user.getId()})}">
 
 </form>
+<div class="modal" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Здесь содержимое вашего модального окна -->
+            <div class="modal-header">
+                <h5 class="modal-title">Заголовок модального окна</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Здесь можете разместить форму или другое содержимое модального окна -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>

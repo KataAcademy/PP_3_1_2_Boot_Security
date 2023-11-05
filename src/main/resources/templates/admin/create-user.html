@@ -12,18 +12,8 @@
     <div class="row flex-xl-nowrap bg-light">
         <div th:replace="~{elements::side-bar}"></div>
         <main class="bg-content col-10">
-            <div class="row"><h1 class="h1">Admin panel</h1></div>
-
-            <div class="row">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/admin}">Users table</a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{admin/create-user}" class="nav-link active">New user</a>
-                    </li>
-                </ul>
-            </div>
+            <h1 class="h1">Admin panel</h1>
+            <th:block th:insert="~{elements::body-nav}"></th:block>
 
             <div class="row justify-content-center">
                 <th:block th:insert="~{elements::save-user-details-form}"></th:block>
