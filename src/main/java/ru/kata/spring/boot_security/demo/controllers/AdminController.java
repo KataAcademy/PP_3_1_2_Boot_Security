@@ -34,8 +34,34 @@ import java.util.Collection;
     @GetMapping() public String getAllUsers(Model model) {
         model.addAttribute("currentUser", getPrincipal());
         model.addAttribute("users", userService.allUsers());
+        model.addAttribute("newUser", new User());
+        model.addAttribute("allRoles", roleService.getAllRoles());
         model.addAttribute("isOwnerAdmin", true);
         return "admin/index";
+    }
+
+    @GetMapping("/create-user")
+    public String createUserPage(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("currentUser", getPrincipal());
+        model.addAttribute("allRoles", roleService.getAllRoles());
+        model.addAttribute("isOwnerAdmin", true);
+        return "admin/create-user";
+    }
+    @PostMapping("/create-user")
+    public String createUser(@Valid User user,
+                             BindingResult result,
+                             Model model) {
+
+        if (result.hasErrors()) {
+            /*model.addAttribute("currentUser", getPrincipal());
+            model.addAttribute("error", result.getAllErrors());
+            model.addAttribute("allRoles", roleService.getAllRoles());*/
+            model.addAttribute("error", result.getAllErrors());
+            return "redirect:/admin";
+        }
+        userService.saveUser(user);
+        return "redirect:/admin";
     }
 
     @GetMapping("/edit-user")
@@ -63,29 +89,7 @@ import java.util.Collection;
         return "redirect:/admin";
     }
 
-    @GetMapping("/create-user")
-    public String createUserPage(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("currentUser", getPrincipal());
-        model.addAttribute("allRoles", roleService.getAllRoles());
-        model.addAttribute("isOwnerAdmin", true);
-        return "admin/create-user";
-    }
 
-    @PostMapping("/create-user")
-    public String createUser(@Valid User user,
-                             BindingResult result,
-                             Model model) {
-
-        if (result.hasErrors()) {
-            model.addAttribute("currentUser", getPrincipal());
-            model.addAttribute("error", result.getAllErrors());
-            model.addAttribute("allRoles", roleService.getAllRoles());
-            return "admin/create-user";
-        }
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
 
     @GetMapping("/delete-user")
     public String deleteUserPage(@RequestParam(name = "id") Long id,

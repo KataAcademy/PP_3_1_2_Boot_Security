@@ -3,76 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>All Users List</title>
 </head>
-<body>
+<body class="container-fluid wrapper w-100 bg-light d-flex no-gutters flex-column">
 <th:block th:replace="~{elements::top-bar}"></th:block>
-<div class="container-fluid">
 
-    <div class="row flex-xl-nowrap bg-light">
-        <div th:replace="~{elements::side-bar}"></div>
-        <main class="bg-content col-10">
-            <h1 class="h1">Admin panel</h1>
-            <th:block th:insert="~{elements::body-nav}"></th:block>
-            <table class="table table-striped" id="users-table" th:fragment="all-users-table" th:object="${users}">
-                <caption>All users</caption>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Login</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Edit</th>
-                    <th >Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.getId()}"></td>
-                    <td th:text="${user.getUsername()}"></td>
-                    <td th:text="${user.getFirstName()}"></td>
-                    <td th:text="${user.getLastName()}"></td>
-                    <td th:text="${user.getEmail()}"></td>
-                    <td>
-                        <!--            <a data-toggle="modal" data-target="#modalDelete"  th:href="@{admin/edit-user(id=${user.getId()})}" title="Edit user details" class="btn btn-info">Edit</a>-->
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal" th:data-user-id="${user.getId()}">Edit</button>
-                    </td>
+<div class="d-flex">
+    <div th:replace="~{elements::side-bar}"></div>
+    <main class="col-10 d-flex flex-column">
 
-                    <td>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" th:data-user-id="${user.getId()}">Delete</button>
-                        <!--<a th:href="@{admin/delete-user(id=${user.getId()})}" title="Delete user" class="btn btn-danger">Delete</a></td>-->
-                </tr>
-                </tbody>
-            </table>
-        </main>
-    </div>
+        <h2>Admin panel</h2>
+
+        <ul th:fragment="body-nav" class="nav nav-tabs d-flex" id="bodyNav">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active"
+                   id="allUsersTab"
+                   data-tab="allUsers"
+                   data-bs-toggle="tab"
+                   data-bs-target="#allUsers"
+                   role="tab"
+                   aria-selected="true"
+                   aria-controls="all-users">
+                    All users
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link"
+                   id="newUserTab"
+                   data-tab="newUser"
+                   data-bs-toggle="tab"
+                   data-bs-target="#newUser"
+                   role="tab"
+                   aria-selected="true"
+                   aria-controls="new-user">
+                    New user
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="bodyTabContent">
+            <div class="p-2 tab-pane fade border show active"
+                 id="allUsers"
+                 role="tabpanel"
+                 aria-labelledby="allUsersTab">
+                <table class="table table-striped"
+                       id="allUsersTable"
+                       th:object="${users}">
+                    <caption class="table-caption">All users</caption>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.getId()}"></td>
+                        <td th:text="${user.getUsername()}"></td>
+                        <td th:text="${user.getFirstName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-info"
+                                    name="edit-button"
+                                    data-toggle="modal"
+                                    data-target="#userManager"
+                                    th:data-user-action="edit"
+                                    th:data-user-id="${user.getId()}">
+                                Edit
+                            </button>
+                        </td>
+
+                        <td>
+                            <button type="button"
+                                    class="btn btn-danger "
+                                    name="delete-button"
+                                    data-toggle="modal"
+                                    data-target="#userManager"
+                                    th:data-user-action="delete"
+                                    th:data-user-id="${user.getId()}">
+                                Delete
+                            </button>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade border" id="newUser" role="tabpanel" aria-labelledby="newUserTab">
+                <div class="row justify-content-center ">
+                    <form class="d-flex flex-column justify-content-center" th:action="@{/admin/create-user}" th:method="post" th:object="${newUser}">
+                        <div class="input-group mb-2">
+                            <label class="form-label w-100 text-center mb-0 w-100" for="newUsername"><strong>Username</strong></label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="newUsername"
+                                   th:field="*{username}"
+                                   placeholder="Choose wisely.">
+                            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserFirstName" class="form-label w-100 text-center mb-0"><strong>First Name</strong></label>
+                            <input type="text" class="form-control" id="newUserFirstName" th:field="*{firstName}" placeholder="How does your mama call you?">
+                            <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserLastName" class="form-label w-100 text-center mb-0"><strong>Last Name</strong></label>
+                            <input type="text" class="form-control" id="newUserLastName" th:field="*{lastName}" placeholder="Put your last name right here.">
+                            <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserEmail" class="form-label w-100 text-center mb-0"><strong>Email</strong></label>
+                            <input type="email" th:field="*{email}" id="newUserEmail" class="form-control" placeholder="Where should we send an owl?">
+                            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserPassword" class="form-label w-100 text-center mb-0"><strong>Password</strong></label>
+                            <input type="password" th:field="*{password}" id="newUserPassword" class="form-control" placeholder="Be sneaky.">
+                            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="form-label w-100 text-center mb-0" for="role"><strong>Role</strong></label>
+                            <select multiple="multiple"
+                                    class="form-control"
+                                    th:size="2"
+                                    name="roles"
+                                    id="role"
+                                    th:field="*{roles}">
+                                <option th:each="role : ${allRoles}"
+                                        th:value="${{role.id}}"
+                                        th:text="${role.getRolename()}">
+                                </option>
+                            </select>
+                        </div>
+                        <input type="submit" name="create-user-button" id="createUserButton" class="mg-auto btn btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
+<!--
 
-<div class="modal" id="deleteModal" data-target="">
-    <div class="modal-dialog">
+<div class="modal fade" id="userManager" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <!-- Здесь содержимое вашего модального окна -->
             <div class="modal-header">
-                <h5 class="modal-title">Заголовок модального окна</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title" id="modalLabel">Подтверждение удаления</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <!-- Здесь можете разместить форму или другое содержимое модального окна -->
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Подтвердить удаление</button>
             </div>
         </div>
     </div>
 </div>
+-->
 
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<th:block th:insert="~{elements::common-scripts-fragment}"></th:block>
 </body>
 </html>

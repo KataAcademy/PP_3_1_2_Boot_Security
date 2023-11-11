@@ -2,7 +2,7 @@
 
 
 <th:block th:fragment="top-bar"  th:object="${currentUser}">
-    <header class="sticky-top navbar navbar-expand flex-md-row justify-content-between navbar-dark bg-dark">
+    <header class="sticky-top navbar d-flex navbar-expand flex-md-row justify-content-between navbar-dark bg-dark">
         <div class="navbar-brand">
             <span  th:text="*{email} + ' with roles: '"></span>
             <th:block th:each="role : *{roles}">
@@ -10,25 +10,29 @@
                 <span th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:text="'USER'"> VALUE</span>
             </th:block>
         </div>
-        <div class="nav nav-pills"><a th:href="@{/logout}" class="nav-item nav-link btn text-secondary">Log Out</a></div>
+        <div class="nav nav-pills">
+            <a th:href="@{/logout}" class="nav-item nav-link btn text-secondary">
+                Log Out
+            </a>
+        </div>
     </header>
 </th:block>
 
-<div th:fragment="side-bar" th:object="${currentUser}" class="col-2 pt-1 bd-sidebar list-group bg-white">
+<nav th:fragment="side-bar"
+     th:object="${currentUser}"
+     class="col-md-3 col-lg-2 px-md-0 d-md-block bg-body sidebar collapse h-100">
     <th:block th:each="role : *{roles}">
-        <a class="list-group-item list-group-item-action active" th:if="${role.getRolename()} == 'ROLE_ADMIN'" th:href="@{/admin}" th:text="'ADMIN'"></a>
-        <a class="list-group-item list-group-item-action" th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:href="@{/user}" th:text="'USER'"></a>
+        <a id="admin-panel-link"
+           class="list-group-item list-group-item-action"
+           th:if="${role.getRolename()} == 'ROLE_ADMIN'"
+           th:href="@{/admin}" th:text="'ADMIN'"></a>
+        <a id="user-panel-link"
+           class="list-group-item list-group-item-action"
+           th:unless="${role.getRolename()} == 'ROLE_ADMIN'"
+           th:href="@{/user}"
+           th:text="'USER'"></a>
     </th:block>
-</div>
-
-<ul th:fragment="body-nav" class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin}">Users table</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/create-user}">New user</a>
-    </li>
-</ul>
+</nav>
 
 <form class="col-4 bg-white no-gutters align-items-start container-fluid"
       th:fragment="save-user-details-form"
@@ -133,3 +137,14 @@
         </div>
     </div>
 </div>
+
+<th:block th:fragment="common-scripts-fragment">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/tabStyles.js"></script>
+</th:block>
