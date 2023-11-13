@@ -1,10 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,7 +13,6 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 
 
 import javax.validation.Valid;
-import java.util.Collection;
 
 @Controller
 @RequestMapping("/admin") public class AdminController {
@@ -54,9 +49,11 @@ import java.util.Collection;
                              Model model) {
 
         if (result.hasErrors()) {
-            /*model.addAttribute("currentUser", getPrincipal());
-            model.addAttribute("error", result.getAllErrors());
-            model.addAttribute("allRoles", roleService.getAllRoles());*/
+            model.addAttribute("currentUser", getPrincipal());
+            model.addAttribute("users", userService.allUsers());
+            model.addAttribute("newUser", new User());
+            model.addAttribute("allRoles", roleService.getAllRoles());
+            model.addAttribute("isOwnerAdmin", true);
             model.addAttribute("error", result.getAllErrors());
             return "redirect:/admin";
         }
