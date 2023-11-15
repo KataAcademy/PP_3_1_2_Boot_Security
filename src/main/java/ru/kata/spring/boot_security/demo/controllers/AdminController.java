@@ -13,9 +13,12 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
-@RequestMapping("/admin") public class AdminController {
+@RequestMapping("/admin")
+public class AdminController {
     private final UserService   userService;
     private final RoleService   roleService;
 
@@ -26,7 +29,19 @@ import javax.validation.Valid;
         this.roleService = roleService;
     }
 
-    @GetMapping() public String getAllUsers(Model model) {
+    @GetMapping()
+    public String getAllUsers(Model model,
+                              @ModelAttribute(name = "flashMessage") String flashAttribute,
+                              Principal principal) {
+        List<User> users = userService.allUsers();
+        User authUser = userService.findByUsername(principal.getName());
+        model.addAttribute("users", users);
+        model.addAttribute("authUser", authUser);
+        model.addAttribute("newUser", new User());
+        return "admin/index";
+    }
+
+    /*@GetMapping() public String getAllUsers(Model model) {
         model.addAttribute("currentUser", getPrincipal());
         model.addAttribute("users", userService.allUsers());
         model.addAttribute("newUser", new User());
@@ -109,5 +124,5 @@ import javax.validation.Valid;
     public User getPrincipal() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userService.findByUsername(userDetails.getUsername());
-    }
+    }*/
 }

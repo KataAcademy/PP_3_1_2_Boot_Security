@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<th:block th:fragment="top-bar"  th:object="${currentUser}">
+<th:block th:fragment="top-bar"  th:object="${authUser}">
     <header class="sticky-top navbar d-flex navbar-expand flex-md-row justify-content-between navbar-dark bg-dark">
         <div class="navbar-brand">
             <span  th:text="*{email} + ' with roles: '"></span>
@@ -19,7 +19,7 @@
 </th:block>
 
 <nav th:fragment="side-bar"
-     th:object="${currentUser}"
+     th:object="${authUser}"
      class="col-md-3 col-lg-2 px-md-0 d-md-block bg-body sidebar collapse h-100">
     <th:block th:each="role : *{roles}">
         <a id="admin-panel-link"

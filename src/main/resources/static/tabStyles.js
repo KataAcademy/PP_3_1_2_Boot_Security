@@ -1,21 +1,3 @@
-/*$(document).ready(function() {
-    $("#bodyNav button.nav-link").click(function() {
-        // Убираем класс "active" с всех кнопок навигации
-        $("#bodyNav a.nav-link").removeClass("active");
-
-        // Добавляем класс "active" только к нажатой кнопке
-        $(this).addClass("active");
-
-        var targetTab = $(this).data("tab");
-
-        // Убираем классы "show" и "active" со всех вкладок
-        $("#bodyTabContent div.tab-pane").removeClass("show active");
-
-        // Добавляем классы "show" и "active" к целевой вкладке
-        $("#" + targetTab).addClass("show active");
-    });
-});*/
-
 // Переключение табов при загрузке страницы
 $(document).ready(function () {
     var activeTab = localStorage.getItem('activeTab');
@@ -46,6 +28,17 @@ $("#bodyNav button.nav-link").click(function () {
 
     // Сохраняем активный таб в локальное хранилище
     localStorage.setItem('activeTab', targetTab);
+});
+
+$("#bodyTabContent button.btn").click(function () {
+    let action = $(this).data("user-action");
+    if (action === 'delete') {
+        $("#modalLabel").text("Подтвердите удаление пользователя")
+    }
+
+    if (action === 'edit') {
+        $("#modalLabel").text("Внесите изменения")
+    }
 });
 
 

@@ -62,36 +62,8 @@
                         <th>Delete</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr th:each="user : ${users}">
-                        <td th:text="${user.getId()}"></td>
-                        <td th:text="${user.getUsername()}"></td>
-                        <td th:text="${user.getFirstName()}"></td>
-                        <td th:text="${user.getLastName()}"></td>
-                        <td th:text="${user.getEmail()}"></td>
-                        <td>
-                            <button type="button"
-                                    class="btn btn-info"
-                                    name="edit-button"
-                                    data-toggle="modal"
-                                    data-target="#userManager"
-                                    th:data-user-action="edit"
-                                    th:data-user-id="${user.getId()}">
-                                Edit
-                            </button>
-                        </td>
+                    <tbody id="allUsersTableBody">
 
-                        <td>
-                            <button type="button"
-                                    class="btn btn-danger "
-                                    name="delete-button"
-                                    data-toggle="modal"
-                                    data-target="#userManager"
-                                    th:data-user-action="delete"
-                                    th:data-user-id="${user.getId()}">
-                                Delete
-                            </button>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -149,21 +121,42 @@
     </main>
 </div>
 
-<div class="modal fade" id="userManager" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade hidden" id="userManager" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Подтверждение удаления</h5>
+                <h4 class="modal-title" id="modalLabel"></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-
+            <div class="modal-body d-flex justify-content-center">
+                <form action="#" class="w-50">
+                    <div class="input-group mb-2">
+                        <label for="userId" class="form-label w-100 align-middle text-center mb-0"><strong>ID</strong></label>
+                        <input type="text" name="id-field" id="userId" class="form-control" disabled>
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userName" class="form-label w-100 align-middle text-center mb-0"><strong>Username</strong></label>
+                        <input type="text" name="username-field" id="userName" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userFirstName" class="form-label w-100 align-middle text-center mb-0"><strong>First name</strong></label>
+                        <input type="text" name="firstname-field" id="userFirstName" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userLastName" class="form-label w-100 align-middle text-center mb-0"><strong>Last name</strong></label>
+                        <input type="text" name="lastname-field" id="userLastName" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userEmail" class="form-label w-100 align-middle text-center mb-0"><strong>Email</strong></label>
+                        <input type="email" name="email-field" id="userEmail" class="form-control">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Подтвердить удаление</button>
+                <button type="button" id="confirmAction"></button>
             </div>
         </div>
     </div>
@@ -171,5 +164,7 @@
 
 
 <th:block th:insert="~{elements::common-scripts-fragment}"></th:block>
+<script type="text/javascript" th:src="@{/admin.js}"></script>
+
 </body>
 </html>
