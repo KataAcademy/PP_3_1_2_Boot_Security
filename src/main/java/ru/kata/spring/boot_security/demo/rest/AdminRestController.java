@@ -26,28 +26,22 @@ public class AdminRestController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/get-user-details")
     public ResponseEntity<User> getUserDetails(@RequestParam(name = "id") Long id) {
         User u = userService.showUserDetails(id);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/edit-user")
     public ResponseEntity<User> editUser(@RequestBody User user) {
-        userService.saveUser(user);
+        userService.updateUserDetails(user.getId(), user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    /*@PostMapping
-    public ResponseEntity<User> deleteUser(@RequestParam(name = "id") Long id) {
-        userService.deleteUser(id);
+    @PostMapping("/delete-user")
+    public ResponseEntity<User> deleteUser(@RequestBody User user) {
+        userService.deleteUser(user.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @GetMapping
-    public ResponseEntity<User> getUserDetails(@RequestParam(name = "id") Long id) {
-        User user = userService.showUserDetails(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }*/
 
 }

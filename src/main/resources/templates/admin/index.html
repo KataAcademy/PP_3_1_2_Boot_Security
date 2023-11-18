@@ -105,11 +105,11 @@
                                     class="form-control"
                                     th:size="2"
                                     name="roles"
-                                    id="role"
+                                    id="newUserRoles"
                                     th:field="*{roles}">
                                 <option th:each="role : ${allRoles}"
-                                        th:value="${{role.id}}"
-                                        th:text="${role.getRolename()}">
+                                        th:value="${role.getId()}"
+                                        th:text="${#strings.substring(role.getRolename(), 5)}">
                                 </option>
                             </select>
                         </div>
@@ -131,7 +131,7 @@
                 </button>
             </div>
             <div class="modal-body d-flex justify-content-center">
-                <form action="#" class="w-50">
+                <form action="#" class="w-50" id="detailsForm">
                     <div class="input-group mb-2">
                         <label for="userId" class="form-label w-100 align-middle text-center mb-0"><strong>ID</strong></label>
                         <input type="text" name="id-field" id="userId" class="form-control" disabled>
@@ -151,6 +151,14 @@
                     <div class="input-group mb-2">
                         <label for="userEmail" class="form-label w-100 align-middle text-center mb-0"><strong>Email</strong></label>
                         <input type="email" name="email-field" id="userEmail" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <label for="userRoles" class="form-label w-100 align-middle text-center mb-0"><strong>Role</strong></label>
+                        <select name="user-roles-select" id="userRoles" class="form-select form-control w-100" size="2" multiple th:object="${allRoles}">
+                            <option th:each="role : ${allRoles}"
+                                    th:text="${#strings.substring(role.getRolename(), 5)}"
+                                    th:value="${role.getId()}"></option>
+                        </select>
                     </div>
                 </form>
             </div>

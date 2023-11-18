@@ -41,16 +41,8 @@ function fillTable(users) {
     $("#allUsersTableBody").html(result);
 }
 
-/*function deleteUser(id) {
-    
-}
-
-function editUser(id) {
-    
-}*/
-
 function userManager(id, type) {
-    fetch(url + "?id=" + id, {
+    fetch(url + "/get-user-details?id=" + id, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -61,32 +53,108 @@ function userManager(id, type) {
     }).then(u => {
         $("div.modal-footer #confirmAction").removeAttr('class').off('click');
         $("div.modal-body input.form-control").prop('disabled', false);
+        $("div.modal-body select").prop('disabled', false);
         $("#userId").val(u.id).prop('placeholder', u.id).data("user-id", u.id);
         $("#userName").val(u.username).prop('placeholder', u.username);
         $("#userFirstName").val(u.firstName).prop('placeholder',u.firstName);
         $("#userLastName").val(u.lastName).prop('placeholder', u.lastName);
         $("#userEmail").val(u.email).prop('placeholder', u.email);
+        $("#userRoles option").each(function () {
+            let roles = u.roles;
+            let optionVal = $(this).val();
+            let roleExists = roles.some(function(role) {
+                return role.id.toString() === optionVal.toString();
+            });
+
+            // Если роль существует, установим атрибут "selected" для этой опции
+            if (roleExists) {
+                $(this).prop('selected', true);
+            }
+        });
+
+        /*Форматируем для окна Edit User*/
         if (type === 'edit') {
             $("#modalLabel").text("Edit user");
-            $("div.modal-body input.form-control#userId")
-                .prop('disabled', true)
+            $("div.modal-body input.form-control#userId").prop('disabled', true);
+            $("div.modal-footer #confirmAction")
+                .addClass('btn btn-success')
+                .text('Save changes')
                 .click(function () {
                     event.preventDefault();
-                    editUser(u.id);
+                    editUser();
                 });
-            $("div.modal-footer #confirmAction").addClass('btn btn-success').text('Save changes');
         }
+
+        /*Форматируем для окна Delete User*/
         if (type === 'delete') {
             $("#modalLabel").text("Delete user");
-            $("div.modal-footer #confirmAction").addClass('btn btn-danger')
+            $("div.modal-body input.form-control").prop('disabled', true);
+            $("div.modal-body select").prop('disabled', true);
+            $("div.modal-footer #confirmAction")
+                .addClass('btn btn-danger')
                 .text('Delete')
                 .click(function () {
                     event.preventDefault();
-                    deleteUser(u.id);
+                    deleteUser(id);
                 });
-            $("div.modal-body input.form-control").prop('disabled', true)
         }
     }).catch(error => {
         console.error(error);
     })
+}
+
+async function deleteUser(id) {
+    let user = {
+        id: id
+    }
+    try {
+        await fetch(url + "/delete-user", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(user)
+        });
+        $("#userManager").modal('hide');
+        await getAllUsers();
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+async function editUser() {
+    let form = $("#detailsForm");
+    let editId = $("#userId").val();
+    let editUsername = $("#userName").val();
+    let editFirstName = $("#userFirstName").val();
+    let editLastName = $("#userLastName").val();
+    let editEmail = $("#userEmail").val();
+    let roles = [];
+    for (let i = 0; i < form.roles.options.length; i++) {
+        if (form.roles.options[i].selected) {
+            let temp = {};
+            temp["id"] = form.roles.option[i].value;
+            roles.push(temp);
+        }
+    }
+    let user = {
+        id: editId,
+        username: editUsername,
+        firstName: editFirstName,
+        lastName: editLastName,
+        email: editEmail
+    }
+    try {
+        await fetch(url + "/edit-user", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+        $("#userManager").modal('hide'); //закрываем окно, используя Bootstrap метод
+        } catch(error) {
+        console.error(error);
+    }
 }
