@@ -27,17 +27,8 @@
                         <th scope="col">Role</th>
                     </tr>
                 </thead>
-                <tbody class="table-hoover">
-                    <tr>
-                        <td class="align-middle" th:text="*{id}"></td>
-                        <td class="align-middle" th:text="*{username}"></td>
-                        <td class="align-middle" th:text="*{firstName}"></td>
-                        <td class="align-middle" th:text="*{lastName}"></td>
-                        <td class="align-middle"  th:text="*{email}"></td>
-                        <td class="d-flex flex-column">
-                            <p class="align-middle m-0" th:each="role : *{roles}" th:text="${role.getRolename()}"></p>
-                        </td>
-                    </tr>
+                <tbody class="table-hoover" id="tableBody">
+
                 </tbody>
             </table>
         </main>
@@ -45,5 +36,6 @@
 </div>
 
 <th:block th:insert="~{commons/elements::common-scripts-fragment}"></th:block>
+<script th:src="@{/user.js}"></script>
 </body>
 </html>
