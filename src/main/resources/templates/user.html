@@ -7,11 +7,11 @@
     <title>User's Home Page</title>
 </head>
 <body class="container-fluid wrapper w-100 bg-light d-flex no-gutters flex-column">
-<div th:insert="~{elements::top-bar}"></div>
+<div th:insert="~{commons/elements::top-bar}"></div>
 <div class="container-fluid">
 
     <div class="row flex-xl-nowrap bg-light">
-        <div th:replace="~{elements::side-bar}"></div>
+        <div th:replace="~{commons/elements::side-bar}"></div>
         <main class="bg-content col-10">
             <h1 class="h1">
                 User information-page
@@ -44,6 +44,6 @@
     </div>
 </div>
 
-<th:block th:insert="~{elements::common-scripts-fragment}"></th:block>
+<th:block th:insert="~{commons/elements::common-scripts-fragment}"></th:block>
 </body>
 </html>

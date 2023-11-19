@@ -1,7 +1,11 @@
 const url = 'http://localhost:8080/restAdmin';
 
 $(document).ready(function () {
-    getAllUsers();
+    getAllUsers().then(() => {
+
+    }).catch(error => {
+        console.error(error);
+    });
 })
 
 async function getAllUsers() {
@@ -131,10 +135,10 @@ async function editUser() {
     let editLastName = $("#userLastName").val();
     let editEmail = $("#userEmail").val();
     let roles = [];
-    for (let i = 0; i < form.roles.options.length; i++) {
-        if (form.roles.options[i].selected) {
+    for (let i = 0; i < form.find("#userRoles").prop('options').length; i++) {
+        if (form.find("#userRoles").prop('options')[i].selected) {
             let temp = {};
-            temp["id"] = form.roles.option[i].value;
+            temp["id"] = form.find("#userRoles").prop('options')[i].value;
             roles.push(temp);
         }
     }
@@ -145,16 +149,18 @@ async function editUser() {
         lastName: editLastName,
         email: editEmail
     }
-    try {
-        await fetch(url + "/edit-user", {
+    await fetch(url + "/edit-user", {
             method: 'POST',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8'
             },
             body: JSON.stringify(user)
-        });
-        $("#userManager").modal('hide'); //закрываем окно, используя Bootstrap метод
-        } catch(error) {
+        }).then(() => {
+            $("#userManager").modal('hide'); //закрываем окно, используя Bootstrap метод
+        }).then(() => {
+            getAllUsers();
+        }).catch(error => {
         console.error(error);
-    }
+    });
 }

@@ -8,10 +8,10 @@
     <title>All Users List</title>
 </head>
 <body class="container-fluid wrapper w-100 bg-light d-flex no-gutters flex-column">
-<th:block th:replace="~{elements::top-bar}"></th:block>
+<th:block th:replace="~{commons/elements::top-bar}"></th:block>
 
 <div class="d-flex">
-    <div th:replace="~{elements::side-bar}"></div>
+    <div th:replace="~{commons/elements::side-bar}"></div>
     <main class="col-10 d-flex flex-column">
 
         <h2>Admin panel</h2>
@@ -171,7 +171,7 @@
 </div>
 
 
-<th:block th:insert="~{elements::common-scripts-fragment}"></th:block>
+<th:block th:insert="~{commons/elements::common-scripts-fragment}"></th:block>
 <script type="text/javascript" th:src="@{/admin.js}"></script>
 
 </body>
