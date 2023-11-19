@@ -4,20 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 @RequestMapping("/restAdmin")
 public class AdminRestController {
     private final UserService userService;
+    private final RoleService roleService;
 
 
     @Autowired
-    public AdminRestController(UserService userService) {
+    public AdminRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -44,4 +49,9 @@ public class AdminRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/create-user")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        userService.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

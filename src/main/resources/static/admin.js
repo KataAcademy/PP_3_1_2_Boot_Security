@@ -1,21 +1,14 @@
 const url = 'http://localhost:8080/restAdmin';
 
-$(document).ready(function () {
-    getAllUsers().then(() => {
-
-    }).catch(error => {
-        console.error(error);
-    });
-})
-
 async function getAllUsers() {
-    setTimeout(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                fillTable(data)
-            })
-    }, 200)
+    await new Promise(resolve => setTimeout(resolve, 200));
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        fillTable(data);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function fillTable(users) {
@@ -127,40 +120,77 @@ async function deleteUser(id) {
 
 }
 
-async function editUser() {
-    let form = $("#detailsForm");
-    let editId = $("#userId").val();
-    let editUsername = $("#userName").val();
-    let editFirstName = $("#userFirstName").val();
-    let editLastName = $("#userLastName").val();
-    let editEmail = $("#userEmail").val();
-    let roles = [];
-    for (let i = 0; i < form.find("#userRoles").prop('options').length; i++) {
-        if (form.find("#userRoles").prop('options')[i].selected) {
-            let temp = {};
-            temp["id"] = form.find("#userRoles").prop('options')[i].value;
-            roles.push(temp);
-        }
-    }
+async function createUser() {
+    let userRoles = []
+    $("#newUserRoles option").each(
+        function () {
+            if ($(this).prop('selected')) {
+                userRoles.push({
+                    id: $(this).val()
+                })
+            }
+        })
     let user = {
-        id: editId,
-        username: editUsername,
-        firstName: editFirstName,
-        lastName: editLastName,
-        email: editEmail
+        username: $("#newUsername").val(),
+        firstName: $("#newUserFirstName").val(),
+        lastName: $("#newUserLastName").val(),
+        email: $("#newUserEmail").val(),
+        password: $("#newUserPassword").val(),
+        roles: userRoles
     }
-    await fetch(url + "/edit-user", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8'
-            },
-            body: JSON.stringify(user)
-        }).then(() => {
-            $("#userManager").modal('hide'); //закрываем окно, используя Bootstrap метод
-        }).then(() => {
-            getAllUsers();
-        }).catch(error => {
+    console.log(user);
+    fetch(url + "/create-user", {
+        method: 'POST',
+        headers: {
+            /*'Accept': 'application/json',*/
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(user)
+    }).then(() => getAllUsers())
+}
+
+async function clearForm() {
+    $("#newUserTab form input.form-control").val("");
+    $("newUserTab form select option").prop('selected', false);
+}
+
+$(document).ready(function () {
+    getAllUsers().then(() => {
+
+    }).catch(error => {
         console.error(error);
+    });
+})
+
+$("#createUserButton").click(function () {
+    createUser().then(() => {
+        clearForm().then(() => {
+            getAllUsers().catch(error => {
+                console.error();
+            })
+        })
+    })
+});
+
+
+function attemptAddUserMessage(result, error) {
+    if (result === 'success') {
+        $("#messageAfterAddingAttempt").modal('show')
+        $("#messageAfterAddingAttempt div.modal-header").addClass("bg-success");
+        $("#messageAfterAddingAttempt div.modal-header h5.modal-title").text("Success!");
+        $("#messageAfterAddingAttempt div.modal-body p").text("User has been successfully added to data base.");
+    }
+
+    if (result == 'fail') {
+        $("#messageAfterAddingAttempt").modal('show')
+        $("#messageAfterAddingAttempt div.modal-header").addClass("bg-danger");
+        $("#messageAfterAddingAttempt div.modal-header h5.modal-title").text("Attention!");
+        $("#messageAfterAddingAttempt div.modal-body p").text(error);
+    }
+
+    $("#messageAfterAddingAttemptBackButton").click(function () {
+        getAllUsers().then(function () {
+            location.href = "/admin";
+        })
     });
 }
