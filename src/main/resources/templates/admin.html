@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>All Users List</title>
+</head>
+<body class="container-fluid wrapper w-100 bg-light d-flex no-gutters flex-column">
+<th:block th:replace="~{commons/elements::top-bar}"></th:block>
+
+<div class="d-flex">
+    <div th:replace="~{commons/elements::side-bar}"></div>
+    <main class="col-10 d-flex flex-column">
+
+        <h2>Admin panel</h2>
+
+        <ul th:fragment="body-nav" class="nav nav-tabs d-flex" id="bodyNav">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active"
+                   id="allUsersTab"
+                   data-tab="allUsers"
+                   data-bs-toggle="tab"
+                   data-bs-target="#allUsers"
+                   role="tab"
+                   aria-selected="true"
+                   aria-controls="all-users">
+                    All users
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link"
+                   id="newUserTab"
+                   data-tab="newUser"
+                   data-bs-toggle="tab"
+                   data-bs-target="#newUser"
+                   role="tab"
+                   aria-selected="true"
+                   aria-controls="new-user">
+                    New user
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="bodyTabContent">
+            <div class="p-2 tab-pane fade border show active"
+                 id="allUsers"
+                 role="tabpanel"
+                 aria-labelledby="allUsersTab">
+                <table class="table table-striped"
+                       id="allUsersTable"
+                       th:object="${users}">
+                    <caption class="table-caption">All users</caption>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody id="allUsersTableBody">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade border" id="newUser" role="tabpanel" aria-labelledby="newUserTab">
+                <div class="row justify-content-center align-items-center">
+                    <form class="d-flex flex-column justify-content-center" action="#" th:method="post" th:object="${newUser}">
+                        <div class="input-group mb-2">
+                            <label class="form-label w-100 text-center mb-0 w-100" for="newUsername"><strong>Username</strong></label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="newUsername"
+                                   th:field="*{username}"
+                                   placeholder="Choose wisely.">
+                            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserFirstName" class="form-label w-100 text-center mb-0"><strong>First Name</strong></label>
+                            <input type="text" class="form-control" id="newUserFirstName" th:field="*{firstName}" placeholder="How does your mama call you?">
+                            <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserLastName" class="form-label w-100 text-center mb-0"><strong>Last Name</strong></label>
+                            <input type="text" class="form-control" id="newUserLastName" th:field="*{lastName}" placeholder="Put your last name right here.">
+                            <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserEmail" class="form-label w-100 text-center mb-0"><strong>Email</strong></label>
+                            <input type="email" th:field="*{email}" id="newUserEmail" class="form-control" placeholder="Where should we send an owl?">
+                            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="newUserPassword" class="form-label w-100 text-center mb-0"><strong>Password</strong></label>
+                            <input type="password" th:field="*{password}" id="newUserPassword" class="form-control" placeholder="Be sneaky.">
+                            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="form-label w-100 text-center mb-0" for="newUserRoles"><strong>Role</strong></label>
+                            <select multiple="multiple"
+                                    class="form-control"
+                                    th:size="2"
+                                    name="roles"
+                                    id="newUserRoles"
+                                    th:field="*{roles}">
+                                <option th:each="role : ${allRoles}"
+                                        th:value="${role.getId()}"
+                                        th:text="${#strings.substring(role.getRolename(), 5)}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group w-100 d-flex justify-content-center">
+                            <button name="create-user-button" id="createUserButton" class="mg-auto btn btn-success">
+                                Create User
+                            </button>
+                        </div>
+                    </form>
+                 <!--   <input type="submit" name="create-user-button" id="createUserButton" class="mg-auto btn btn-success">-->
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="modal fade hidden" id="userManager" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <form action="#" class="w-50" id="detailsForm">
+                    <div class="input-group mb-2">
+                        <label for="userId" class="form-label w-100 align-middle text-center mb-0"><strong>ID</strong></label>
+                        <input type="text" name="id-field" id="userId" class="form-control" disabled>
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userName" class="form-label w-100 align-middle text-center mb-0"><strong>Username</strong></label>
+                        <input type="text" name="username-field" id="userName" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userFirstName" class="form-label w-100 align-middle text-center mb-0"><strong>First name</strong></label>
+                        <input type="text" name="firstname-field" id="userFirstName" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userLastName" class="form-label w-100 align-middle text-center mb-0"><strong>Last name</strong></label>
+                        <input type="text" name="lastname-field" id="userLastName" class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="userEmail" class="form-label w-100 align-middle text-center mb-0"><strong>Email</strong></label>
+                        <input type="email" name="email-field" id="userEmail" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <label for="userRoles" class="form-label w-100 align-middle text-center mb-0"><strong>Role</strong></label>
+                        <select name="user-roles-select" id="userRoles" class="form-select form-control w-100" size="2" multiple th:object="${allRoles}">
+                            <option th:each="role : ${allRoles}"
+                                    th:text="${#strings.substring(role.getRolename(), 5)}"
+                                    th:value="${role.getId()}"></option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" id="confirmAction"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade d-none" tabindex="-1" id="messageAfterAddingAttempt">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="messageAfterAddingAttemptCloseButton">Close</button>
+                <button type="button" class="btn btn-primary" id="messageAfterAddingAttemptBackButton">Back to admin panel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:insert="~{commons/elements::common-scripts-fragment}"></th:block>
+<script type="text/javascript" th:src="@{/admin.js}"></script>
+
+</body>
+</html>

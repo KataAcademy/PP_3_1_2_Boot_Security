@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+
+<th:block th:fragment="top-bar"  th:object="${authUser}">
+    <header class="sticky-top navbar d-flex navbar-expand flex-md-row justify-content-between navbar-dark bg-dark">
+        <div class="navbar-brand">
+            <span  th:text="*{email} + ' with roles: '"></span>
+            <th:block th:each="role : *{roles}">
+                <span th:if="${role.getRolename()} == 'ROLE_ADMIN'" th:text="'ADMIN'"> VALUE</span>
+                <span th:unless="${role.getRolename()} == 'ROLE_ADMIN'" th:text="'USER'"> VALUE</span>
+            </th:block>
+        </div>
+        <div class="nav nav-pills">
+            <a th:href="@{/logout}" class="nav-item nav-link btn text-secondary">
+                Log Out
+            </a>
+        </div>
+    </header>
+</th:block>
+
+<nav th:fragment="side-bar"
+     th:object="${authUser}"
+     class="col-md-3 col-lg-2 px-md-0 d-md-block bg-body sidebar collapse h-100">
+    <th:block th:each="role : *{roles}">
+        <a id="admin-panel-link"
+           class="list-group-item list-group-item-action"
+           th:if="${role.getRolename()} == 'ROLE_ADMIN'"
+           th:href="@{/admin}" th:text="'ADMIN'"></a>
+        <a id="user-panel-link"
+           class="list-group-item list-group-item-action"
+           th:unless="${role.getRolename()} == 'ROLE_ADMIN'"
+           th:href="@{/user}"
+           th:text="'USER'"></a>
+    </th:block>
+</nav>
+
+<form class="col-4 bg-white no-gutters align-items-start container-fluid"
+      th:fragment="save-user-details-form"
+      th:action="'#'"
+      th:method="post"
+      th:object="${user}">
+    <legend class="h4"
+            th:text="*{id} == null ? 'Add new user' : 'Edit user'"></legend>
+    <fieldset>
+        <div class="form-group text-center">
+            <label class="mb-0" for="username"><strong>Username</strong></label>
+            <input th:type="text"
+                   th:disabled="*{id} == null ? false : true"
+                   th:required="*{id} == null ? true : false"
+                   class="form-control"
+                   id="username"
+                   th:field="*{username}"
+                   th:placeholder="*{id} == null ? 'Choose wisely.' : *{username}"/>
+            <span class="error bg-warning text-dark"
+                  th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+        </div>
+        <div class="form-group text-center align-bottom">
+            <label class="mb-0" for="firstname"><strong>First name</strong></label>
+            <input type="text"
+                   th:required="*{id} == null ? true : false"
+                   class="form-control"
+                   id="firstname"
+                   th:field="*{firstName}"
+                   th:placeholder="*{id} == null ? 'How does your mama call you?' : *{firstName}"/>
+            <span class="error bg-warning text-dark" th:if="${#fields.hasErrors('firstName')}"
+                  th:errors="*{firstName}"></span>
+        </div>
+        <div class="form-group text-center">
+            <label class="mb-0" for="lastname"><strong>Last name</strong></label>
+            <input type="text"
+                   class="form-control"
+                   id="lastname"
+                   th:field="*{lastName}"
+                   th:placeholder="*{id} == null ? 'To which kin dost thou belong?' : *{lastName}"/>
+            <span class="error bg-warning text-dark" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <label class="mb-0" for="email"><strong>Email</strong></label>
+            <input type="text"
+                   th:required="*{id} == null ? true : false"
+                   class="form-control"
+                   id="email"
+                   th:field="*{email}"
+                   th:placeholder="*{id} == null ? 'Where shall we send an owl?' : *{email}"/>
+            <span class="error bg-warning text-dark" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <label class="mb-0" for="password"><strong>Password</strong></label>
+            <input th:type="*{id} == null ? text : hidden"
+                   th:required="*{id} == null ? true : false"
+                   class="form-control"
+                   id="password"
+                   th:field="*{password}"
+                   placeholder="Be sneaky."/>
+            <span class="error bg-warning text-dark" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        </div>
+        <div class="form-group text-center">
+            <label class="mb-0" for="role"><strong>Role</strong></label>
+            <select multiple="multiple"
+                    class="form-control"
+                    th:size="2"
+                    name="roles"
+                    id="role"
+                    th:field="*{roles}">
+                <option th:each="role : ${allRoles}"
+                        th:value="${{role.id}}"
+                        th:text="${role.getRolename()}">
+                </option>
+            </select>
+        </div>
+    </fieldset>
+    <input type="submit"
+           class="btn btn-success mb-2"
+           name="submit"
+           id="submit"
+           th:value="*{id} == null ? 'Add new user' : 'Edit user'"
+           th:formaction="*{id} == null ? @{/admin/create-user} : @{/admin/edit-user(id=${user.getId()})}">
+
+</form>
+<div class="modal" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Здесь содержимое вашего модального окна -->
+            <div class="modal-header">
+                <h5 class="modal-title">Заголовок модального окна</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Здесь можете разместить форму или другое содержимое модального окна -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:fragment="common-scripts-fragment">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/tabStyles.js"></script>
+</th:block>

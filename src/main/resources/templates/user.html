@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>User's Home Page</title>
 </head>
-<body>
-<h1>User, welcome spring boot security page!</h1>
+<body class="container-fluid wrapper w-100 bg-light d-flex no-gutters flex-column">
+<div th:insert="~{commons/elements::top-bar}"></div>
+<div class="container-fluid">
 
+    <div class="row flex-xl-nowrap bg-light">
+        <div th:replace="~{commons/elements::side-bar}"></div>
+        <main class="bg-content col-10">
+            <h1 class="h1">
+                User information-page
+            </h1>
+            <table class="col-12 table table-stripped bg-white align-middle" th:object="${user}">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hoover" id="tableBody">
 
+                </tbody>
+            </table>
+        </main>
+    </div>
+</div>
+
+<th:block th:insert="~{commons/elements::common-scripts-fragment}"></th:block>
+<script th:src="@{/user.js}"></script>
 </body>
 </html>
