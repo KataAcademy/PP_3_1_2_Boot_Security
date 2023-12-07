@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Entity(name = "users")
-public class User implements UserDetails {
+public class Person implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class User implements UserDetails {
 
     @Column
     @NotBlank(message = "Name cannot be empty")
-    private String name;
+    private String username;
 
     @Column
     @NotBlank(message = "Surname cannot be empty")
-    private String surname;
+    private String lastName;
 
     @Column
     @Email(message = "Email is not correct")
@@ -44,22 +44,16 @@ public class User implements UserDetails {
     private String password;
 
     @Column
+    @ToString.Exclude
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
 
-    /**
-     * Создает новый экземпляр User.
-     *
-     * @param name    Имя пользователя
-     * @param surname Фамилия пользователя
-     * @param email   Электронная почта пользователя
-     */
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
+    public Person(String username, String lastName, String email, String password) {
+        this.username = username;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.enabled = true;
@@ -77,7 +71,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
