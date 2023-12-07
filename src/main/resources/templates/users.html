@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/users.css" rel="stylesheet">
     <title>WorkWithUsers</title>
 </head>
 <body>
@@ -12,45 +12,65 @@
         <th>Name</th>
         <th>Surname</th>
         <th>Email</th>
+        <th>Password</th>
+        <th>Role</th>
     </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.surname}"></td>
-        <td th:text="${user.email}"></td>
+    <tr th:each="entry : ${usersWithRoles}">
+        <td th:text="${entry.key.id}"></td>
+        <td th:text="${entry.key.username}"></td>
+        <td th:text="${entry.key.lastName}"></td>
+        <td th:text="${entry.key.email}"></td>
+        <td th:text="${entry.key.password}"></td>
+        <td th:text="${entry.value}"></td>
     </tr>
 </table>
 
-<form method="post" action="/add">
+<form method="post" action="/admin/add">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <label>
-        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="username" placeholder="Name">
     </label>
     <label>
-        <input type="text" name="surname" placeholder="Surname">
+        <input type="text" name="lastname" placeholder="Surname">
     </label>
     <label>
         <input type="text" name="email" placeholder="Email">
     </label>
+    <label>
+        <input type="text" name="password" placeholder="Password">
+    </label>
+    <label>
+        Role:
+        <select name="role">
+            <option value="ROLE_ADMIN">admin</option>
+            <option value="ROLE_USER">user</option>
+        </select>
+    </label>
     <input type="submit" value="Add User">
 </form>
 
-<form method="post" action="/update">
+<form method="post" action="/admin/update">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <label>
         <input type="number" name="id" placeholder="User ID">
     </label>
     <label>
-        <input type="text" name="name" placeholder="New Name">
+        <input type="text" name="username" placeholder="New Name">
     </label>
     <label>
-        <input type="text" name="surname" placeholder="New Surname">
+        <input type="text" name="lastname" placeholder="New Surname">
     </label>
     <label>
         <input type="text" name="email" placeholder="New Email">
     </label>
+    <label>
+        <input type="text" name="password" placeholder="New Password">
+    </label>
     <input type="submit" value="Update User">
 </form>
 
-<form method="post" action="/delete">
+<form method="post" action="/admin/delete">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <label>
         <input type="number" name="id" placeholder="User ID">
     </label>
