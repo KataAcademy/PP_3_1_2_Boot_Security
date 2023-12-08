@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    // я знаю что NoOpPasswordEncoder не безопасен,
+    // NoOpPasswordEncoder не безопасен,
     // он используется только для учебного проекта
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -50,7 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
-    // доступ к css файлам
+    // по дефолту у spring security залочен доступ к css файлам
+    // пользователям которые не прошли аутентификацию
+    // поэтому я их открыл для всех
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**");

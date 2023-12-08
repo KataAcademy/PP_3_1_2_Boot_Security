@@ -1,6 +1,7 @@
 package ru.summer.spring.boot_security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +16,23 @@ import ru.summer.spring.boot_security.model.Role;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Имплементация сервиса для работы с пользователями (User).
+ * Реализует интерфейсы UserService и UserDetailsService.
+ */
 @Service
 public class UserServiceImp implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+
     private final RoleService roleService;
 
-
+    /**
+     * Конструктор, в который внедряются зависимости - репозиторий пользователей и сервис ролей.
+     *
+     * @param userRepository Репозиторий для работы с пользователями.
+     * @param roleService Сервис для работы с ролями.
+     */
     @Autowired
     public UserServiceImp(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
@@ -49,9 +60,17 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAll(Sort.by("id"));
     }
 
+    /**
+     * Загружает данные пользователя по его имени пользователя.
+     * Этот метод предназначен для использования Spring Security.
+     *
+     * @param username Имя пользователя.
+     * @return Объект UserDetails, содержащий информацию о пользователе.
+     * @throws UsernameNotFoundException Если пользователь с указанным именем не найден.
+     */
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -92,4 +111,5 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
 }
