@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.summer.spring.boot_security.model.User;
 import ru.summer.spring.boot_security.service.UserService;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -40,9 +42,12 @@ public class UserAdminController {
         Map<User, String> usersWithRoles = userService
                 .getAllUsers()
                 .stream()
+                .sorted(Comparator.comparing(User::getId))
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        userService::getUserRoles
+                        userService::getUserRoles,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new
                 ));
 
         model.addAttribute("usersWithRoles", usersWithRoles);
