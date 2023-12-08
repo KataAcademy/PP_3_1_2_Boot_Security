@@ -20,26 +20,26 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Entity(name = "users")
-public class Person implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    @Column
+    @Column(name = "user_name", unique = true)
     @NotBlank(message = "Name cannot be empty")
     private String username;
 
-    @Column
+    @Column(name = "last_name")
     @NotBlank(message = "Surname cannot be empty")
-    private String lastName;
+    private String lastname;
 
-    @Column
+    @Column(name = "email", unique = true)
     @Email(message = "Email is not correct")
     private String email;
 
-    @Column
+    @Column(name = "password")
     @Size(min = 4)
     private String password;
 
@@ -51,9 +51,9 @@ public class Person implements UserDetails {
     @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
 
-    public Person(String username, String lastName, String email, String password) {
+    public User(String username, String lastName, String email, String password) {
         this.username = username;
-        this.lastName = lastName;
+        this.lastname = lastName;
         this.email = email;
         this.password = password;
         this.enabled = true;
@@ -93,4 +93,5 @@ public class Person implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 }
