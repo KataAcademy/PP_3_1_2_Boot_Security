@@ -1,0 +1,93 @@
+.logout-button-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.logout-form input[type="submit"] {
+    background-color: #b20000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: linear-gradient(to right, rgb(241, 233, 233), rgb(246, 229, 229));
+}
+
+.title {
+    color: #4f4b4b;
+    text-align: center;
+}
+
+.table-container {
+    max-width: 550px;
+    margin: 20px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.add-user-form input[type="submit"] {
+    float: left;
+}
+
+.add-user-form .role-selection {
+    float: right;
+}
+
+.add-user-form::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+form input[type="text"], form input[type="number"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 98%;
+}
+
+.role-select-container {
+    display: inline-block;
+    line-height: 45px;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+
+.add-user-form input[type="submit"],
+.update-user-form input[type="submit"],
+.delete-user-form input[type="submit"] {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+}
+

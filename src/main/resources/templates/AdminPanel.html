@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link href="/css/adminPanel.css" rel="stylesheet">
+    <title>AdminPanel</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">Users</h1>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Role</th>
+            </tr>
+            <tr th:each="entry : ${usersWithRoles}">
+                <td th:text="${entry.key.id}"></td>
+                <td><a th:href="@{'/user/' + ${entry.key.id}}" th:text="${entry.key.username}"></a></td>
+                <td th:text="${entry.key.lastname}"></td>
+                <td th:text="${entry.key.email}"></td>
+                <td th:text="${entry.key.password}"></td>
+                <td th:text="${entry.value}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="form-container">
+        <form method="post" action="/admin/add" class="add-user-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <label>
+                <input type="text" name="username" placeholder="Name">
+            </label>
+            <label>
+                <input type="text" name="lastname" placeholder="Surname">
+            </label>
+            <label>
+                <input type="text" name="email" placeholder="Email">
+            </label>
+            <label>
+                <input type="text" name="password" placeholder="Password">
+            </label>
+            <input type="submit" value="Add User">
+            <label class="role-select-container">
+                Role:
+                <select name="role">
+                    <option value="ROLE_ADMIN">admin</option>
+                    <option value="ROLE_USER">user</option>
+                </select>
+            </label>
+        </form>
+        <form method="post" action="/admin/update" class="update-user-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <label>
+                <input type="number" name="id" placeholder="User ID">
+            </label>
+            <label>
+                <input type="text" name="username" placeholder="New Name">
+            </label>
+            <label>
+                <input type="text" name="lastname" placeholder="New Surname">
+            </label>
+            <label>
+                <input type="text" name="email" placeholder="New Email">
+            </label>
+            <label>
+                <input type="text" name="password" placeholder="New Password">
+            </label>
+            <input type="submit" value="Update User">
+        </form>
+        <form method="post" action="/admin/delete" class="delete-user-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <label>
+                <input type="number" name="id" placeholder="User ID">
+            </label>
+            <input type="submit" value="Delete User">
+        </form>
+    </div>
+
+    <div class="logout-button-wrapper">
+        <form action="/logout" method="post" class="logout-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="submit" value="Logout"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>
