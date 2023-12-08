@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import ru.summer.spring.boot_security.service.PersonServiceImp;
+import ru.summer.spring.boot_security.service.UserServiceImp;
 
 @Configuration
 @EnableWebSecurity
@@ -16,11 +16,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SuccessUserHandler successUserHandler;
 
-    private final PersonServiceImp personServiceImp;
+    private final UserServiceImp personServiceImp;
 
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler,
-                             PersonServiceImp personServiceImp) {
+                             UserServiceImp personServiceImp) {
         this.successUserHandler = successUserHandler;
         this.personServiceImp = personServiceImp;
     }
@@ -30,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/admin/**", "/user/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -40,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+    // я знаю что NoOpPasswordEncoder не безопасен,
+    // он используется только для учебного проекта
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -47,9 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
-    // unlocked css files for all roles
+    // доступ к css файлам
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**");
     }
+
 }
