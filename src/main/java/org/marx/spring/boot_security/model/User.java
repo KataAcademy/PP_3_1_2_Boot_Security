@@ -1,5 +1,6 @@
 package org.marx.spring.boot_security.model;
 
+import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,9 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -29,8 +30,6 @@ public class User implements UserDetails {
 
     @Column(name = "age")
     private int age;
-//    @Column(name = "professional_position")
-//    private String professionalPosition;
 
     @ManyToMany
     @Fetch(FetchMode.JOIN)
@@ -49,50 +48,10 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
     public String roleToString() {
         StringBuilder sb = new StringBuilder();
@@ -131,11 +90,4 @@ public class User implements UserDetails {
         return roles;
     }
 
-    @Override
-    public String toString() {
-        return "id=" + id +
-                " name=" + name +
-                " age=" + age;
-
-    }
 }
