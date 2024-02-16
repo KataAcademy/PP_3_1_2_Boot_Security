@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<div th:each="peoples : ${users}">
+    <a th:href="@{/admin/{id}(id=${peoples.getId()})}" th:text="${peoples}"></a>
+</div>
+
+<br/>
+<hr/>
+
+<form th:method="DELETE" th:action="@{/admin}" th:object="${user}">
+    <label for="deleteName">Enter id: </label>
+    <input type="number" th:field="*{id}" id="deleteName">
+    <br/>
+    <input type="submit" value="Delete"/>
+</form>
+
+<br/>
+
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+
+    <label for="createUserName">Enter userName: </label>
+    <input type="text" th:field="*{username}" id="createUserName" required/>
+
+    <br>
+
+    <label for="createPassword">Enter password: </label>
+    <input type="text" th:field="*{password}" id="createPassword" required/>
+
+    <br>
+
+    <label for="createName">Enter name: </label>
+    <input type="text" th:field="*{name}" id="createName" required/>
+
+    <br>
+
+    <label for="createAge">Enter age: </label>
+    <input type="number" min="0" th:field="*{age}" id="createAge" required/>
+
+    <br>
+    <input type="submit" value="Create"/>
+</form>
+
+<br/>
+
+<form th:method="GET" th:action="@{/logout}" >
+
+    <input type="submit" value="Logout"/>
+
+</form>
+
+</body>
+</html>
