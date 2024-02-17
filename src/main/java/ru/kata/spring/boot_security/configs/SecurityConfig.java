@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -18,6 +19,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(PersonDetailsService personDetailsService) {
         this.personDetailsService = personDetailsService;
     }
+
+    protected void configure(HttpSecurity http) throws Exception {
+        // конфигурируем Spring Security
+        // конфигурируем страницу авторизации
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/index").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+    }
+
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(personDetailsService);

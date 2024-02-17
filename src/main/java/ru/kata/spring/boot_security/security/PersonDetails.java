@@ -3,16 +3,16 @@ package ru.kata.spring.boot_security.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.kata.spring.boot_security.models.Persson;
+import ru.kata.spring.boot_security.models.Person;
 
 import java.util.Collection;
 
 public class PersonDetails implements UserDetails {
 
-    private final Persson persson;
+    private final Person persson;
 
 
-    public PersonDetails(Persson persson) {
+    public PersonDetails(Person persson) {
         this.persson = persson;
     }
 
@@ -51,7 +51,7 @@ public class PersonDetails implements UserDetails {
         return true;
     }
 
-    public Persson getPersson(){
+    public Person getPersson(){
         return this.persson;
     }
 }

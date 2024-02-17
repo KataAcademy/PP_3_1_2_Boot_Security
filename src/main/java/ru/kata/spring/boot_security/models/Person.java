@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Preson", schema = "web_admin_security")
-public class Persson {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +23,10 @@ public class Persson {
     @Column(name = "password")
     private String password;
 
-    public Persson() {
+    public Person() {
     }
 
-    public Persson(Long id, String firstName, String lastName, String email) {
+    public Person(Long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -86,7 +86,7 @@ public class Persson {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Persson persson = (Persson) o;
+        Person persson = (Person) o;
         return Objects.equals(getId(), persson.getId()) && Objects.equals(getFirstName(), persson.getFirstName()) && Objects.equals(getLastName(), persson.getLastName()) && Objects.equals(getEmail(), persson.getEmail());
     }
 
