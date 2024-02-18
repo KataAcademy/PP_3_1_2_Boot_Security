@@ -3,10 +3,7 @@ package ru.kata.spring.boot_security.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.services.RegistrationService;
 import ru.kata.spring.boot_security.until.PersonValidator;
@@ -26,6 +23,17 @@ public class AuthController {
         this.personValidator = personValidator;
     }
 
+    @GetMapping("login")
+    public String loginPage() {
+        return "login";
+    }
+
+//    @PostMapping("/process_login")
+//    public String processLogin(@RequestParam String username, @RequestParam String password) {
+//        // Ваша логика обработки входа здесь
+//        return "redirect:/hello"; // или другой URL для перенаправления после успешного входа
+//    }
+
 
     @GetMapping("registration")
     public String registrationPage(@ModelAttribute("person") Person person) {
@@ -44,7 +52,6 @@ public class AuthController {
 
         System.out.println(person);
 
-        return "redirect:/user"; //TODO: может сдлать старницу регистрации
+        return "redirect:/user";
     }
-
 }

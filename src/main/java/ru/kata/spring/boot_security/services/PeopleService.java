@@ -10,6 +10,8 @@ import java.util.Optional;
 @Service
 public class PeopleService {
 
+
+    // TODO проверить ошибки тут
     private final PeopleRepository peopleRepository;
 
     public PeopleService(PeopleRepository peopleRepository) {

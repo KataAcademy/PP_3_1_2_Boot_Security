@@ -20,21 +20,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.personDetailsService = personDetailsService;
     }
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // конфигурируем Spring Security
-        // конфигурируем страницу авторизации
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
+                .antMatchers("/auth/login", "/index", "/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .permitAll()
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/process_login")
+                .defaultSuccessUrl("/hello", true)
+                .failureUrl("/auth/login?error")
                 .and()
                 .logout()
                 .permitAll();
     }
+
 
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

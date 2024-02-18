@@ -19,6 +19,7 @@ public class RegistrationService {
 
     @Transactional
     public void register(Person person) {
+        //TODO: проверить тут ошибки
         peopleRepository.save(person);
     }
 }
