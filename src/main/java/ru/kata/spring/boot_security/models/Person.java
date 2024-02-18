@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Preson", schema = "web_admin_security")
