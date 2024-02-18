@@ -10,8 +10,6 @@ import java.util.Optional;
 @Service
 public class PeopleService {
 
-
-    // TODO проверить ошибки тут
     private final PeopleRepository peopleRepository;
 
     public PeopleService(PeopleRepository peopleRepository) {
@@ -19,12 +17,6 @@ public class PeopleService {
     }
 
     public Optional<Person> loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Person> persson = peopleRepository.findByFirstName(username);
-
-        if(persson.isEmpty()) {
-            throw new UsernameNotFoundException("User not found!");
-        }
-
-        return persson;
+        return peopleRepository.findByFirstName(username);
     }
 }

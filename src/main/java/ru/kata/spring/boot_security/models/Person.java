@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -12,15 +13,19 @@ public class Person {
     private Long id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Имя не должно быть пустым")
     private String firstName;
 
+
     @Column(name = "last_name")
+    @NotEmpty(message = "Имя не должно быть пустым")
     private String lastName;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
+    @NotEmpty(message = "Имя не должно быть пустым")
     private String password;
 
     public Person() {
