@@ -28,6 +28,9 @@ public class Person {
     @NotEmpty(message = "Имя не должно быть пустым")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     public Person() {
     }
 
@@ -76,6 +79,14 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

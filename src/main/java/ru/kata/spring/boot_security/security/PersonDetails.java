@@ -2,10 +2,12 @@ package ru.kata.spring.boot_security.security;
 
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.models.Person;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class PersonDetails implements UserDetails {
 
@@ -18,7 +20,8 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        //TODO: сделать список ролей
+        return Collections.singletonList(new SimpleGrantedAuthority(persson.getRole()));
     }
 
     @Override
