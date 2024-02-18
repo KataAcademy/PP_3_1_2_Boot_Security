@@ -48,21 +48,12 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-
     public String roleToString() {
         StringBuilder sb = new StringBuilder();
 
         this.roles.forEach(x -> sb.append(x.getName()).append(" "));
 
         return sb.toString();
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 
     @Override
