@@ -3,7 +3,6 @@ package ru.kata.spring.boot_security.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.services.RegistrationService;
@@ -46,8 +45,7 @@ public class AuthController {
             return "/registration";
         }
 
-        registrationService.register(person);
-        System.out.printf("sout from Auth controller user %s saved", person );
+        registrationService.registerUser(person);
 
         return "redirect:/auth/login";
     }

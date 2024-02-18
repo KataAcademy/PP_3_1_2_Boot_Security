@@ -1,5 +1,8 @@
 package ru.kata.spring.boot_security.models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
@@ -29,17 +32,25 @@ public class Person {
     @NotEmpty(message = "Имя не должно быть пустым")
     private String password;
 
-    @Column(name = "role")
-    private String role;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(
+            name = "Person_Pole",
+            joinColumns = @JoinColumn(name = "peson_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 
     public Person() {
     }
 
-    public Person(Long id, String firstName, String lastName, String email) {
+    public Person(Long id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -82,12 +93,12 @@ public class Person {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
