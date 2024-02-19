@@ -19,8 +19,15 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
 
-    public Optional<Person> loadUserByUsername(String username) throws UsernameNotFoundException {
-        return peopleRepository.findByFirstName(username);
+//    public Optional<Person> loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return peopleRepository.findByFirstName(username);
+//    }
+
+    public Optional<Person> findByUserName(String username) {
+        Optional<Person> user = peopleRepository.findByFirstName(username);
+        if (user.isEmpty())
+            throw new UsernameNotFoundException("User " + username + " not found");
+        return user;
     }
 
     public Set<Role> getUserRoles(String username) {

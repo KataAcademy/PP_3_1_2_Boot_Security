@@ -29,11 +29,11 @@ public class RegistrationService {
     }
 
     //TODO: сделать проверку на пустую таблицу ролей, если пустая - то заполнить
+    //TODO: сделать регистрацию только пользователей а admin уже через изменение
 
     public void registerAdmin(Person person) {
         // Регистрация пользователя с ролью ADMIN
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-//        person.setPassword(person.getPassword());
         String[] roles = new String[]{"ROLE_ADMIN"};
         setUserRoles(person, roles);
 
@@ -48,7 +48,6 @@ public class RegistrationService {
     public void registerUser(Person person) {
         // Регистрация пользователя с ролью USER
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-//        person.setPassword(person.getPassword());
         String[] roles = new String[]{"ROLE_USER"};
         setUserRoles(person, roles);
 
@@ -59,7 +58,7 @@ public class RegistrationService {
         Set<Role> rolesSet = new HashSet<>();
         for (String roleName : rolesNames) {
             Role role = roleService.findByName(roleName);
-            if (role == null) {
+            if (role == null) { //TODO: может поменять на optional, тк оно не работает
                 role = new Role(roleName);
                 roleService.saveRole(role);
             }
