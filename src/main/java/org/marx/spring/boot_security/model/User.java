@@ -43,17 +43,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, int age) {
-        this.name = name;
+
+    public User(String username, int age, String password, Set<Role> roles) {
+        this.username = username;
         this.age = age;
-    }
-
-    public String roleToString() {
-        StringBuilder sb = new StringBuilder();
-
-        this.roles.forEach(x -> sb.append(x.getName()).append(" "));
-
-        return sb.toString();
+        this.password = password;
+        this.roles = roles;
     }
 
     @Override

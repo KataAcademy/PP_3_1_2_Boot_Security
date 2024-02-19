@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -19,31 +20,31 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public String user(@PathVariable("id") long id, Model model) {
+    public String show(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "edit";
     }
     @GetMapping
-    public String pageForAdmin(Model model, @ModelAttribute("user") User user) {
+    public String showAll(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("users", userService.getUserList());
         return "admin";
     }
 
     @PostMapping
     public String create(@ModelAttribute("admin") User user) {
-        userService.createUser(user);
+        userService.create(user);
         return "redirect:/admin";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("admin") User user) {
-        userService.updateUser(user);
+        userService.update(user);
         return "redirect:/admin";
     }
 
     @DeleteMapping
     public String delete(@ModelAttribute("user") User user) {
-        userService.deleteUser(user.getId());
+        userService.deleteById(user.getId());
         return "redirect:/admin";
     }
 
