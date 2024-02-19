@@ -34,13 +34,10 @@ public class AdminServiceImpl implements AdminService {
         return user.get();
     }
 
-//    @Override
-//    public void addUser(Person person) {
-//
-//    }
-
     @Override
     public void updateUser(Person person) {
+        Person beforeUpdate = peopleRepository.getById(person.getId());
+        person.setPassword(beforeUpdate.getPassword());
         peopleRepository.save(person);
     }
 

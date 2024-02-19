@@ -40,11 +40,6 @@ public class RegistrationService {
         peopleRepository.save(person);
     }
 
-//    public void saveRole() {
-//        Role user = new Role("ROLE_USER");
-//        roleService.saveRole(user);
-//    }
-
     public void registerUser(Person person) {
         // Регистрация пользователя с ролью USER
         person.setPassword(passwordEncoder.encode(person.getPassword()));

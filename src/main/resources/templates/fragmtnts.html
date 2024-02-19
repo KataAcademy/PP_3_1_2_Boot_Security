@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>Fragments</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,20 +46,32 @@
     </style>
 </head>
 <body>
-<div th:fragment="header_full">
+
+<div th:fragment="header">
     <header>
         <div class="buttons">
-            <button class="buttons" onclick="window.location.href = '/auth/registration'">Sign Up</button>
-        </div>
-        <div class="buttons">
-            <button class="buttons" onclick="window.location.href = '/auth/login'">Sign In</button>
+            <button class="home" onclick="window.location.href = '/'">Home</button>
         </div>
         <form th:action="@{/logout}" th:method="POST" style="display: inline-block;">
             <button class="logout" type="submit">Logout</button>
         </form>
     </header>
 </div>
-<h1>Welcome to Index PAGE!</h1>
-
+<!--<div th:fragment="header_full">-->
+<!--    <header>-->
+<!--        <div class="buttons">-->
+<!--            <button class="home" onclick="window.location.href = '/'">Home</button>-->
+<!--        </div>-->
+<!--        <div class="buttons">-->
+<!--            <button class="buttons" onclick="window.location.href = '/auth/registration'">Sign Up</button>-->
+<!--        </div>-->
+<!--        <div class="buttons">-->
+<!--            <button class="buttons" onclick="window.location.href = '/auth/login'">Sign In</button>-->
+<!--        </div>-->
+<!--        <form th:action="@{/logout}" th:method="POST" style="display: inline-block;">-->
+<!--            <button class="logout" type="submit">Logout</button>-->
+<!--        </form>-->
+<!--    </header>-->
+<!--</div>-->
 </body>
 </html>

@@ -25,14 +25,14 @@ public class AuthController {
 
     @GetMapping("login")
     public String loginPage() {
-        return "login";
+        return "security/login";
     }
 
 
 
     @GetMapping("registration")
     public String registrationPage(@ModelAttribute("person") Person person) {
-        return "/registration";
+        return "security/registration";
     }
 
     @PostMapping("/registration")
@@ -42,7 +42,7 @@ public class AuthController {
         personValidator.validate(person, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            return "/registration";
+            return "security/registration";
         }
 
         registrationService.registerUser(person);

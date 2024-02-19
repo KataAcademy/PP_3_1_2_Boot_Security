@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>User Home</title>
     <style>
         body {
             background-color: #f4f4f4;
@@ -85,9 +85,6 @@
         .buttons button:hover {
             background-color: #ff8c1a;
         }
-
-        <
-        style >
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -128,44 +125,35 @@
             opacity: 0.8;
         }
     </style>
-
 </head>
 <body>
-<div>
+<!--<div th:insert="~{fragmtnts :: header}"></div>-->
+
+<div class="container">
     <div th:insert="~{fragmtnts :: header}"></div>
 
-    <div class="container">
-        <H3>Users: </H3>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Operations</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!--/*@thymesVar id="personList" type=""*/-->
-            <tr th:each="person : ${personList}">
-                <td th:text="${person.getId}">ID</td>
-                <td th:text="${person.firstName}">Name</td>
-                <td th:text="${person.lastName}">Last Name</td>
-                <td th:text="${person.email}">Email</td>
-                <td>
-                    <a th:href="'admin/updateUser?id=' + ${person.id}">Update</a>
-                    <span> | </span>
-                    <a th:href="'/auth/registration' + ${person.id}">Add</a>
-                    <span> | </span>
-                    <a th:href="'admin/removeUser?id=' + ${person.id}">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <h1>User, welcome spring boot security page!</h1>
 
+    <table>
+        <thead>
+        <tr>
+            <th>firstName</th>
+            <th>lastName</th>
+            <th>Email</th>
+            <th>Authorities</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
 
-    </div>
+            <td th:text="${personDetails.getPersson().firstName}">firstName</td>
+            <td th:text="${personDetails.getPersson().lastName}">lastName</td>
+            <td th:text="${personDetails.getPersson().email}">Email</td>
+            <td th:text="${personDetails.getAuthorities()}">getAuthorities</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 </body>
 </html>

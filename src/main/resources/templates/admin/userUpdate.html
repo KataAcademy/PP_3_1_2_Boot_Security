@@ -111,15 +111,10 @@
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br>
 
-    <label for="passUpdate">new Password</label>
-    <input type="text" th:field="*{password}" id="passUpdate" placeholder="password">
-    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{password}">Password Error</div>
-    <br>
-
     <input type="submit" value="Update User">
   </form>
   <div class="buttons">
-    <button type="button" class="custom-button" onclick="window.location.href = '/users'">Go to All Users</button>
+    <button type="button" class="custom-button" onclick="window.location.href = '/admin/users'">Go to All Users</button>
     <button type="button" class="custom-button" onclick="window.location.href = '/'">Home Page</button>
   </div>
 </div>
