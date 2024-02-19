@@ -47,6 +47,7 @@ public class AuthController {
 
         registrationService.registerUser(person);
 
+        System.out.println();
         return "redirect:/auth/login";
     }
 }

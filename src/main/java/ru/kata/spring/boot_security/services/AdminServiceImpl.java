@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private final PeopleRepository peopleRepository;
@@ -27,11 +27,11 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public Optional<Person> findUserByUserName(String firstName) {
+    public Person findUserByUserName(String firstName) {
         Optional<Person> user = peopleRepository.findByFirstName(firstName);
         if (user.isEmpty())
             throw new UsernameNotFoundException("User " + firstName + " not found");
-        return user;
+        return user.get();
     }
 
 //    @Override
@@ -48,4 +48,20 @@ public class AdminServiceImpl implements AdminService{
     public void removeUser(Long id) {
         peopleRepository.delete(peopleRepository.getById(id));
     }
+
+    public Person findOneById(Long id) {
+        Optional<Person> user = peopleRepository.findById(id);
+        if (user.isEmpty())
+            throw new  UsernameNotFoundException("user не найден");
+        return user.get();
+    }
+
+
+//    // TODO: убрать в personService
+//    public Optional<Person> findByUserName(String username) {
+//        Optional<Person> user = peopleRepository.findByFirstName(username);
+//        if (user.isEmpty())
+//            throw new UsernameNotFoundException("User " + username + " not found");
+//        return user;
+//    }
 }

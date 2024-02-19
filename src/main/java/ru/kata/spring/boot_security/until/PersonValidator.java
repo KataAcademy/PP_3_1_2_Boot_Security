@@ -27,11 +27,8 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-
         if (peopleService.loadUserByUsername(person.getFirstName()).isPresent()) {
             errors.rejectValue("firstName", "", "a user with that name already exists");
         }
-
-        System.out.printf("vaidator: name %s is valid", person.getFirstName());
     }
 }

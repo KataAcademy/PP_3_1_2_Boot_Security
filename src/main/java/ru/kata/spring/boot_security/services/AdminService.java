@@ -7,8 +7,13 @@ import java.util.Optional;
 
 public interface AdminService {
     List<Person> getAllUsers();
-    Optional<Person> findUserByUserName(String firstName);
-//    void addUser(Person person);
+
+    Person findUserByUserName(String firstName);
+
+    //    void addUser(Person person);
     void updateUser(Person person);
+
     void removeUser(Long id);
+
+    Person findOneById(Long id);
 }

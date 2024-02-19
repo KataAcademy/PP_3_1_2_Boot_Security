@@ -19,9 +19,11 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
 
-//    public Optional<Person> loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return peopleRepository.findByFirstName(username);
-//    }
+
+    // длч валидации
+    public Optional<Person> loadUserByUsername(String username) throws UsernameNotFoundException {
+        return peopleRepository.findByFirstName(username);
+    }
 
     public Optional<Person> findByUserName(String username) {
         Optional<Person> user = peopleRepository.findByFirstName(username);
