@@ -17,19 +17,19 @@ public class Person {
     private Long id;
 
     @Column(name = "name")
-    @NotEmpty(message = "Имя не должно быть пустым")
+    @NotEmpty(message = "firstName не должно быть пустым")
     private String firstName;
 
 
     @Column(name = "last_name")
-    @NotEmpty(message = "Имя не должно быть пустым")
+    @NotEmpty(message = "lastName не должно быть пустым")
     private String lastName;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
-    @NotEmpty(message = "Имя не должно быть пустым")
+//    @NotEmpty(message = "password не должно быть пустым")
     private String password;
 
 

@@ -62,7 +62,7 @@ public class AdminController {
         personValidator.validate(person, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            return "/registration";
+            return "redirect:/admin/users";
         }
 
         adminService.updateUser(person);
