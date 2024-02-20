@@ -38,7 +38,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    // TODO: позволяет получить все роли person.findByName
     public Role findByName(String name) {
         return roleRepository.findByNameOfRole(name);
     }
@@ -48,15 +47,5 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public void saveRole(Role role) {
         roleRepository.save(role);
-    }
-
-    @Override
-    public boolean roleExists(Role role){
-//        if (roleRepository.findByNameOfRole(roleName) == null) {
-//            Role role = new Role(roleName);
-//            roleRepository.save(role);
-//        }
-//
-        return roleRepository.findByNameOfRole(role.getNameOfRole()) != null;
     }
 }

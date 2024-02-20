@@ -17,5 +17,4 @@ public interface RoleService {
 
     void saveRole(Role role);
 
-    boolean roleExists(Role role);
 }

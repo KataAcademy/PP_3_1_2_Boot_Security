@@ -49,9 +49,6 @@ public class AdminServiceImpl implements AdminService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
-//        if (roleSet.stream().allMatch(roleRepository::roleExists)) {
-//
-//        }
         person.setRoles(roleSet);
         peopleRepository.save(person);
     }
@@ -67,28 +64,4 @@ public class AdminServiceImpl implements AdminService {
             throw new  UsernameNotFoundException("user не найден");
         return user.get();
     }
-
-
-
-//    private void setUserRoles(Person person, Set<Role> roles) {
-//        Set<Role> rolesSet = new HashSet<>();
-//        for (Role role : roles) {
-//            Role r = roleRepository.findByNameOfRole(role.getNameOfRole());
-//            if (r == null) {
-//                role = r;
-//                roleRepository.save(role);
-//            }
-//            rolesSet.add(role);
-//        }
-//        person.setRoles(rolesSet);
-//    }
-
-
-//    // TODO: убрать в personService
-//    public Optional<Person> findByUserName(String username) {
-//        Optional<Person> user = peopleRepository.findByFirstName(username);
-//        if (user.isEmpty())
-//            throw new UsernameNotFoundException("User " + username + " not found");
-//        return user;
-//    }
 }

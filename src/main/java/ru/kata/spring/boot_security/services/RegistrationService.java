@@ -11,7 +11,6 @@ import ru.kata.spring.boot_security.models.Role;
 import ru.kata.spring.boot_security.repositories.PeopleRepository;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -32,7 +31,6 @@ public class RegistrationService {
     //TODO: сделать регистрацию только пользователей а admin уже через изменение
 
     public void registerAdmin(Person person) {
-        // Регистрация пользователя с ролью ADMIN
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         String[] roles = new String[]{"ROLE_ADMIN"};
         setUserRoles(person, roles);
@@ -42,9 +40,7 @@ public class RegistrationService {
 
     @Transactional
     public void registerUser(Person person) {
-        // Регистрация пользователя с ролью USER
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-//        List<Role> roles = roleService.findByName("ROLE_USER");
         String[] roles = new String[]{"ROLE_USER"};
         setUserRoles(person, roles);
 

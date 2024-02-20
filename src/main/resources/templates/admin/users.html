@@ -85,9 +85,6 @@
         .buttons button:hover {
             background-color: #ff8c1a;
         }
-
-        <
-        style >
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -158,8 +155,8 @@
                 <td>
                     <a th:href="'admin/updateUser?id=' + ${person.id}">Update</a>
                     <span> | </span>
-                    <a th:href="'/auth/registration' + ${person.id}">Add</a>
-                    <span> | </span>
+<!--                    <a th:href="'/auth/registration' + ${person.id}">Add</a>-->
+<!--                    <span> | </span>-->
                     <a th:href="'admin/removeUser?id=' + ${person.id}">Delete</a>
                 </td>
             </tr>
