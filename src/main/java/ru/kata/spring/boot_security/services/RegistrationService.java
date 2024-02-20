@@ -11,10 +11,10 @@ import ru.kata.spring.boot_security.models.Role;
 import ru.kata.spring.boot_security.repositories.PeopleRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class RegistrationService {
 
     private final PeopleRepository peopleRepository;
@@ -40,9 +40,11 @@ public class RegistrationService {
         peopleRepository.save(person);
     }
 
+    @Transactional
     public void registerUser(Person person) {
         // Регистрация пользователя с ролью USER
         person.setPassword(passwordEncoder.encode(person.getPassword()));
+//        List<Role> roles = roleService.findByName("ROLE_USER");
         String[] roles = new String[]{"ROLE_USER"};
         setUserRoles(person, roles);
 

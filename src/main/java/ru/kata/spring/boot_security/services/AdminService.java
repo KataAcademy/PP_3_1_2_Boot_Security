@@ -11,7 +11,7 @@ public interface AdminService {
     Person findUserByUserName(String firstName);
 
     //    void addUser(Person person);
-    void updateUser(Person person);
+    void updateUser(Person person, List<String> roles);
 
     void removeUser(Long id);
 

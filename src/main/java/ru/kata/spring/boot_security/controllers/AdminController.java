@@ -51,12 +51,14 @@ public class AdminController {
     @GetMapping("/admin/updateUser")
     public String getEditUserForm(Model model, @RequestParam("id") Long id) {
         model.addAttribute("person", adminService.findOneById(id));
+        model.addAttribute("roles", roleService.getRoles());
         return "admin/userUpdate";
     }
 
 
     @PostMapping("/updateUser")
     public String postEditUserForm(@ModelAttribute("person") @Valid Person person,
+                                   @RequestParam(value = "roles", required = false) List<String> roles,
                                    BindingResult bindingResult) {
 
         personValidator.validate(person, bindingResult);
@@ -65,7 +67,8 @@ public class AdminController {
             return "redirect:/admin/users";
         }
 
-        adminService.updateUser(person);
+        System.out.println();
+        adminService.updateUser(person, roles);
         return "redirect:/admin/users";
     }
 }

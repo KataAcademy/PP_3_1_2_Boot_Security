@@ -28,8 +28,6 @@ public class AuthController {
         return "security/login";
     }
 
-
-
     @GetMapping("registration")
     public String registrationPage(@ModelAttribute("person") Person person) {
         return "security/registration";

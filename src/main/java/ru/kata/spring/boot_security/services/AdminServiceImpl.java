@@ -5,10 +5,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.models.Person;
+import ru.kata.spring.boot_security.models.Role;
 import ru.kata.spring.boot_security.repositories.PeopleRepository;
+import ru.kata.spring.boot_security.repositories.RoleRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -16,9 +18,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private final PeopleRepository peopleRepository;
+    private final RoleRepository roleRepository;
 
-    public AdminServiceImpl(PeopleRepository peopleRepository) {
+    public AdminServiceImpl(PeopleRepository peopleRepository, RoleRepository roleRepository) {
         this.peopleRepository = peopleRepository;
+        this.roleRepository = roleRepository;
+
     }
 
 
@@ -35,9 +40,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateUser(Person person) {
+    public void updateUser(Person person, List<String> roles) {
+        System.out.println(roles);
         Person beforeUpdate = peopleRepository.getById(person.getId());
         person.setPassword(beforeUpdate.getPassword());
+        Set<Role> roleSet = roles.stream()
+                .map(roleRepository::findByStringId)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+//        if (roleSet.stream().allMatch(roleRepository::roleExists)) {
+//
+//        }
+        person.setRoles(roleSet);
         peopleRepository.save(person);
     }
 
@@ -52,6 +67,21 @@ public class AdminServiceImpl implements AdminService {
             throw new  UsernameNotFoundException("user не найден");
         return user.get();
     }
+
+
+
+//    private void setUserRoles(Person person, Set<Role> roles) {
+//        Set<Role> rolesSet = new HashSet<>();
+//        for (Role role : roles) {
+//            Role r = roleRepository.findByNameOfRole(role.getNameOfRole());
+//            if (r == null) {
+//                role = r;
+//                roleRepository.save(role);
+//            }
+//            rolesSet.add(role);
+//        }
+//        person.setRoles(rolesSet);
+//    }
 
 
 //    // TODO: убрать в personService
