@@ -111,30 +111,17 @@
         <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
         <br>
 
-        <!--    <div th:each="role: ${roles}">-->
-        <!--      <input th:id="${'role_' + role.id}" type="radio" name="roles" th:value="${role.id}">-->
-        <!--      <label th:for="${'role_' + role.id}" th:text="${role.getNameOfRole()}">Role name</label>-->
-        <!--    </div>-->
         <div>
             <fieldset>
                 <legend>Roles:</legend>
                 <div th:each="role: ${roles}">
                     <label>
-                        <input type="checkbox" name="roles" th:value="${role.id}" th:checked="${person.roles != null && person.roles.contains(role.id)}"/>
-                        <span th:text="${role.getNameOfRole()}"></span>
+                        <input type="checkbox" name="roles" th:value="${role.id}" th:checked="${person.roles != null && person.roles.![id].contains(role.id)}"/>
+                        <span th:text="${role}"></span>
                     </label>
                 </div>
             </fieldset>
         </div>
-
-
-
-        <!--    <label>Role:-->
-        <!--      <select size="2" multiple name="roles" th:field="*{roles}">-->
-        <!--        <option value="ROLE_ADMIN" th:selected="${person.roles.contains('ROLE_ADMIN')}">ADMIN</option>-->
-        <!--        <option value="ROLE_USER" th:selected="${person.roles.contains('ROLE_USER')}">USER</option>-->
-        <!--      </select>-->
-        <!--    </label>-->
 
 
         <input type="submit" value="Update User">
