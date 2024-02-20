@@ -116,12 +116,17 @@
         <!--      <label th:for="${'role_' + role.id}" th:text="${role.getNameOfRole()}">Role name</label>-->
         <!--    </div>-->
         <div>
-            <select multiple="multiple" name="roles" th:field="*{roles}">
-                <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.getNameOfRole()}"
-                        th:selected="${person.roles != null && person.roles.contains(role.id)}">Role name
-                </option>
-            </select>
+            <fieldset>
+                <legend>Roles:</legend>
+                <div th:each="role: ${roles}">
+                    <label>
+                        <input type="checkbox" name="roles" th:value="${role.id}" th:checked="${person.roles != null && person.roles.contains(role.id)}"/>
+                        <span th:text="${role.getNameOfRole()}"></span>
+                    </label>
+                </div>
+            </fieldset>
         </div>
+
 
 
         <!--    <label>Role:-->

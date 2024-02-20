@@ -143,6 +143,7 @@
                 <th>Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Roles</th>
                 <th>Operations</th>
             </tr>
             </thead>
@@ -153,6 +154,7 @@
                 <td th:text="${person.firstName}">Name</td>
                 <td th:text="${person.lastName}">Last Name</td>
                 <td th:text="${person.email}">Email</td>
+                <td th:text="${person.getRoles()}">Roles</td>
                 <td>
                     <a th:href="'admin/updateUser?id=' + ${person.id}">Update</a>
                     <span> | </span>
