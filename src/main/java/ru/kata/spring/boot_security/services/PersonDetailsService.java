@@ -11,24 +11,39 @@ import ru.kata.spring.boot_security.security.PersonDetails;
 
 import java.util.Optional;
 
+/**
+ * Сервис, предоставляющий информацию о пользователях для Spring Security.
+ */
 @Service
 public class PersonDetailsService implements UserDetailsService {
 
-    @Autowired
     private final PeopleRepository peopleRepository;
 
+    /**
+     * Конструктор сервиса.
+     *
+     * @param peopleRepository Репозиторий для работы с пользователями.
+     */
+    @Autowired
     public PersonDetailsService(PeopleRepository peopleRepository) {
         this.peopleRepository = peopleRepository;
     }
 
+    /**
+     * Загружает пользователя по его имени для Spring Security.
+     *
+     * @param username Имя пользователя.
+     * @return Объект UserDetails, представляющий информацию о пользователе.
+     * @throws UsernameNotFoundException если пользователь не найден.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Person> persson = peopleRepository.findByFirstName(username);
+        Optional<Person> personOptional = peopleRepository.findByFirstName(username);
 
-        if(persson.isEmpty()) {
+        if (personOptional.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");
         }
 
-        return new PersonDetails(persson.get());
+        return new PersonDetails(personOptional.get());
     }
 }

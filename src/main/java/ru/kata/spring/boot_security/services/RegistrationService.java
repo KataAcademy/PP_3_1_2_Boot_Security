@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Transactional
 public class RegistrationService {
 
     private final PeopleRepository peopleRepository;
@@ -27,9 +28,6 @@ public class RegistrationService {
         this.roleService = roleService;
     }
 
-    //TODO: сделать проверку на пустую таблицу ролей, если пустая - то заполнить
-    //TODO: сделать регистрацию только пользователей а admin уже через изменение
-
     public void registerAdmin(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         String[] roles = new String[]{"ROLE_ADMIN"};
@@ -38,7 +36,6 @@ public class RegistrationService {
         peopleRepository.save(person);
     }
 
-    @Transactional
     public void registerUser(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         String[] roles = new String[]{"ROLE_USER"};
@@ -51,7 +48,7 @@ public class RegistrationService {
         Set<Role> rolesSet = new HashSet<>();
         for (String roleName : rolesNames) {
             Role role = roleService.findByName(roleName);
-            if (role == null) { //TODO: может поменять на optional, тк оно не работает
+            if (role == null) {
                 role = new Role(roleName);
                 roleService.saveRole(role);
             }

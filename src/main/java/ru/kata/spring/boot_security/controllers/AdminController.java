@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +17,9 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Контроллер, отвечающий за управление пользователями администратором.
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,6 +28,13 @@ public class AdminController {
     private final RoleService roleService;
     private final PersonValidator personValidator;
 
+    /**
+     * Конструктор контроллера.
+     *
+     * @param adminService     Сервис для работы с пользователями.
+     * @param roleService      Сервис для работы с ролями.
+     * @param personValidator  Валидатор для объектов Person.
+     */
     @Autowired
     public AdminController(AdminService adminService, RoleService roleService, PersonValidator personValidator) {
         this.adminService = adminService;
@@ -33,6 +42,13 @@ public class AdminController {
         this.personValidator = personValidator;
     }
 
+    /**
+     * Получает страницу со списком всех пользователей.
+     *
+     * @param model      Модель для передачи данных в представление.
+     * @param principal  Объект Principal для получения информации об аутентифицированном пользователе.
+     * @return Строка с именем представления "admin/users".
+     */
     @GetMapping("/users")
     public String getAllUsers(Model model, Principal principal) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -45,13 +61,25 @@ public class AdminController {
         return "admin/users";
     }
 
-
+    /**
+     * Удаляет пользователя по ID и перенаправляет на страницу со списком пользователей.
+     *
+     * @param id ID пользователя для удаления.
+     * @return Строка с адресом перенаправления "/admin/users".
+     */
     @GetMapping("admin/removeUser")
     public String removeUser(@RequestParam("id") Long id) {
         adminService.removeUser(id);
         return "redirect:/admin/users";
     }
 
+    /**
+     * Получает форму редактирования пользователя по ID.
+     *
+     * @param model Модель для передачи данных в представление.
+     * @param id    ID пользователя для редактирования.
+     * @return Строка с именем представления "admin/userUpdate".
+     */
     @GetMapping("/admin/updateUser")
     public String getEditUserForm(Model model, @RequestParam("id") Long id) {
         model.addAttribute("person", adminService.findOneById(id));
@@ -59,19 +87,23 @@ public class AdminController {
         return "admin/userUpdate";
     }
 
-
+    /**
+     * Обрабатывает форму редактирования пользователя и перенаправляет на страницу со списком пользователей.
+     *
+     * @param person         Объект Person с данными пользователя.
+     * @param roles          Список ролей пользователя.
+     * @param bindingResult  Результат валидации данных пользователя.
+     * @return Строка с адресом перенаправления "/admin/users".
+     */
     @PostMapping("/updateUser")
     public String postEditUserForm(@ModelAttribute("person") @Valid Person person,
                                    @RequestParam(value = "roles", required = false) List<String> roles,
                                    BindingResult bindingResult) {
 
         personValidator.validate(person, bindingResult);
-
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "redirect:/admin/users";
         }
-
-        System.out.println();
         adminService.updateUser(person, roles);
         return "redirect:/admin/users";
     }
