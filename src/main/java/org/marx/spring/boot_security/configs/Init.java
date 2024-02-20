@@ -38,11 +38,11 @@ public class Init {
 
         roleService.save(userRole);
 
-        User admin = new User("ADMIN", 20, "ADMIN", adminRoles);
+        User admin = new User("ADMIN", "ADMIN", 20, "ADMIN", adminRoles);
 
         userService.create(admin);
 
-        User user = new User("user", 20, "user", userRoles);
+        User user = new User("user", "user", 20, "user", userRoles);
 
         userService.create(user);
     }

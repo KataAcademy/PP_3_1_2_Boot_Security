@@ -1,4 +1,4 @@
-package org.marx.spring.boot_security.service;
+package org.marx.spring.boot_security.security;
 
 import org.marx.spring.boot_security.model.User;
 import org.marx.spring.boot_security.repositories.UserRepository;

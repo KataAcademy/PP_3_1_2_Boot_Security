@@ -1,6 +1,6 @@
 package org.marx.spring.boot_security.configs;
 
-import org.marx.spring.boot_security.service.UserDetailService;
+import org.marx.spring.boot_security.security.UserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
