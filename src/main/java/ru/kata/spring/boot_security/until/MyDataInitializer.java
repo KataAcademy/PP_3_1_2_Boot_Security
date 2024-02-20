@@ -30,7 +30,6 @@ public class MyDataInitializer {
     @PostConstruct
     public void initializeData() {
         if (adminService.getAllUsers().isEmpty()) {
-
             Role adminRole = new Role("ROLE_ADMIN");
             roleService.saveRole(adminRole);
             Person adminUser = new Person();
@@ -40,7 +39,6 @@ public class MyDataInitializer {
             registrationService.registerAdmin(adminUser);
             System.out.println("Users created:");
             System.out.println("Admin: username=admin, password=admin");
-            System.out.println("User: username=user, password=user");
         }
     }
 }

@@ -29,10 +29,8 @@ public class RegistrationService {
     }
 
     public void registerAdmin(Person person) {
-        person.setPassword(passwordEncoder.encode(person.getPassword()));
         String[] roles = new String[]{"ROLE_ADMIN"};
         setUserRoles(person, roles);
-
         peopleRepository.save(person);
     }
 
