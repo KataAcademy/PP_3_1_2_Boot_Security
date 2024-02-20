@@ -5,132 +5,170 @@
     <title>Registration</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
             margin: 0;
-            padding: 0;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header-class {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: flex-end;
+        }
+
+        .header-class button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-class button:hover {
+            background-color: #218838;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0e263f;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        td {
+            transition: background-color 0.3s ease;
+        }
+
+        tr:hover td {
+            background-color: #f0f0f0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         form {
-            width: 300px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
 
         label {
             display: block;
+            font-weight: bold;
             margin-bottom: 8px;
-            color: #333;
+            color: #495057;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 20px;
             box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007bff;
         }
 
         input[type="submit"] {
-            background-color: #4caf50;
+            background-color: #007bff;
             color: #fff;
-            cursor: pointer;
+            padding: 15px 20px;
             border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
 
+        /* Добавленные стили для ошибок */
         .error-message {
-            color: #ff6347;
+            color: red;
             margin-top: 10px;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: right;
-        }
-
-        .buttons {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button.logout {
-            background-color: #ff5555; /* красный цвет для кнопки выхода */
-            color: white;
-        }
-
-        button.home {
-            background-color: #4285f4; /* синий цвет для кнопки домашней страницы */
-            color: white;
-        }
-
-        button:hover {
-            opacity: 0.8;
         }
 
     </style>
 </head>
 <body>
-<div>
-    <div th:fragment="header_full">
-        <header>
-            <div class="buttons">
-                <button class="home" onclick="window.location.href = '/'">Home</button>
-            </div>
-            <div class="buttons">
-                <button class="buttons" onclick="window.location.href = '/auth/login'">Sign In</button>
-            </div>
-        </header>
+<header>
+    <div class="header-class">
+        <button type="button-header" onclick="window.location.href = '/'">Home Page</button>
+        <button class="buttons" onclick="window.location.href = '/auth/login'">Sign In</button>
     </div>
-
+</header>
+<div class="container">
     <form method="POST" th:action="@{/auth/registration}" th:object="${person}">
         <label for="firstName"> Enter username </label>
         <input type="text" th:field="*{firstName}" id="firstName">
-        <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Username Error</div>
-        <br>
+        <div class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Username Error</div>
+
         <label for="lastname"> Enter last name </label>
         <input type="text" th:field="*{lastName}" id="lastname">
-        <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname Error</div>
-        <br>
+        <div class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname Error</div>
 
         <label for="email"> Enter email</label>
         <input type="text" th:field="*{email}" id="email">
-        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-        <br>
+        <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
 
         <label for="password"> Enter password</label>
         <input type="password" th:field="*{password}" id="password">
 
-        <br>
         <input type="submit" value="Sign in"/>
     </form>
 </div>
-
 </body>
 </html>

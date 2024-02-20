@@ -2,11 +2,14 @@ package ru.kata.spring.boot_security.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
+import ru.kata.spring.boot_security.security.PersonDetails;
 import ru.kata.spring.boot_security.services.AdminService;
 import ru.kata.spring.boot_security.services.RoleService;
 import ru.kata.spring.boot_security.until.PersonValidator;
@@ -32,11 +35,12 @@ public class AdminController {
 
     @GetMapping("/users")
     public String getAllUsers(Model model, Principal principal) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        model.addAttribute("personDetails", personDetails);
         Person person = adminService.findUserByUserName(principal.getName());
-        System.out.println(person);
         model.addAttribute("person", person);
         List<Person> personList = adminService.getAllUsers();
-        System.out.println(personList);
         model.addAttribute("personList", personList);
         return "admin/users";
     }

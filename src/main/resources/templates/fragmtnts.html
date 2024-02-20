@@ -57,21 +57,21 @@
         </form>
     </header>
 </div>
-<!--<div th:fragment="header_full">-->
-<!--    <header>-->
-<!--        <div class="buttons">-->
-<!--            <button class="home" onclick="window.location.href = '/'">Home</button>-->
-<!--        </div>-->
-<!--        <div class="buttons">-->
-<!--            <button class="buttons" onclick="window.location.href = '/auth/registration'">Sign Up</button>-->
-<!--        </div>-->
-<!--        <div class="buttons">-->
-<!--            <button class="buttons" onclick="window.location.href = '/auth/login'">Sign In</button>-->
-<!--        </div>-->
-<!--        <form th:action="@{/logout}" th:method="POST" style="display: inline-block;">-->
-<!--            <button class="logout" type="submit">Logout</button>-->
-<!--        </form>-->
-<!--    </header>-->
-<!--</div>-->
+<div th:fragment="header_full">
+    <header>
+        <div class="buttons">
+            <button class="home" onclick="window.location.href = '/'">Home</button>
+        </div>
+        <div class="buttons">
+            <button class="buttons" onclick="window.location.href = '/auth/registration'">Sign Up</button>
+        </div>
+        <div class="buttons">
+            <button class="buttons" onclick="window.location.href = '/auth/login'">Sign In</button>
+        </div>
+        <form th:action="@{/logout}" th:method="POST" style="display: inline-block;">
+            <button class="logout" type="submit">Logout</button>
+        </form>
+    </header>
+</div>
 </body>
 </html>

@@ -1,33 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>User Home</title>
     <style>
         body {
-            background-color: #f4f4f4;
-            color: #333;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
             margin: 0;
-            padding: 0;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header-class {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            justify-content: flex-end;
+        }
+
+        .header-class button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-class button:hover {
+            background-color: #218838;
         }
 
         .container {
-            width: 800px;
-            padding: 30px;
+            max-width: 80%;
+            margin: 20px auto;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #007bff;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 12px;
+            margin-top: 20px;
         }
 
         th, td {
@@ -37,7 +64,7 @@
         }
 
         th {
-            background-color: #ff6600;
+            background-color: #0e263f;
             color: #fff;
             font-weight: bold;
         }
@@ -47,90 +74,46 @@
         }
 
         tr:hover td {
-            background-color: #ff8c1a;
+            background-color: #f0f0f0;
         }
 
         a {
-            color: #333;
+            color: #007bff;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         a:hover {
-            color: #ff6600;
+            color: #0056b3;
         }
 
-        .buttons {
-            display: flex;
-            margin-bottom: 20px;
+        .logout {
+            background-color: #ff5555 !important; /* Красный цвет для кнопки logout */
+            color: white !important;
         }
 
-        .buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            background-color: #ff6600;
-            color: #fff;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
+        .logout:hover {
+            background-color: #cc0000 !important; /* Темно-красный при наведении */
         }
 
-        .buttons button:last-child {
-            margin-right: 0;
-        }
-
-        .buttons button:hover {
-            background-color: #ff8c1a;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: right;
-        }
-
-        .buttons {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button.logout {
-            background-color: #ff5555; /* красный цвет для кнопки выхода */
-            color: white;
-        }
-
-        button.home {
-            background-color: #4285f4; /* синий цвет для кнопки домашней страницы */
-            color: white;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
     </style>
+
 </head>
 <body>
 <!--<div th:insert="~{fragmtnts :: header}"></div>-->
+<header>
+    <div class="header-class">
+        <button type="button-header" onclick="window.location.href = '/admin/users'">Go to All Users</button>
+        <button type="button-header" onclick="window.location.href = '/'">Home Page</button>
+        <div>
+            <form type="button-header" th:action="@{/logout}" th:method="POST">
+                <button class="logout" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
 
 <div class="container">
-    <div th:insert="~{fragmtnts :: header}"></div>
 
     <h1>User, welcome spring boot security page!</h1>
 
