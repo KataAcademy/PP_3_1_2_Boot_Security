@@ -26,6 +26,7 @@ public class Init {
     @PostConstruct
     public void initUsers() {
 
+
         Role adminRole = new Role("ROLE_ADMIN");
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
@@ -38,11 +39,17 @@ public class Init {
 
         roleService.save(userRole);
 
-        User admin = new User("ADMIN", "ADMIN", 20, "ADMIN", adminRoles);
-
+        User admin = new User("ADMIN","ADMIN","ADMIN",1,adminRoles );
+//        this.username = username;
+//        this.password = password;
+//        this.name = name;
+//        this.age = age;
+//        this.roles = roles;
+        System.out.println("моя роль АДМИНА" + admin.getRoles());
         userService.create(admin);
 
-        User user = new User("user", "user", 20, "user", userRoles);
+        User user = new User("user", "user", "user",20, userRoles);
+        System.out.println("моя роль ЮЗЕРА" + user.getRoles());
 
         userService.create(user);
     }
