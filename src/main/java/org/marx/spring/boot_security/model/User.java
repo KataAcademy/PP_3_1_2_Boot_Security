@@ -6,7 +6,15 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.Set;
 
@@ -31,11 +39,6 @@ public class User implements UserDetails {
     @Column(name = "age")
     private int age;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "users_roles",
-//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-//            inverseJoinColumns = {@JoinColumn(name = "roles_id", referencedColumnName = "id")})
-
 
     @ManyToMany
     @Fetch(FetchMode.JOIN)
@@ -50,13 +53,6 @@ public class User implements UserDetails {
     }
 
 
-    public User(String username, String name,  int age, String password, Set<Role> roles) {
-        this.username = username;
-        this.name = name;
-        this.age = age;
-        this.password = password;
-        this.roles = roles;
-    }
 
     public User(String username, String password, String name, int age, Set<Role> roles) {
         this.username = username;

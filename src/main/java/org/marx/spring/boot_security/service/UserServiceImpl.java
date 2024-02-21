@@ -1,18 +1,16 @@
 package org.marx.spring.boot_security.service;
 
-import org.marx.spring.boot_security.model.Role;
 import org.marx.spring.boot_security.model.User;
 import org.marx.spring.boot_security.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
@@ -36,8 +34,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void create(User user) {
-//        userRepository.findByUsername(user.getUsername());
-//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -51,8 +47,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(User updateUser) {
-        if (updateUser != null) {
+        if (userRepository.findByUsername(updateUser.getUsername()) != null) {
+            updateUser.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
             userRepository.save(updateUser);
+        } else {
+            throw new UsernameNotFoundException("User not found");
         }
     }
 

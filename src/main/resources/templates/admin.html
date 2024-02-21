@@ -43,6 +43,11 @@
     <label for="createAge">Enter age: </label>
     <input type="number" min="0" th:field="*{age}" id="createAge" required/>
 
+    Select roles:
+    <select th:field="*{roles}" >
+        <option th:each="role : ${listRoles}" th:value="${role.id}" th:text="${role.name}"></option>
+    </select>
+
     <br>
     <input type="submit" value="Create"/>
 </form>

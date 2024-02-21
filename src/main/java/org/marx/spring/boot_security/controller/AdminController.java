@@ -1,6 +1,7 @@
 package org.marx.spring.boot_security.controller;
 
 import org.marx.spring.boot_security.model.User;
+import org.marx.spring.boot_security.service.RoleService;
 import org.marx.spring.boot_security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,20 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
+        model.addAttribute("listRoles", roleService.findAll());
         return "edit";
     }
     @GetMapping
     public String showAll(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("users", userService.getUserList());
+        model.addAttribute("listRoles", roleService.findAll());
         return "admin";
     }
 

@@ -16,6 +16,11 @@
     <label for="age">Enter password: </label>
     <input type="text" th:field="*{password}" id="password"/>
     <br/>
+
+    <select th:field="*{roles}">
+        <option th:each="role : ${listRoles}" th:value="${role.id}" th:text="${role.name}"></option>
+    </select>
+
     <input type="submit" value="Update"/>
 </form>
 </body>
