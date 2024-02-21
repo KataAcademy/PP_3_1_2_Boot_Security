@@ -44,7 +44,7 @@
     <input type="number" min="0" th:field="*{age}" id="createAge" required/>
 
     Select roles:
-    <select th:field="*{roles}" >
+    <select th:field="*{roles}" multiple="multiple">
         <option th:each="role : ${listRoles}" th:value="${role.id}" th:text="${role.name}"></option>
     </select>
 

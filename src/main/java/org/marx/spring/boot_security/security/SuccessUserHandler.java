@@ -1,4 +1,4 @@
-package org.marx.spring.boot_security.configs;
+package org.marx.spring.boot_security.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;

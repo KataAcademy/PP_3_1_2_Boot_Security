@@ -30,7 +30,7 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.findUserById(id));
+        model.addAttribute("user", userService.findUserById(id).get());
         model.addAttribute("listRoles", roleService.findAll());
         return "edit";
     }

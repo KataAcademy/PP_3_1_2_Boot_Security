@@ -1,5 +1,6 @@
 package org.marx.spring.boot_security.configs;
 
+import org.marx.spring.boot_security.security.SuccessUserHandler;
 import org.marx.spring.boot_security.security.UserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
