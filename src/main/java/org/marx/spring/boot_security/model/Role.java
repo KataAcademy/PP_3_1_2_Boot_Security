@@ -1,7 +1,6 @@
 package org.marx.spring.boot_security.model;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "t_role")
-public class Role implements GrantedAuthority {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +42,4 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-
-    @Override
-    public String getAuthority() {
-        return getName();
-    }
 }

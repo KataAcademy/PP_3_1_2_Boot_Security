@@ -49,6 +49,7 @@ public class User {
     public User() {
     }
 
+
     public User(String username, String password, String name, int age, Set<Role> roles) {
         this.username = username;
         this.password = password;
@@ -56,5 +57,6 @@ public class User {
         this.age = age;
         this.roles = roles;
     }
+
 }
 
