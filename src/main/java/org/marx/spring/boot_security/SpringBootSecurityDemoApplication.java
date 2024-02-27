@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo;
+package org.marx.spring.boot_security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,3 +11,4 @@ public class SpringBootSecurityDemoApplication {
 	}
 
 }
+
